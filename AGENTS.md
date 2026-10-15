@@ -10,6 +10,6 @@
 <!-- LOVABLE:END -->
 
 ## Application architecture
-- Keep the transistor educational model in a browser-safe pure module with unit tests; visualizations consume the same results to keep circuit values and carrier flow consistent.
+- Keep each component's educational model (transistor, diode, …) in a browser-safe pure module under src/lib with unit tests; visualizations consume the same results to keep circuit values and carrier flow consistent.
 - Use purpose-built SVG circuit and semiconductor diagrams for the interactive lab; animation must remain adjustable and pausable rather than using prerecorded media.
-- The first lab lives at the index route; this educational version is client-side and does not require persistence or authentication.
+- Each component type is its own route tab (transistors at /, diodes at /diodes) sharing SiteHeader for navigation; this educational version is client-side and does not require persistence or authentication.
