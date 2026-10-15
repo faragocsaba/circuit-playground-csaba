@@ -110,6 +110,9 @@ h1 { font-weight: 550; font-size: 42px; line-height: 1.15; }
 .readout:last-child { border-right: 0; }
 .readout-value { font: 500 24px var(--font-mono); margin-top: 9px; }
 .readout-unit { font-size: 12px; color: var(--muted-foreground); }
+.readouts-led { grid-template-columns: repeat(4, 1fr); }
+.brightness-bar { margin-top: 7px; height: 6px; border-radius: 3px; background: var(--secondary); overflow: hidden; }
+.brightness-bar > span { display: block; height: 100%; border-radius: 3px; transition: width 0.2s ease; }
 .lower-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px; margin-top: 30px; }
 .section-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px; }
 .section-top h2 { font-size: 15px; font-weight: 600; }
