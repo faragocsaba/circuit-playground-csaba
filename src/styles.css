@@ -70,6 +70,13 @@ h1 { font-weight: 550; font-size: 42px; line-height: 1.15; }
 .symbol { stroke: var(--foreground); stroke-width: 2.5; fill: none; }
 .node { fill: var(--wire); }
 .current-particle { fill: var(--primary); }
+.current-particle.flow-collector { fill: var(--flow-collector); }
+.current-particle.flow-base { fill: var(--flow-base); }
+.flow-text-collector { fill: var(--flow-collector) !important; }
+.flow-text-base { fill: var(--flow-base) !important; }
+.legend-dot.flow-collector { background: var(--flow-collector); }
+.legend-dot.flow-base { background: var(--flow-base); }
+:root { --flow-collector: oklch(0.62 0.13 230); --flow-base: oklch(0.75 0.16 75); }
 .current-text { fill: var(--primary) !important; }
 .carrier-text { fill: var(--coral) !important; }
 .circuit-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 13px 23px; border-top: 1px solid var(--border); min-height: 54px; }
