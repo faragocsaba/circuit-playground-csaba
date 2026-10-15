@@ -103,6 +103,9 @@ h1 { font-weight: 550; font-size: 42px; line-height: 1.15; }
 .region-n { fill: var(--accent); }
 .region-p { fill: var(--carrier-soft); }
 .carrier { fill: var(--coral); }
+.hole-carrier { fill: var(--card); }
+.cutaway-svg .electron-sign { fill: var(--card); font-size: 9px; }
+.cutaway-svg .hole-sign { fill: var(--coral); font-size: 9px; }
 .cutaway-boundary { stroke: var(--primary); stroke-width: 1; stroke-dasharray: 3 4; opacity: 0.5; }
 .panel-note { padding: 13px 18px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted-foreground); display: flex; gap: 9px; align-items: flex-start; min-height: 53px; }
 .trace-svg { width: 100%; height: 177px; display: block; }
@@ -111,7 +114,7 @@ h1 { font-weight: 550; font-size: 42px; line-height: 1.15; }
 .trace-output { stroke: var(--primary); fill: none; stroke-width: 2.5; }
 .response-footer { padding: 13px 20px 15px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 11px; min-height: 45px; }
 .live-status { display: inline-flex; align-items: center; gap: 7px; color: var(--primary); font-size: 11px; }
-.status-badge { color: var(--primary); background: var(--accent); border: 1px solid var(--primary)/20; display: inline-flex; align-items: center; gap: 6px; border-radius: 4px; font: 10px var(--font-mono); padding: 5px 8px; }
+.status-badge { color: var(--primary); background: var(--accent); border: 1px solid var(--border); display: inline-flex; align-items: center; gap: 6px; border-radius: 4px; font: 10px var(--font-mono); padding: 5px 8px; }
 .footer { padding: 23px 0 28px; margin-top: 25px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; color: var(--muted-foreground); font-size: 10px; }
 .info-note { padding: 12px; background: var(--secondary); border-radius: 5px; font-size: 11px; line-height: 1.6; color: var(--muted-foreground); }
 @media (max-width: 1000px) { .shell { padding: 0 24px; } .lab-grid { grid-template-columns: minmax(0,1fr) 270px; } .controls { padding: 20px; } .readout { padding: 0 16px; } .readout-value { font-size: 20px; } }
