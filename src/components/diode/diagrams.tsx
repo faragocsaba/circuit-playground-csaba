@@ -92,12 +92,13 @@ export function IVPlot({ kind, model, color }: { kind: DiodeKind; model: DiodeRe
   const xOf = (v: number) => 44 + (v + 8) / 12 * 406; // −8 … +4 V
   const yOf = (i: number) => 100 - Math.max(-70, Math.min(70, i)) ;
   const pts = Array.from({ length: 121 }, (_, n) => { const v = -8 + n * 0.1; return `${n ? 'L' : 'M'}${xOf(v)},${yOf(ivCurve(kind, v, color))}`; }).join(' ');
-  const opY = yOf(model.conducting ? (model.current > 0 ? 1 : -1) * Math.min(70, 8 + Math.abs(model.current) * 3) : 0);
+  const shown = model.conducting ? Math.sign(model.current) * Math.min(70, 8 + Math.abs(model.current) * 3) : 0;
+  const opY = yOf(shown); const opV = model.vd + shown / 40; // sits on the plotted curve
   return <svg className="trace-svg" viewBox="0 0 480 177" role="img" aria-label="Current–voltage characteristic with operating point">
     <path d={`M44 100H450M${xOf(0)} 24V168`} className="trace-grid" />
     <text x="420" y="94">V →</text><text x={xOf(0) + 6} y="34">I ↑</text>
     {kind === 'zener' && <text x={xOf(-ZENER_VOLTAGE) - 20} y="165">−{ZENER_VOLTAGE} V</text>}
     <path d={pts} className="trace-output" />
-    <circle cx={xOf(Math.max(-8, Math.min(4, model.vd)))} cy={opY} r="6" fill="var(--coral)" stroke="var(--card)" strokeWidth="2" />
+    <circle cx={xOf(Math.max(-8, Math.min(4, opV)))} cy={opY} r="6" fill="var(--coral)" stroke="var(--card)" strokeWidth="2" />
   </svg>;
 }
