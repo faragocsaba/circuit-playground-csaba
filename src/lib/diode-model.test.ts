@@ -1,7 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { diodeModel, forwardVoltage, ZENER_VOLTAGE } from './diode-model';
+import { diodeModel, forwardVoltage, ivCurve, ZENER_VOLTAGE } from './diode-model';
 
 describe('diode model', () => {
+  it('compares characteristic knees and reverse breakdown consistently', () => {
+    expect(ivCurve('schottky', 0.5)).toBeCloseTo(8);
+    expect(ivCurve('rectifier', 0.5)).toBe(0);
+    expect(ivCurve('led', 2, 'red')).toBeCloseTo(8);
+    expect(ivCurve('led', 2, 'blue')).toBe(0);
+    expect(ivCurve('rectifier', 1)).toBe(ivCurve('zener', 1));
+    expect(ivCurve('zener', -6)).toBeCloseTo(-36);
+    expect(ivCurve('rectifier', -6)).toBe(0);
+  });
   it('conducts above forward voltage with Ohm-limited current', () => {
     const m = diodeModel('rectifier', 5.7, 1);
     expect(m.state).toBe('Forward');

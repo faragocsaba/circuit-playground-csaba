@@ -4,20 +4,22 @@ import { ChevronDown, Cpu, Info, Pause, Play, RotateCcw, Activity } from 'lucide
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
 import { DiodeCircuit, IVPlot, Junction } from '@/components/diode/diagrams';
+import { DiodeComparison } from '@/components/diode/comparison';
 import { diodeModel, diodes, ledForward, type DiodeKind, type LedColor } from '@/lib/diode-model';
 
 export const Route = createFileRoute('/diodes')({
   head: () => ({ meta: [
     { title: 'Diode Lab — Circuit Playground' },
-    { name: 'description', content: 'Explore rectifier, Schottky, LED and Zener diodes with an interactive circuit, animated junction and live I–V curve.' },
+    { name: 'description', content: 'Explore rectifier, Schottky, LED and Zener diodes with interactive circuits, animated junctions and overlaid current–voltage comparisons.' },
     { property: 'og:title', content: 'Diode Lab — Circuit Playground' },
-    { property: 'og:description', content: 'See how diodes conduct, block, glow and break down — interactively.' },
+    { property: 'og:description', content: 'Compare diode current–voltage curves and see how rectifier, Schottky, LED and Zener diodes behave.' },
     { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' },
   ] }),
   component: DiodeLab,
 });
 
 function DiodeLab() {
+  const [view, setView] = useState<'lab' | 'comparison'>('lab');
   const [kind, setKind] = useState<DiodeKind>('rectifier');
   const [color, setColor] = useState<LedColor>('red');
   const [source, setSource] = useState(5);
@@ -33,7 +35,8 @@ function DiodeLab() {
   return <>
     <SiteHeader />
     <main className="shell">
-      <div className="lab-heading"><div className="eyebrow mb-3 flex items-center gap-2 text-muted-foreground"><span className="text-primary">02</span><span>/</span> THE BUILDING BLOCKS</div><h1>Diode lab<span className="text-primary">.</span></h1><p className="mt-3 text-sm text-muted-foreground">Current that only goes one way — mostly.</p></div>
+      <div className="lab-heading flex flex-wrap items-end justify-between gap-4"><div><div className="eyebrow mb-3 flex items-center gap-2 text-muted-foreground"><span className="text-primary">02</span><span>/</span> THE BUILDING BLOCKS</div><h1>Diode lab<span className="text-primary">.</span></h1><p className="mt-3 text-sm text-muted-foreground">Current that only goes one way — mostly.</p></div><div className="segment" aria-label="Diode view"><Button variant="ghost" size="sm" aria-pressed={view === 'lab'} onClick={() => setView('lab')}>Circuit lab</Button><Button variant="ghost" size="sm" aria-pressed={view === 'comparison'} onClick={() => setView('comparison')}>Compare curves</Button></div></div>
+      {view === 'comparison' ? <DiodeComparison /> : <>
       <div className="lab-grid">
         <section className="workspace" aria-label="Circuit workspace">
           <div className="workspace-head"><div className="flex items-center gap-2.5"><span className="eyebrow text-muted-foreground">LIVE CIRCUIT</span><span className="text-xs text-muted-foreground">/</span><span className="text-xs font-medium">{diodes[kind].name}</span></div><span className="live-status"><span className="legend-dot" />{playing ? 'Running' : 'Paused'}</span></div>
@@ -59,6 +62,7 @@ function DiodeLab() {
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Cpu size={16} className="text-muted-foreground" /> Inside the junction</h2><span className="text-[10px] text-muted-foreground font-mono">{kind === 'schottky' ? 'METAL–N' : 'P–N'} JUNCTION</span></div><div className="figure-panel"><Junction kind={kind} model={model} color={color} speed={speed} playing={playing} /><div className="panel-note"><Info size={13} className="shrink-0" /><span>{note}</span></div></div></section>
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Activity size={16} className="text-muted-foreground" /> Current vs. voltage</h2><span className="text-[10px] text-muted-foreground font-mono">● operating point</span></div><div className="figure-panel"><IVPlot kind={kind} model={model} color={color} /><div className="panel-note"><Info size={13} className="shrink-0" /><span>{kind === 'zener' ? 'Flat in reverse until −5.1 V, then a sharp downward knee: the breakdown region.' : 'Almost no current until the knee, then current rises steeply. In reverse it stays near zero.'}</span></div></div></section>
       </div>
+      </>}
       <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Simplified educational model · ideal knee voltage · carrier motion not to scale</span><span>circuit.playground / 02</span></footer>
     </main>
   </>;
