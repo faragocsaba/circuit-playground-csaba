@@ -42,7 +42,7 @@ export function DiodeCircuit({ kind, model, color, source, resistance, speed, pl
     <text x="60" y="140" className="carrier-text">SOURCE</text><text x="60" y="262">{source >= 0 ? '+' : '−'}{Math.abs(source).toFixed(1)} V</text>
     {/* resistor */}
     <rect x="320" y="78" width="100" height="24" fill="var(--card)" />
-    <path d="M320 90h10l6-10 12 20 12-20 12 20 12-20 12 20 6-10h8" className="wire" />
+    <path d="M320 90h10l6-10 12 20 12-20 12 20 12-20 12 20 6-10h18" className="wire" />
     <text x="340" y="66">R · {resistance.toFixed(1)} kΩ</text><text x="340" y="126">{Math.abs(model.vr).toFixed(2)} V</text>
     <DiodeSymbol kind={kind} model={model} color={color} />
     <text x="606" y="222">{model.vd.toFixed(2)} V</text>
