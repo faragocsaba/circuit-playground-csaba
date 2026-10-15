@@ -78,10 +78,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Element Lab — Interactive electronics" },
+      { title: "Circuit Playground — Interactive electronics" },
       { name: "description", content: "Explore electronic elements through interactive circuits and charge flow." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Element Lab — Interactive electronics" },
+      { property: "og:title", content: "Circuit Playground — Interactive electronics" },
       { property: "og:description", content: "Explore electronic elements through interactive circuits and charge flow." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

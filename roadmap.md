@@ -1,4 +1,4 @@
-# Transistor lab
-- [x] Build the six-arrangement circuit, charge cutaway, and controls.
-- [x] Add a bounded educational model and synchronized output traces.
-- [x] Verify model tests and desktop/mobile interaction flows.
+# Circuit playground
+- [x] Transistor lab (six arrangements, color-coded currents).
+- [x] Diode lab tab: rectifier, Schottky, LED, Zener with circuit, junction view, I–V curve.
+- [x] Rename branding to circuit playground.
