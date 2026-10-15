@@ -16,9 +16,9 @@ describe('diode comparison', () => {
     const original = screen.getByTestId('curve-led').getAttribute('d');
     fireEvent.change(screen.getByLabelText('Comparison LED color'), { target: { value: 'blue' } });
     expect(screen.getByTestId('curve-led').getAttribute('d')).not.toBe(original);
-    fireEvent.change(screen.getByLabelText('Diode voltage'), { target: { value: '-6' } });
+    fireEvent.change(screen.getByRole('slider', { name: 'Diode voltage' }), { target: { value: '-6' } });
     expect(screen.getByText('-36.00')).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: 'Reverse', exact: true }));
-    expect(screen.getByLabelText('Diode voltage').getAttribute('max')).toBe('0');
+    fireEvent.click(screen.getByRole('button', { name: 'Reverse' }));
+    expect(screen.getByRole('slider', { name: 'Diode voltage' }).getAttribute('max')).toBe('0');
   });
 });
