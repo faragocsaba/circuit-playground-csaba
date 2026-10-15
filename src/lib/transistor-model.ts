@@ -17,14 +17,16 @@ export function transistorModel(type: TransistorType, config: Configuration, dri
   const requestedBase = Math.max(0, drive) / (config === 'base' ? BETA + 1 : 1000);
   const canConduct = v > 0.7;
   const limit = canConduct ? Math.max(0, v - (config === 'base' ? 0 : 0.2)) / LOAD_KOHM : 0;
-  const ic = canConduct ? Math.min(BETA * requestedBase, config === 'collector' ? limit * BETA / (BETA + 1) : limit) : 0;
-  const ib = canConduct ? requestedBase : 0;
+  const ibActive = canConduct ? requestedBase : 0;
+  const collectorTarget = BETA * ibActive;
+  const ic = config === 'collector' ? Math.min(collectorTarget, Math.max(0, limit - ibActive)) : Math.min(collectorTarget, limit);
+  const ib = config === 'base' && canConduct ? Math.max(0, drive) - ic : config === 'collector' ? Math.min(ibActive, limit) : ibActive;
   const ie = ic + ib;
   const active = canConduct && requestedBase > 0;
-  const saturated = active && BETA * requestedBase >= (config === 'collector' ? limit * BETA / (BETA + 1) : limit);
+  const saturated = active && collectorTarget >= (config === 'collector' ? Math.max(0, limit - ibActive) : limit);
   // Emitter output in CC is constrained by its load, even when excess base drive flows.
   const emitterVoltage = config === 'collector' ? Math.min(ie * LOAD_KOHM, Math.max(0, v - 0.2)) : config === 'base' && active ? -0.7 : 0;
-  const collectorVoltage = config === 'collector' ? v : Math.max(config === 'base' ? 0 : 0.2, v - ic * LOAD_KOHM);
+  const collectorVoltage = config === 'collector' ? v : Math.max(0, v - ic * LOAD_KOHM);
   return { ib, ic, ie, sign, state: !active ? 'Cutoff' : saturated ? 'Saturation' : 'Active', output: sign * (config === 'collector' ? emitterVoltage : collectorVoltage), vb: sign * (config === 'base' ? 0 : active ? emitterVoltage + 0.7 : 0), ve: sign * emitterVoltage, vc: sign * collectorVoltage, conducting: active, saturated };
 }
 export type Model = ReturnType<typeof transistorModel>;
