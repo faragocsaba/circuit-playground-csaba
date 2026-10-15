@@ -3,4 +3,4 @@
 - [x] Diode lab tab: rectifier, Schottky, LED, Zener with circuit, junction view, I–V curve.
 - [x] Rename branding to circuit playground.
 - [x] Add interactive overlaid diode I–V comparison and verify it.
-- [ ] Update the published address to circuit-playground.
+- [x] Request publishing at circuit-playground-csaba (chosen alternative; original slugs unavailable).
