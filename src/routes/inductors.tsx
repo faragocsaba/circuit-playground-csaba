@@ -62,7 +62,7 @@ function InductorLab() {
     ? settings.connected ? 'Switch on: the coil pushes back with a voltage that opposes the change, so current rises gradually instead of jumping. Once steady, the coil is just a wire.'
       : 'Switch off: the collapsing magnetic field keeps the current flowing in the same direction. The coil voltage flips to keep it going.'
     : settings.mode === 'lc' ? 'The charged capacitor drives current into the coil. Energy swaps back and forth between the electric field (C) and the magnetic field (L). The resistor slowly turns it into heat.'
-      : 'Below resonance the capacitor dominates and current leads; above it the coil dominates and current lags. At f₀ their effects cancel and only R limits the current.';
+      : 'Below resonance the capacitor dominates and current leads; above it the coil dominates and current lags. At f₀ their effects cancel and only R limits the current — and the coil and capacitor voltages can grow far larger than the source while cancelling each other.';
   const readouts: [string, string, string][] = [
     ['CURRENT', s.current.toFixed(1), 'mA'], ['COIL VOLTAGE', s.vL.toFixed(2), 'V'], ['FIELD ENERGY', s.energyL.toFixed(1), 'mJ'],
     settings.mode === 'rl' ? ['τ = L / R', timeConstant(settings).toFixed(2), 's'] : settings.mode === 'lc' ? ['CAPACITOR ENERGY', s.energyC.toFixed(1), 'mJ'] : ['IMPEDANCE', ac.impedance.toFixed(0), 'Ω'],

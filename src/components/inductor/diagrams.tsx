@@ -33,8 +33,8 @@ export function InductorCircuit({ settings, sample, motion, fieldScale }: { sett
     {[0, 1, 2].map(k => <ellipse key={k} cx="572" cy="195" rx={34 + k * 18} ry={60 + k * 14} className="capacitor-field" fill="none" opacity={strength * (1 - k * 0.28)} />)}
     <path d={coil(560, 150, 4, 11, true)} className="symbol" fill="none" />
     <path d="M560 238V242" className="wire" />
-    <text x="620" y="182">L</text><text x="620" y="207">{settings.inductance} H</text>
-    <text x="620" y="250" className="font-mono">{sample.vL.toFixed(2)} V</text>
+    <text x="655" y="182">L</text><text x="655" y="207">{settings.inductance} H</text>
+    <text x="655" y="250" className="font-mono">{sample.vL.toFixed(2)} V</text>
     {hasC && <><rect x="340" y="280" width="32" height="40" fill="var(--card)" /><path d="M350 272V328M362 272V328" className="symbol" />
       <text x="330" y="350">C · {settings.capacitance} µF · {sample.vC.toFixed(2)} V</text></>}
     {Array.from({ length: count }, (_, i) => <circle key={i} r="3.5" className="current-particle" {...along(loop, ((motion / 3 + i / count) % 1 + 1) % 1)} />)}
@@ -90,7 +90,7 @@ export function ResonanceCurve({ settings }: { settings: InductorSettings }) {
   const peak = settings.voltage / settings.resistance * 1000;
   const y = (i: number) => 200 - i / peak * 165;
   const f0 = resonantFrequency(settings); const now = acResponse(settings);
-  return <svg className="capacitor-trace" viewBox="0 0 600 248" role="img" aria-label={`Resonance curve: peak current versus frequency, resonance at ${f0.toFixed(2)} hertz`}>
+  return <svg className="capacitor-trace mx-auto block" style={{ maxHeight: 340 }} viewBox="0 0 600 248" role="img" aria-label={`Resonance curve: peak current versus frequency, resonance at ${f0.toFixed(2)} hertz`}>
     {[0, 1, 2, 3, 4, 5].map(f => <g key={f}><path d={`M${x(Math.max(fMin, f))} 30V200`} className="trace-grid" /><text x={x(Math.max(fMin, f))} y="220" textAnchor="middle">{f} Hz</text></g>)}
     <path d="M56 200H556" className="comparison-axis" /><text x="8" y="40">mA</text><text x="8" y="58" className="font-mono">{peak.toFixed(0)}</text>
     <path d={freqs.map((f, k) => `${k ? 'L' : 'M'}${x(f).toFixed(1)} ${y(acResponse(settings, f).peakCurrent).toFixed(1)}`).join(' ')} className="trace-output" />
