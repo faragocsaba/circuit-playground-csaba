@@ -34,7 +34,7 @@ function FlipFlopsLab() {
     if (type === 'sr') {
       const next = { ...inputs, [name]: bit };
       setInputs(next);
-      setQ(prev => srLatch(next.sBar ?? 1, next.rBar ?? 1, prev));
+      setQ(prev => srLatch(next['sBar'] ?? 1, next['rBar'] ?? 1, prev));
     } else if (name === 'clock') {
       // rising edge: 0 → 1
       if (clock === 0 && bit === 1) setQ(prev => ffNext(type, inputs, prev));
@@ -44,8 +44,8 @@ function FlipFlopsLab() {
     }
   };
 
-  const forbidden = type === 'sr' && inputs.sBar === 0 && inputs.rBar === 0;
-  const qBar: Bit = type === 'sr' ? srLatchQBar(inputs.sBar ?? 1, inputs.rBar ?? 1, q) : q ? 0 : 1;
+  const forbidden = type === 'sr' && inputs['sBar'] === 0 && inputs['rBar'] === 0;
+  const qBar: Bit = type === 'sr' ? srLatchQBar(inputs['sBar'] ?? 1, inputs['rBar'] ?? 1, q) : q ? 0 : 1;
   const rows = ffRows(type);
   const inputControls: [string, string, boolean?][] = type === 'sr' ? [['sBar', 'S̄ (set, active low)', true], ['rBar', 'R̄ (reset, active low)', true]]
     : type === 'd' ? [['d', 'D (data)']]
@@ -67,7 +67,7 @@ function FlipFlopsLab() {
           <div className="readouts" aria-live="polite">
             <div className="readout"><div className="eyebrow text-muted-foreground">STORED BIT Q</div><div className="readout-value">{q}</div></div>
             <div className="readout"><div className="eyebrow text-muted-foreground">COMPLEMENT Q̄</div><div className="readout-value">{qBar}</div></div>
-            <div className="readout"><div className="eyebrow text-muted-foreground">{type === 'sr' ? 'MODE' : 'CLOCK'}</div><div className="readout-value">{type === 'sr' ? (forbidden ? 'FORBIDDEN' : inputs.sBar === 0 ? 'SET' : inputs.rBar === 0 ? 'RESET' : 'HOLD') : clock}</div></div>
+            <div className="readout"><div className="eyebrow text-muted-foreground">{type === 'sr' ? 'MODE' : 'CLOCK'}</div><div className="readout-value">{type === 'sr' ? (forbidden ? 'FORBIDDEN' : inputs['sBar'] === 0 ? 'SET' : inputs['rBar'] === 0 ? 'RESET' : 'HOLD') : clock}</div></div>
           </div>
         </section>
         <aside className="controls" aria-label="Flip-flop controls">
