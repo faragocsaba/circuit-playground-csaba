@@ -131,7 +131,7 @@ export function rippleAdd(a: Bit[], b: Bit[], cin: Bit = 0): RippleResult {
     bits.push({ a: ai, b: bi, cin: carry, sum: r.sum, cout: r.carry });
     carry = r.carry;
   }
-  const toDec = (bs: Bit[]) => bs.reduce((n, bit, i) => n + bit * 2 ** i, 0);
+  const toDec = (bs: Bit[]) => bs.reduce((n, bit, i) => n + bit * (2 ** i), 0);
   return { bits, sum: bits.map(x => x.sum), overflow: carry, decimal: { a: toDec(a), b: toDec(b), sum: toDec(bits.map(x => x.sum)) + carry * 2 ** a.length } };
 }
 
