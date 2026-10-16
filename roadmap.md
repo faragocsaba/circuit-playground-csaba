@@ -7,3 +7,4 @@
 - [x] Add capacitor lab with DC charge/discharge and AC, synchronized diagrams and graphs; verify both experiments.
 - [x] Add a setup-aware capacitor AI helper with a single unsaved conversation; verify DC, AC, follow-up and Stop.
 - [x] Resistor tab, tab order, /transistors URL, landing page.
+- [ ] Add stacked BJT/FET family buttons and voltage-controlled MOSFET/JFET experiments; verify the controls, diagrams and model.
