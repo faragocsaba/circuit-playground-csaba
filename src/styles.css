@@ -200,6 +200,7 @@ h1 { font-family: var(--font-display); font-weight: 400; font-size: 46px; line-h
 .nav-group { position: relative; }
 .nav-group-trigger { display: inline-flex; align-items: center; gap: 4px; border: 0; background: transparent; }
 .nav-menu { position: absolute; top: calc(100% + 8px); left: 0; min-width: 190px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow); padding: 6px; display: none; flex-direction: column; z-index: 50; }
+.nav-menu::before { content: ''; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
 .nav-group:hover .nav-menu, .nav-group:focus-within .nav-menu { display: flex; }
 .nav-item { padding: 8px 12px; border-radius: 5px; font-size: 13px; font-weight: 500; color: var(--foreground); }
 .nav-item:hover { background: var(--secondary); }
