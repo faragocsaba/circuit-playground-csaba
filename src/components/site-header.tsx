@@ -36,7 +36,7 @@ export function SiteHeader({ children }: { children?: ReactNode }) {
           { to: '/adders', label: 'Adders', soon: true },
         ]} />
         <NavGroup label="Radio" items={[
-          { to: '/antennas', label: 'Antennas', soon: true },
+          { to: '/antennas', label: 'Antennas' },
         ]} />
         <Link to="/theory" className="tab" activeProps={{ 'aria-current': 'page' }}>Theory</Link>
       </nav>
