@@ -20,7 +20,7 @@ export function colorBands(ohms: number): BandColor[] {
   let exponent = Math.floor(Math.log10(ohms)) - 1;
   let digits = Math.round(ohms / 10 ** exponent);
   if (digits === 100) { digits = 10; exponent += 1; }
-  return [names[Math.floor(digits / 10)], names[digits % 10], names[exponent], 'gold'];
+  return [names[Math.floor(digits / 10)]!, names[digits % 10]!, names[exponent]!, "gold"];
 }
 export function formatOhms(ohms: number) {
   return ohms >= 1000 ? `${+(ohms / 1000).toFixed(2)} kΩ` : `${+ohms.toFixed(1)} Ω`;

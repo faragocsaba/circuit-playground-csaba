@@ -3,13 +3,15 @@ import { colorBands, formatOhms, resistorModel } from '@/lib/resistor-model';
 
 type Pt = [number, number];
 function along(points: Pt[], t: number): Pt {
-  const lens = points.slice(1).map((p, i) => Math.hypot(p[0] - points[i][0], p[1] - points[i][1]));
+  const p = (i: number) => points[i] as Pt;
+  const lens = points.slice(1).map((q, i) => Math.hypot(q[0] - p(i)[0], q[1] - p(i)[1]));
   let d = (((t % 1) + 1) % 1) * lens.reduce((a, b) => a + b, 0);
   for (let i = 0; i < lens.length; i++) {
-    if (d <= lens[i]) { const f = d / lens[i]; return [points[i][0] + (points[i + 1][0] - points[i][0]) * f, points[i][1] + (points[i + 1][1] - points[i][1]) * f]; }
-    d -= lens[i];
+    const len = lens[i] as number, a = p(i), b = p(i + 1);
+    if (d <= len) { const f = d / len; return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f]; }
+    d -= len;
   }
-  return points[points.length - 1];
+  return p(points.length - 1);
 }
 function Particles({ path, current, phase, cls }: { path: Pt[]; current: number; phase: number; cls: string }) {
   if (current < 0.01) return null;
