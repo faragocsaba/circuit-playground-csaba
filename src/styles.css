@@ -195,3 +195,14 @@ h1 { font-family: var(--font-display); font-weight: 400; font-size: 46px; line-h
 .lab-card:hover { transform: translateY(-3px); border-color: color-mix(in oklab, var(--primary) 45%, var(--border)); box-shadow: 0 2px 4px oklch(0.235 0.022 60 / 8%), 0 20px 44px -18px oklch(0.235 0.022 60 / 26%); }
 .lab-card-num { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 1px; color: var(--amber); }
 .icon-chip { width: 52px; height: 52px; border-radius: 12px; background: var(--accent); color: var(--primary); display: grid; place-items: center; flex-shrink: 0; }
+.section-title { font-family: var(--font-display); font-size: 26px; font-weight: 400; }
+.lab-card-soon { border: 1px dashed var(--border); border-radius: 12px; padding: 22px 26px; background: color-mix(in oklab, var(--card) 60%, transparent); }
+.nav-group { position: relative; }
+.nav-group-trigger { display: inline-flex; align-items: center; gap: 4px; border: 0; background: transparent; }
+.nav-menu { position: absolute; top: calc(100% + 8px); left: 0; min-width: 190px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow); padding: 6px; display: none; flex-direction: column; z-index: 50; }
+.nav-group:hover .nav-menu, .nav-group:focus-within .nav-menu { display: flex; }
+.nav-item { padding: 8px 12px; border-radius: 5px; font-size: 13px; font-weight: 500; color: var(--foreground); }
+.nav-item:hover { background: var(--secondary); }
+.nav-item[aria-current=page] { color: var(--primary); background: var(--accent); }
+.nav-soon { padding: 8px 12px; font-size: 13px; color: var(--muted-foreground); display: flex; flex-direction: column; gap: 2px; }
+.nav-soon-note { font-size: 11px; opacity: 0.8; }
