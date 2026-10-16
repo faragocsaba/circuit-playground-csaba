@@ -12,7 +12,7 @@ function Wire({ d, bit }: { d: string; bit: Bit | boolean }) {
   return <path d={d} className={`sig-wire ${cls(bit)}`} />;
 }
 
-function Pin({ x, y, bit, label, onToggle }: { x: number; y: number; bit: Bit; label?: string; onToggle?: () => void }) {
+function Pin({ x, y, bit, label, onToggle }: { x: number; y: number; bit: Bit; label?: string | undefined; onToggle?: (() => void) | undefined }) {
   return <g onClick={onToggle} style={onToggle ? { cursor: 'pointer' } : undefined} role={onToggle ? 'button' : undefined} aria-label={onToggle ? `Toggle ${label}` : undefined}>
     <circle cx={x} cy={y} r={9} className={`sig-pin ${cls(bit)}`} />
     <text x={x} y={y + 3.5} textAnchor="middle" className="sig-pin-text">{bit}</text>

@@ -19,8 +19,8 @@ export const GATE_INFO: Record<GateType, { name: string; inputs: 1 | 2; blurb: s
 
 export function gate(type: GateType, a: Bit, b: Bit = 0): Bit {
   switch (type) {
-    case 'and': return a & b as Bit;
-    case 'or': return a | b as Bit;
+    case 'and': return (a & b) as Bit;
+    case 'or': return (a | b) as Bit;
     case 'not': return a ? 0 : 1;
     case 'nand': return a & b ? 0 : 1;
     case 'nor': return a | b ? 0 : 1;
@@ -126,8 +126,9 @@ export function rippleAdd(a: Bit[], b: Bit[], cin: Bit = 0): RippleResult {
   const bits: RippleResult['bits'] = [];
   let carry = cin;
   for (let i = 0; i < a.length; i++) {
-    const r = fullAdder(a[i], b[i], carry);
-    bits.push({ a: a[i], b: b[i], cin: carry, sum: r.sum, cout: r.carry });
+    const ai = a[i] ?? 0, bi = b[i] ?? 0;
+    const r = fullAdder(ai, bi, carry);
+    bits.push({ a: ai, b: bi, cin: carry, sum: r.sum, cout: r.carry });
     carry = r.carry;
   }
   const toDec = (bs: Bit[]) => bs.reduce((n, bit, i) => n + bit * 2 ** i, 0);
