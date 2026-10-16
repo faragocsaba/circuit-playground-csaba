@@ -21,8 +21,8 @@ No account is needed and nothing is saved: all simulation runs in the browser.
 | [`/transistors`](https://circuit-playground-csaba.lovable.app/transistors) | **BJT**: NPN and PNP in common-emitter, common-base and common-collector arrangements. **FET**: enhancement MOSFET and JFET, n- and p-channel, in common-source, common-gate and common-drain — the voltage-controlled counterpart to the BJT. Both show carrier motion and conventional current separately, with dot counts that follow the current split. |
 | [`/theory`](https://circuit-playground-csaba.lovable.app/theory) | Ohm's law, Kirchhoff's current and voltage laws, and how capacitors and inductors store energy — formula, plain-language explanation, a worked example using each lab's own starting values, and a link straight back to the matching lab. |
 
-Every lab has play/pause, a speed control and a reset, and respects the browser's
-"reduce motion" setting by starting paused.
+Every lab has play/pause and a reset; all but the resistor lab also have a speed
+control. All of them respect the browser's "reduce motion" setting by starting paused.
 
 ## How it is put together
 
