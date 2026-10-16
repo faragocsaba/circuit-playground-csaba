@@ -31,7 +31,7 @@ function ResistorLab() {
   const update = (patch: Partial<ResistorSettings>) => setSettings(s => ({ ...s, ...patch }));
   useEffect(() => {
     if (!playing || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const timer = window.setInterval(() => setPhase(p => p + 0.08), 50);
+    const timer = window.setInterval(() => setPhase(p => p + 0.045), 50);
     return () => window.clearInterval(timer);
   }, [playing]);
   const two = settings.arrangement !== 'single';

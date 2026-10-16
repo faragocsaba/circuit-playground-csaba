@@ -8,3 +8,7 @@
 - [x] Add a setup-aware capacitor AI helper with a single unsaved conversation; verify DC, AC, follow-up and Stop.
 - [x] Resistor tab, tab order, /transistors URL, landing page.
 - [x] Add stacked BJT/FET family buttons and voltage-controlled MOSFET/JFET experiments; verify the controls, diagrams and model.
+- [x] Add Kirchhoff current and voltage law panels to the resistor lab with tests; verify in browser.
+- [x] Add inductor lab (RL switching, LC tank, series RLC resonance) between capacitors and diodes; verify all three experiments.
+- [x] Add Theory tab (Ohm, KCL, KVL, capacitor and inductor energy) with links from every lab; verify deep links.
+- [x] Slow the initial animation speed in the resistor and inductor labs; measure both in the browser.
