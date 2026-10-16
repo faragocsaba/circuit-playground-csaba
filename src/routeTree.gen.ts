@@ -9,16 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
 import { Route as CapacitorsRouteImport } from './routes/capacitors'
 import { Route as DiodesRouteImport } from './routes/diodes'
+import { Route as TransistorsRouteImport } from './routes/transistors'
 import { Route as ApiCapacitorChatRouteImport } from './routes/api.capacitor-chat'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CapacitorsRoute = CapacitorsRouteImport.update({
   id: '/capacitors',
   path: '/capacitors',
@@ -29,6 +24,11 @@ const DiodesRoute = DiodesRouteImport.update({
   path: '/diodes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TransistorsRoute = TransistorsRouteImport.update({
+  id: '/transistors',
+  path: '/transistors',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiCapacitorChatRoute = ApiCapacitorChatRouteImport.update({
   id: '/api/capacitor-chat',
   path: '/api/capacitor-chat',
@@ -36,48 +36,46 @@ const ApiCapacitorChatRoute = ApiCapacitorChatRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/capacitors': typeof CapacitorsRoute
   '/diodes': typeof DiodesRoute
+  '/transistors': typeof TransistorsRoute
   '/api/capacitor-chat': typeof ApiCapacitorChatRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/capacitors': typeof CapacitorsRoute
   '/diodes': typeof DiodesRoute
+  '/transistors': typeof TransistorsRoute
   '/api/capacitor-chat': typeof ApiCapacitorChatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/capacitors': typeof CapacitorsRoute
   '/diodes': typeof DiodesRoute
+  '/transistors': typeof TransistorsRoute
   '/api/capacitor-chat': typeof ApiCapacitorChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/capacitors' | '/diodes' | '/api/capacitor-chat'
+  fullPaths: '/capacitors' | '/diodes' | '/transistors' | '/api/capacitor-chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/capacitors' | '/diodes' | '/api/capacitor-chat'
-  id: '__root__' | '/' | '/capacitors' | '/diodes' | '/api/capacitor-chat'
+  to: '/capacitors' | '/diodes' | '/transistors' | '/api/capacitor-chat'
+  id:
+    | '__root__'
+    | '/capacitors'
+    | '/diodes'
+    | '/transistors'
+    | '/api/capacitor-chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   CapacitorsRoute: typeof CapacitorsRoute
   DiodesRoute: typeof DiodesRoute
+  TransistorsRoute: typeof TransistorsRoute
   ApiCapacitorChatRoute: typeof ApiCapacitorChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/capacitors': {
       id: '/capacitors'
       path: '/capacitors'
@@ -92,6 +90,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DiodesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/transistors': {
+      id: '/transistors'
+      path: '/transistors'
+      fullPath: '/transistors'
+      preLoaderRoute: typeof TransistorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/capacitor-chat': {
       id: '/api/capacitor-chat'
       path: '/api/capacitor-chat'
@@ -103,9 +108,9 @@ declare module '@tanstack/react-router' {
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   CapacitorsRoute: CapacitorsRoute,
   DiodesRoute: DiodesRoute,
+  TransistorsRoute: TransistorsRoute,
   ApiCapacitorChatRoute: ApiCapacitorChatRoute,
 }
 export const routeTree = rootRouteImport

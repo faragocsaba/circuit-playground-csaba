@@ -35,7 +35,7 @@ function DiodeLab() {
   return <>
     <SiteHeader />
     <main className="shell">
-      <div className="lab-heading flex flex-wrap items-end justify-between gap-4"><div><div className="eyebrow mb-3 flex items-center gap-2 text-muted-foreground"><span className="text-primary">02</span><span>/</span> THE BUILDING BLOCKS</div><h1>Diode lab<span className="text-primary">.</span></h1><p className="mt-3 text-sm text-muted-foreground">Current that only goes one way — mostly.</p></div><div className="segment" aria-label="Diode view"><Button variant="ghost" size="sm" aria-pressed={view === 'lab'} onClick={() => setView('lab')}>Circuit lab</Button><Button variant="ghost" size="sm" aria-pressed={view === 'comparison'} onClick={() => setView('comparison')}>Compare curves</Button></div></div>
+      <div className="lab-heading flex flex-wrap items-end justify-between gap-4"><div><div className="eyebrow mb-3 flex items-center gap-2 text-muted-foreground"><span className="text-primary">03</span><span>/</span> THE BUILDING BLOCKS</div><h1>Diode lab<span className="text-primary">.</span></h1><p className="mt-3 text-sm text-muted-foreground">Current that only goes one way — mostly.</p></div><div className="segment" aria-label="Diode view"><Button variant="ghost" size="sm" aria-pressed={view === 'lab'} onClick={() => setView('lab')}>Circuit lab</Button><Button variant="ghost" size="sm" aria-pressed={view === 'comparison'} onClick={() => setView('comparison')}>Compare curves</Button></div></div>
       {view === 'comparison' ? <DiodeComparison /> : <>
       <div className="lab-grid">
         <section className="workspace" aria-label="Circuit workspace">
@@ -64,7 +64,7 @@ function DiodeLab() {
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Activity size={16} className="text-muted-foreground" /> Current vs. voltage</h2><span className="text-[10px] text-muted-foreground font-mono">● operating point</span></div><div className="figure-panel"><IVPlot kind={kind} model={model} color={color} /><div className="panel-note"><Info size={13} className="shrink-0" /><span>{kind === 'zener' ? 'Flat in reverse until −5.1 V, then a sharp downward knee: the breakdown region.' : 'Almost no current until the knee, then current rises steeply. In reverse it stays near zero.'}</span></div></div></section>
       </div>
       </>}
-      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Simplified educational model · ideal knee voltage · carrier motion not to scale</span><span>circuit.playground / 02</span></footer>
+      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Simplified educational model · ideal knee voltage · carrier motion not to scale</span><span>circuit.playground / 03</span></footer>
     </main>
   </>;
 }
