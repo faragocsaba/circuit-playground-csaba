@@ -4,3 +4,4 @@
 - [x] Rename branding to circuit playground.
 - [x] Add interactive overlaid diode I–V comparison and verify it.
 - [x] Request publishing at circuit-playground-csaba (chosen alternative; original slugs unavailable).
+- [ ] Add capacitor lab with DC charge/discharge and AC, synchronized diagrams and graphs; verify both experiments.
