@@ -10,9 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AddersRouteImport } from './routes/adders'
+import { Route as AntennasRouteImport } from './routes/antennas'
 import { Route as CapacitorsRouteImport } from './routes/capacitors'
+import { Route as CircuitsRouteImport } from './routes/circuits'
 import { Route as DiodesRouteImport } from './routes/diodes'
+import { Route as FlipFlopsRouteImport } from './routes/flip-flops'
 import { Route as InductorsRouteImport } from './routes/inductors'
+import { Route as LenzRouteImport } from './routes/lenz'
+import { Route as LogicGatesRouteImport } from './routes/logic-gates'
 import { Route as ResistorsRouteImport } from './routes/resistors'
 import { Route as TheoryRouteImport } from './routes/theory'
 import { Route as TransistorsRouteImport } from './routes/transistors'
@@ -23,9 +29,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AddersRoute = AddersRouteImport.update({
+  id: '/adders',
+  path: '/adders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AntennasRoute = AntennasRouteImport.update({
+  id: '/antennas',
+  path: '/antennas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CapacitorsRoute = CapacitorsRouteImport.update({
   id: '/capacitors',
   path: '/capacitors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CircuitsRoute = CircuitsRouteImport.update({
+  id: '/circuits',
+  path: '/circuits',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DiodesRoute = DiodesRouteImport.update({
@@ -33,9 +54,24 @@ const DiodesRoute = DiodesRouteImport.update({
   path: '/diodes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FlipFlopsRoute = FlipFlopsRouteImport.update({
+  id: '/flip-flops',
+  path: '/flip-flops',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InductorsRoute = InductorsRouteImport.update({
   id: '/inductors',
   path: '/inductors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LenzRoute = LenzRouteImport.update({
+  id: '/lenz',
+  path: '/lenz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LogicGatesRoute = LogicGatesRouteImport.update({
+  id: '/logic-gates',
+  path: '/logic-gates',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResistorsRoute = ResistorsRouteImport.update({
@@ -61,9 +97,15 @@ const ApiCapacitorChatRoute = ApiCapacitorChatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/adders': typeof AddersRoute
+  '/antennas': typeof AntennasRoute
   '/capacitors': typeof CapacitorsRoute
+  '/circuits': typeof CircuitsRoute
   '/diodes': typeof DiodesRoute
+  '/flip-flops': typeof FlipFlopsRoute
   '/inductors': typeof InductorsRoute
+  '/lenz': typeof LenzRoute
+  '/logic-gates': typeof LogicGatesRoute
   '/resistors': typeof ResistorsRoute
   '/theory': typeof TheoryRoute
   '/transistors': typeof TransistorsRoute
@@ -71,9 +113,15 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/adders': typeof AddersRoute
+  '/antennas': typeof AntennasRoute
   '/capacitors': typeof CapacitorsRoute
+  '/circuits': typeof CircuitsRoute
   '/diodes': typeof DiodesRoute
+  '/flip-flops': typeof FlipFlopsRoute
   '/inductors': typeof InductorsRoute
+  '/lenz': typeof LenzRoute
+  '/logic-gates': typeof LogicGatesRoute
   '/resistors': typeof ResistorsRoute
   '/theory': typeof TheoryRoute
   '/transistors': typeof TransistorsRoute
@@ -82,9 +130,15 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/adders': typeof AddersRoute
+  '/antennas': typeof AntennasRoute
   '/capacitors': typeof CapacitorsRoute
+  '/circuits': typeof CircuitsRoute
   '/diodes': typeof DiodesRoute
+  '/flip-flops': typeof FlipFlopsRoute
   '/inductors': typeof InductorsRoute
+  '/lenz': typeof LenzRoute
+  '/logic-gates': typeof LogicGatesRoute
   '/resistors': typeof ResistorsRoute
   '/theory': typeof TheoryRoute
   '/transistors': typeof TransistorsRoute
@@ -94,9 +148,15 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/adders'
+    | '/antennas'
     | '/capacitors'
+    | '/circuits'
     | '/diodes'
+    | '/flip-flops'
     | '/inductors'
+    | '/lenz'
+    | '/logic-gates'
     | '/resistors'
     | '/theory'
     | '/transistors'
@@ -104,9 +164,15 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/adders'
+    | '/antennas'
     | '/capacitors'
+    | '/circuits'
     | '/diodes'
+    | '/flip-flops'
     | '/inductors'
+    | '/lenz'
+    | '/logic-gates'
     | '/resistors'
     | '/theory'
     | '/transistors'
@@ -114,9 +180,15 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/adders'
+    | '/antennas'
     | '/capacitors'
+    | '/circuits'
     | '/diodes'
+    | '/flip-flops'
     | '/inductors'
+    | '/lenz'
+    | '/logic-gates'
     | '/resistors'
     | '/theory'
     | '/transistors'
@@ -125,9 +197,15 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AddersRoute: typeof AddersRoute
+  AntennasRoute: typeof AntennasRoute
   CapacitorsRoute: typeof CapacitorsRoute
+  CircuitsRoute: typeof CircuitsRoute
   DiodesRoute: typeof DiodesRoute
+  FlipFlopsRoute: typeof FlipFlopsRoute
   InductorsRoute: typeof InductorsRoute
+  LenzRoute: typeof LenzRoute
+  LogicGatesRoute: typeof LogicGatesRoute
   ResistorsRoute: typeof ResistorsRoute
   TheoryRoute: typeof TheoryRoute
   TransistorsRoute: typeof TransistorsRoute
@@ -143,11 +221,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/adders': {
+      id: '/adders'
+      path: '/adders'
+      fullPath: '/adders'
+      preLoaderRoute: typeof AddersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/antennas': {
+      id: '/antennas'
+      path: '/antennas'
+      fullPath: '/antennas'
+      preLoaderRoute: typeof AntennasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/capacitors': {
       id: '/capacitors'
       path: '/capacitors'
       fullPath: '/capacitors'
       preLoaderRoute: typeof CapacitorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/circuits': {
+      id: '/circuits'
+      path: '/circuits'
+      fullPath: '/circuits'
+      preLoaderRoute: typeof CircuitsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/diodes': {
@@ -157,11 +256,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DiodesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/flip-flops': {
+      id: '/flip-flops'
+      path: '/flip-flops'
+      fullPath: '/flip-flops'
+      preLoaderRoute: typeof FlipFlopsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/inductors': {
       id: '/inductors'
       path: '/inductors'
       fullPath: '/inductors'
       preLoaderRoute: typeof InductorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lenz': {
+      id: '/lenz'
+      path: '/lenz'
+      fullPath: '/lenz'
+      preLoaderRoute: typeof LenzRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/logic-gates': {
+      id: '/logic-gates'
+      path: '/logic-gates'
+      fullPath: '/logic-gates'
+      preLoaderRoute: typeof LogicGatesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/resistors': {
@@ -197,9 +317,15 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AddersRoute: AddersRoute,
+  AntennasRoute: AntennasRoute,
   CapacitorsRoute: CapacitorsRoute,
+  CircuitsRoute: CircuitsRoute,
   DiodesRoute: DiodesRoute,
+  FlipFlopsRoute: FlipFlopsRoute,
   InductorsRoute: InductorsRoute,
+  LenzRoute: LenzRoute,
+  LogicGatesRoute: LogicGatesRoute,
   ResistorsRoute: ResistorsRoute,
   TheoryRoute: TheoryRoute,
   TransistorsRoute: TransistorsRoute,
