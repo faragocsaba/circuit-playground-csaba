@@ -84,6 +84,20 @@ h1 { font-weight: 550; font-size: 42px; line-height: 1.15; }
 @media (max-width: 760px) { .brand-word { display: none; } }
 :root { --led-red: oklch(0.63 0.22 27); --led-green: oklch(0.72 0.2 145); --led-blue: oklch(0.6 0.2 260); --flow-collector: oklch(0.62 0.13 230); --flow-base: oklch(0.75 0.16 75); --curve-rectifier: var(--primary); --curve-schottky: oklch(0.58 0.15 245); --curve-led: var(--coral); --curve-zener: oklch(0.58 0.13 80); }
 .current-text { fill: var(--primary) !important; }
+.capacitor-field { stroke: var(--coral); stroke-width: 1.5; fill: none; }
+.capacitor-current-trace { stroke: var(--flow-collector); stroke-width: 2; fill: none; }
+.capacitor-trace { width: 100%; aspect-ratio: 600 / 248; display: block; }
+.capacitor-trace text { font: 10px var(--font-mono); fill: var(--muted-foreground); }
+.capacitor-trace-legend { display: flex; flex-wrap: wrap; gap: 16px; padding: 12px 18px 0; color: var(--muted-foreground); font-size: 11px; }
+.capacitor-trace-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.capacitor-trace-legend i { width: 14px; height: 2px; display: inline-block; }
+.capacitor-source-key { background: var(--coral); }
+.capacitor-voltage-key { background: var(--primary); }
+.capacitor-current-key { background: var(--flow-collector); }
+.capacitor-readouts .eyebrow { font-size: 9px; letter-spacing: 0; }
+.capacitor-readouts .readout-value { font-size: 19px; }
+@media (max-width: 1100px) and (min-width: 761px) { .capacitor-readouts { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 14px; } .capacitor-readouts .readout:nth-child(2n) { border-right: 0; } }
+@media (max-width: 400px) { .topbar .shell > div:first-child { gap: 12px; } .tab { padding: 6px 9px; } }
 .carrier-text { fill: var(--coral) !important; }
 .circuit-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 13px 23px; border-top: 1px solid var(--border); min-height: 54px; }
 .legend-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; background: var(--primary); }
