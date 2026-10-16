@@ -66,14 +66,14 @@ export function GateSymbol({ type, a, b, onToggleA, onToggleB, motion = 0 }: {
 
 // ---------- Flip-flop diagrams ----------
 
-function NandMini({ x, y, inA, inB, out, label }: { x: number; y: number; inA: Bit; inB: Bit; out: Bit; label: string }) {
+function NandMini({ x, y, inA, inB, out, label, labelBelow = false }: { x: number; y: number; inA: Bit; inB: Bit; out: Bit; label: string; labelBelow?: boolean }) {
   return <g>
     <path d={`M ${x} ${y - 16} h 14 a 16 16 0 0 1 0 32 h -14 z`} className="symbol" style={{ strokeWidth: 2 }} />
     <circle cx={x + 34} cy={y} r={3.5} className="symbol" style={{ strokeWidth: 2 }} />
     <Wire d={`M ${x - 26} ${y - 8} H ${x}`} bit={inA} />
     <Wire d={`M ${x - 26} ${y + 8} H ${x}`} bit={inB} />
     <Wire d={`M ${x + 38} ${y} H ${x + 62}`} bit={out} />
-    <text x={x + 15} y={y - 24} textAnchor="middle">{label}</text>
+    <text x={x + 15} y={labelBelow ? y + 32 : y - 24} textAnchor="middle">{label}</text>
   </g>;
 }
 
@@ -89,15 +89,16 @@ export function FlipFlopDiagram({ type, inputs, q, clock, onToggle }: {
     const qBar = srLatchQBar(sBar, rBar, q);
     return <svg viewBox="0 0 400 280" className="circuit-svg" style={{ height: 300 }} role="img" aria-label="SR latch built from two NAND gates">
       <NandMini x={150} y={100} inA={sBar} inB={qBar} out={q} label="NAND 1" />
-      <NandMini x={150} y={190} inA={q} inB={rBar} out={qBar} label="NAND 2" />
-      {/* Q output: continuous wire from NAND 1 to the Q pin, tapped down into NAND 2's upper input */}
+      <NandMini x={150} y={190} inA={q} inB={rBar} out={qBar} label="NAND 2" labelBelow />
+      {/* Classic cross-coupled layout: each output taps off, drops toward the middle,
+          crosses diagonally (X, no junction) and enters the OTHER gate's free input from the left. */}
       <Wire d="M 212 100 H 321" bit={q} />
-      <Wire d="M 240 100 V 182 H 124" bit={q} />
+      <Wire d="M 240 100 V 125 L 105 165 V 182 H 124" bit={q} />
       <circle cx={240} cy={100} r={3} className={`sig-node ${cls(q)}`} />
-      {/* Q̄ output: continuous wire from NAND 2 to the Q̄ pin, tapped up into NAND 1's lower input (crosses Q's tap without connecting) */}
       <Wire d="M 212 190 H 321" bit={qBar} />
-      <Wire d="M 270 190 V 108 H 124" bit={qBar} />
-      <circle cx={270} cy={190} r={3} className={`sig-node ${cls(qBar)}`} />
+      <Wire d="M 240 190 V 165 L 105 125 V 108 H 124" bit={qBar} />
+      <circle cx={240} cy={190} r={3} className={`sig-node ${cls(qBar)}`} />
+
       <Wire d={`M 60 92 H 124`} bit={sBar} />
       <Wire d={`M 60 198 H 124`} bit={rBar} />
       <Pin x={60} y={92} bit={sBar} label="S̄" onToggle={() => onToggle('sBar')} />
