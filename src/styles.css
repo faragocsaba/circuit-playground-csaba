@@ -57,6 +57,9 @@ button { cursor: pointer; }
 .brand-word { font-weight: 650; font-size: 20px; }
 .brand-dot { color: var(--primary); }
 .lab-heading { padding: 36px 0 27px; }
+.family-selector { display: grid; gap: 7px; width: 290px; max-width: 100%; }
+.family-selector .layout-option { min-width: 0; font-size: 12px; }
+.workspace .readouts .eyebrow { font-size: 9px; letter-spacing: 0; }
 h1 { font-weight: 550; font-size: 42px; line-height: 1.15; }
 .eyebrow { font-family: var(--font-mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; }
 .lab-grid { display: grid; grid-template-columns: minmax(0, 1fr) 310px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); overflow: hidden; box-shadow: var(--shadow); }
