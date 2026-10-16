@@ -34,9 +34,9 @@ export function SiteHeader({ children }: { children?: ReactNode }) {
           { to: '/circuits/lenz', label: 'Lenz’s law' },
         ]} />
         <NavGroup label="Digital" items={[
-          { to: '/logic-gates', label: 'Logic gates', soon: true },
-          { to: '/flip-flops', label: 'Flip-flops', soon: true },
-          { to: '/adders', label: 'Adders', soon: true },
+          { to: '/logic-gates', label: 'Logic gates' },
+          { to: '/flip-flops', label: 'Flip-flops' },
+          { to: '/adders', label: 'Adders' },
         ]} />
         <NavGroup label="Radio" items={[
           { to: '/antennas', label: 'Antennas' },
