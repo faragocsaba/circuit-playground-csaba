@@ -215,3 +215,13 @@ h1 { font-family: var(--font-display); font-weight: 400; font-size: 46px; line-h
 .ant-ground { fill: var(--muted-foreground); opacity: .5; }
 .ant-box { fill: var(--card); stroke: var(--border); }
 .ant-box-text { font-size: 9px; letter-spacing: .08em; }
+.phasor-i { stroke: var(--flow-collector); }
+.phasor-r { stroke: var(--primary); }
+.phasor-l { stroke: var(--coral); }
+.phasor-c { stroke: var(--flow-collector); }
+.phasor-s { stroke: var(--amber); }
+.phasor-i-text { fill: var(--flow-collector) !important; }
+.phasor-r-text { fill: var(--primary) !important; }
+.phasor-l-text { fill: var(--coral) !important; }
+.phasor-c-text { fill: var(--flow-collector) !important; }
+.phasor-s-text { fill: var(--amber) !important; font-weight: 600; }

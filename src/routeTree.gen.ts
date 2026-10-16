@@ -22,6 +22,9 @@ import { Route as ResistorsRouteImport } from './routes/resistors'
 import { Route as TheoryRouteImport } from './routes/theory'
 import { Route as TransistorsRouteImport } from './routes/transistors'
 import { Route as ApiCapacitorChatRouteImport } from './routes/api.capacitor-chat'
+import { Route as CircuitsKirchhoffRouteImport } from './routes/circuits_.kirchhoff'
+import { Route as CircuitsLenzRouteImport } from './routes/circuits_.lenz'
+import { Route as CircuitsResonanceRouteImport } from './routes/circuits_.resonance'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -88,6 +91,21 @@ const ApiCapacitorChatRoute = ApiCapacitorChatRouteImport.update({
   path: '/api/capacitor-chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CircuitsKirchhoffRoute = CircuitsKirchhoffRouteImport.update({
+  id: '/circuits_/kirchhoff',
+  path: '/circuits/kirchhoff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CircuitsLenzRoute = CircuitsLenzRouteImport.update({
+  id: '/circuits_/lenz',
+  path: '/circuits/lenz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CircuitsResonanceRoute = CircuitsResonanceRouteImport.update({
+  id: '/circuits_/resonance',
+  path: '/circuits/resonance',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -103,6 +121,9 @@ export interface FileRoutesByFullPath {
   '/theory': typeof TheoryRoute
   '/transistors': typeof TransistorsRoute
   '/api/capacitor-chat': typeof ApiCapacitorChatRoute
+  '/circuits/kirchhoff': typeof CircuitsKirchhoffRoute
+  '/circuits/lenz': typeof CircuitsLenzRoute
+  '/circuits/resonance': typeof CircuitsResonanceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -118,6 +139,9 @@ export interface FileRoutesByTo {
   '/theory': typeof TheoryRoute
   '/transistors': typeof TransistorsRoute
   '/api/capacitor-chat': typeof ApiCapacitorChatRoute
+  '/circuits/kirchhoff': typeof CircuitsKirchhoffRoute
+  '/circuits/lenz': typeof CircuitsLenzRoute
+  '/circuits/resonance': typeof CircuitsResonanceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,6 +158,9 @@ export interface FileRoutesById {
   '/theory': typeof TheoryRoute
   '/transistors': typeof TransistorsRoute
   '/api/capacitor-chat': typeof ApiCapacitorChatRoute
+  '/circuits_/kirchhoff': typeof CircuitsKirchhoffRoute
+  '/circuits_/lenz': typeof CircuitsLenzRoute
+  '/circuits_/resonance': typeof CircuitsResonanceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +178,9 @@ export interface FileRouteTypes {
     | '/theory'
     | '/transistors'
     | '/api/capacitor-chat'
+    | '/circuits/kirchhoff'
+    | '/circuits/lenz'
+    | '/circuits/resonance'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,6 +196,9 @@ export interface FileRouteTypes {
     | '/theory'
     | '/transistors'
     | '/api/capacitor-chat'
+    | '/circuits/kirchhoff'
+    | '/circuits/lenz'
+    | '/circuits/resonance'
   id:
     | '__root__'
     | '/'
@@ -181,6 +214,9 @@ export interface FileRouteTypes {
     | '/theory'
     | '/transistors'
     | '/api/capacitor-chat'
+    | '/circuits_/kirchhoff'
+    | '/circuits_/lenz'
+    | '/circuits_/resonance'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -197,6 +233,9 @@ export interface RootRouteChildren {
   TheoryRoute: typeof TheoryRoute
   TransistorsRoute: typeof TransistorsRoute
   ApiCapacitorChatRoute: typeof ApiCapacitorChatRoute
+  CircuitsKirchhoffRoute: typeof CircuitsKirchhoffRoute
+  CircuitsLenzRoute: typeof CircuitsLenzRoute
+  CircuitsResonanceRoute: typeof CircuitsResonanceRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -292,6 +331,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCapacitorChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/circuits_/kirchhoff': {
+      id: '/circuits_/kirchhoff'
+      path: '/circuits/kirchhoff'
+      fullPath: '/circuits/kirchhoff'
+      preLoaderRoute: typeof CircuitsKirchhoffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/circuits_/lenz': {
+      id: '/circuits_/lenz'
+      path: '/circuits/lenz'
+      fullPath: '/circuits/lenz'
+      preLoaderRoute: typeof CircuitsLenzRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/circuits_/resonance': {
+      id: '/circuits_/resonance'
+      path: '/circuits/resonance'
+      fullPath: '/circuits/resonance'
+      preLoaderRoute: typeof CircuitsResonanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -309,6 +369,9 @@ const rootRouteChildren: RootRouteChildren = {
   TheoryRoute: TheoryRoute,
   TransistorsRoute: TransistorsRoute,
   ApiCapacitorChatRoute: ApiCapacitorChatRoute,
+  CircuitsKirchhoffRoute: CircuitsKirchhoffRoute,
+  CircuitsLenzRoute: CircuitsLenzRoute,
+  CircuitsResonanceRoute: CircuitsResonanceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
