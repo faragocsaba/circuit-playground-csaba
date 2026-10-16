@@ -54,10 +54,10 @@ export function patternRaw(type: AntennaType, lengthM: number, fMHz: number, the
   };
   if (type === 'dipole') return dipole(lengthM);
   if (type === 'monopole') return Math.sin(theta) < -1e-9 ? 0 : dipole(2 * lengthM);
-  if (type === 'loop') return Math.abs(Math.cos(theta)); // loop axis vertical in drawing? we draw loop seen edge-on, axis horizontal → null along axis
+  if (type === 'loop') return Math.abs(Math.sin(theta)); // loop drawn edge-on, axis horizontal → null along its axis, maximum in the loop plane
   // Yagi: three horizontal elements stacked along +x (reflector -0.2λ, driven 0, director +0.2λ), top view
   const d = 0.2 * wavelength(fMHz);
-  const amps = [{ x: -d, a: 0.65, p: Math.PI * 0.6 }, { x: 0, a: 1, p: 0 }, { x: d, a: 0.75, p: -Math.PI * 0.6 }];
+  const amps = [{ x: -d, a: 0.65, p: Math.PI * 0.5 }, { x: 0, a: 1, p: 0 }, { x: d, a: 0.75, p: -Math.PI * 0.5 }];
   let re = 0, im = 0;
   for (const e of amps) { const ph = k * e.x * Math.cos(theta) + e.p; re += e.a * Math.cos(ph); im += e.a * Math.sin(ph); }
   const element = Math.abs(Math.cos(theta)) ** 0.5 * 0.4 + 0.6; // short-dipole element factor seen from above, softened
