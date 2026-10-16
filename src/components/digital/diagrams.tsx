@@ -1,8 +1,8 @@
 // SVG diagrams for the digital labs: gate symbols, flip-flops, adders.
 // Signal colors come from CSS classes .sig-high / .sig-low (see styles.css).
 
-import type { Bit, FFType, GateType, RippleResult } from '@/lib/logic-model';
-import { FF_INFO, GATE_INFO, gate, srLatchQBar } from '@/lib/logic-model';
+import type { Bit, FFType, GateType, PrimitiveGate, RippleResult } from '@/lib/logic-model';
+import { cmosNetworks, FF_INFO, GATE_BUILD, GATE_INFO, gate, mosConducts, srLatchQBar } from '@/lib/logic-model';
 
 const H = 'sig-high';
 const L = 'sig-low';
@@ -216,4 +216,153 @@ export function RippleAdderDiagram({ result, onToggleA, onToggleB }: {
     <Wire d={`M ${x0 - 12} ${yTop + 52} H ${x0}`} bit={result.overflow} />
     <Pin x={x0 - 20} y={yTop + 52} bit={result.overflow} label="C4" />
   </svg>;
+}
+
+// ---------- Gates built from transistors (CMOS) ----------
+
+/** Vertical MOSFET symbol: drain top, source bottom, gate from the left. Channel lights up when conducting. */
+function Mosfet({ x, y, type, label, bit }: { x: number; y: number; type: 'pmos' | 'nmos'; label: string; bit: Bit }) {
+  const on = mosConducts(type, bit);
+  const ch = on ? 'sig-high' : 'sig-low';
+  return <g>
+    {/* gate wire and plate */}
+    <path d={`M ${x - 34} ${y} H ${x - 8}`} className={`sig-wire ${cls(bit)}`} />
+    {type === 'pmos' && <circle cx={x - 5} cy={y} r={3.5} className="symbol" style={{ strokeWidth: 1.8 }} />}
+    <path d={`M ${x} ${y - 11} V ${y + 11}`} className="symbol" style={{ strokeWidth: 2 }} />
+    {/* broken enhancement channel, highlighted when conducting */}
+    <path d={`M ${x + 5} ${y - 11} V ${y - 4} M ${x + 5} ${y - 2} V ${y + 2} M ${x + 5} ${y + 4} V ${y + 11}`} className={`symbol ${ch}`} style={{ strokeWidth: on ? 3 : 2 }} />
+    {/* drain / source stubs */}
+    <path d={`M ${x + 5} ${y - 7} H ${x + 14} V ${y - 20}`} className={`symbol ${ch}`} style={{ strokeWidth: 1.8 }} />
+    <path d={`M ${x + 5} ${y + 7} H ${x + 14} V ${y + 20}`} className={`symbol ${ch}`} style={{ strokeWidth: 1.8 }} />
+    <text x={x - 40} y={y + 4} textAnchor="end" className="terminal-label" style={{ fontSize: 11 }}>{label}</text>
+    <text x={x + 26} y={y - 24} className="terminal-label" style={{ fontSize: 9 }}>{type === 'pmos' ? 'PMOS' : 'NMOS'}</text>
+    <text x={x + 26} y={y + 30} className="terminal-label" style={{ fontSize: 9, fill: on ? 'var(--primary)' : 'var(--muted-foreground)' }}>{on ? 'ON' : 'off'}</text>
+  </g>;
+}
+
+/** Transistor-level schematic of the primitive CMOS gates: NOT, NAND, NOR. */
+export function CmosDiagram({ type, a, b }: { type: PrimitiveGate; a: Bit; b: Bit }) {
+  const { pullUp, pullDown } = cmosNetworks(type, a, b);
+  const out = gate(type, a, b);
+  const vddY = 34, gndY = 266, outY = 150, outX = 214;
+  return <svg viewBox="0 0 400 300" className="circuit-svg" style={{ height: 320 }} role="img" aria-label={`${GATE_INFO[type].name} gate built from transistors`}>
+    {/* supply rails */}
+    <path d={`M 120 ${vddY} H 280`} className="sig-wire sig-high" />
+    <text x={290} y={vddY + 4} className="terminal-label" style={{ fontSize: 11 }}>VDD = 1</text>
+    <path d={`M 120 ${gndY} H 280`} className="sig-wire sig-low" />
+    <path d={`M 190 ${gndY + 6} H 250 M 196 ${gndY + 12} H 244 M 202 ${gndY + 18} H 238`} className="symbol" style={{ strokeWidth: 1.6 }} />
+    <text x={290} y={gndY + 4} className="terminal-label" style={{ fontSize: 11 }}>GND = 0</text>
+    {/* output node */}
+    <Wire d={`M ${outX} ${outY} H 330`} bit={out} />
+    <Pin x={340} y={outY} bit={out} label="OUT" />
+    {type === 'not' && <>
+      <Wire d={`M ${outX} ${vddY} V 70`} bit={1} />
+      <Mosfet x={186} y={90} type="pmos" label="A" bit={a} />
+      <Wire d={`M 200 110 V ${outY}`} bit={out} />
+      <Mosfet x={186} y={210} type="nmos" label="A" bit={a} />
+      <Wire d={`M 200 190 V ${outY} M 200 230 V ${gndY}`} bit={out} />
+    </>}
+    {type === 'nand' && <>
+      {/* PMOS pair in parallel */}
+      <Wire d={`M 160 ${vddY} V 70`} bit={1} />
+      <Wire d={`M 240 ${vddY} V 70`} bit={1} />
+      <Mosfet x={146} y={90} type="pmos" label="A" bit={a} />
+      <Mosfet x={226} y={90} type="pmos" label="B" bit={b} />
+      <Wire d={`M 160 110 V ${outY} H ${outX}`} bit={out} />
+      <Wire d={`M 240 110 V ${outY}`} bit={out} />
+      {/* NMOS pair in series */}
+      <Mosfet x={186} y={180} type="nmos" label="A" bit={a} />
+      <Mosfet x={186} y={236} type="nmos" label="B" bit={b} />
+      <Wire d={`M 200 ${outY} V 160`} bit={out} />
+      <Wire d={`M 200 200 V 216`} bit={pullDown ? 0 : out} />
+      <Wire d={`M 200 256 V ${gndY}`} bit={0} />
+    </>}
+    {type === 'nor' && <>
+      {/* PMOS pair in series */}
+      <Mosfet x={186} y={64} type="pmos" label="A" bit={a} />
+      <Mosfet x={186} y={120} type="pmos" label="B" bit={b} />
+      <Wire d={`M 200 ${vddY} V 44`} bit={1} />
+      <Wire d={`M 200 84 V 100`} bit={pullUp ? 1 : out} />
+      <Wire d={`M 200 140 V ${outY}`} bit={out} />
+      {/* NMOS pair in parallel */}
+      <Mosfet x={146} y={210} type="nmos" label="A" bit={a} />
+      <Mosfet x={226} y={210} type="nmos" label="B" bit={b} />
+      <Wire d={`M ${outX} ${outY} V 190 H 160 M 240 190 V 190 H ${outX}`} bit={out} />
+      <Wire d={`M 160 230 V ${gndY}`} bit={0} />
+      <Wire d={`M 240 230 V ${gndY}`} bit={0} />
+    </>}
+    <text x={30} y={30} className="terminal-label" style={{ fontSize: 11 }}>{pullUp ? 'Pulled UP to 1' : pullDown ? 'Pulled DOWN to 0' : ''}</text>
+  </svg>;
+}
+
+/** Small labeled gate box with live colored wires, for composition diagrams. */
+function GateBox({ x, y, name, inA, inB, out }: { x: number; y: number; name: string; inA: Bit; inB?: Bit | undefined; out: Bit }) {
+  const w = 64, h = 40;
+  return <g>
+    <Wire d={`M ${x - 30} ${y + 12} H ${x}`} bit={inA} />
+    {inB !== undefined && <Wire d={`M ${x - 30} ${y + 28} H ${x}`} bit={inB} />}
+    <rect x={x} y={y} width={w} height={h} rx={6} className="symbol" style={{ fill: 'var(--card)', strokeWidth: 1.8 }} />
+    <text x={x + w / 2} y={y + h / 2 + 4} textAnchor="middle" style={{ fontSize: 11 }}>{name}</text>
+    <Wire d={`M ${x + w} ${y + h / 2} H ${x + w + 30}`} bit={out} />
+  </g>;
+}
+
+/** How the derived gates are composed from NAND / NOR / NOT. */
+export function CompositeBuild({ type, a, b }: { type: GateType; a: Bit; b: Bit }) {
+  if (type === 'and' || type === 'or') {
+    const first = type === 'and' ? 'nand' : 'nor';
+    const mid = gate(first, a, b);
+    const out = gate('not', mid);
+    return <svg viewBox="0 0 400 200" className="circuit-svg" style={{ height: 220 }} role="img" aria-label={`${GATE_INFO[type].name} built from ${GATE_INFO[first].name} plus NOT`}>
+      <Pin x={30} y={72} bit={a} label="A" />
+      <Pin x={30} y={108} bit={b} label="B" />
+      <Wire d="M 40 72 H 90" bit={a} />
+      <Wire d="M 40 108 H 90" bit={b} />
+      <GateBox x={120} y={60} name={GATE_INFO[first].name} inA={a} inB={b} out={mid} />
+      <text x={214} y={86} className="terminal-label" style={{ fontSize: 10 }}>{mid}</text>
+      <GateBox x={244} y={60} name="NOT" inA={mid} out={out} />
+      <Pin x={368} y={80} bit={out} label="OUT" />
+      <text x={200} y={160} textAnchor="middle" className="terminal-label" style={{ fontSize: 11 }}>{GATE_BUILD[type].transistors} transistors: {GATE_INFO[first].name} (4) + NOT (2)</text>
+    </svg>;
+  }
+  // XOR / XNOR from four NANDs (+ NOT)
+  const n1 = gate('nand', a, b);
+  const n2 = gate('nand', a, n1);
+  const n3 = gate('nand', b, n1);
+  const x = gate('nand', n2, n3);
+  const out = type === 'xnor' ? gate('not', x) : x;
+  const wide = type === 'xnor';
+  return <svg viewBox={`0 0 ${wide ? 540 : 440} 210`} className="circuit-svg" style={{ height: 230 }} role="img" aria-label={`${GATE_INFO[type].name} built from NAND gates`}>
+    <Pin x={24} y={92} bit={a} label="A" />
+    <Pin x={24} y={118} bit={b} label="B" />
+    <Wire d="M 34 92 H 60" bit={a} />
+    <Wire d="M 34 118 H 60" bit={b} />
+    <GateBox x={90} y={80} name="NAND" inA={a} inB={b} out={n1} />
+    {/* A and B branch to the middle gates */}
+    <Wire d="M 48 92 V 42 H 200" bit={a} />
+    <Wire d="M 48 118 V 168 H 200" bit={b} />
+    <circle cx={48} cy={92} r={3} className={`sig-node ${cls(a)}`} />
+    <circle cx={48} cy={118} r={3} className={`sig-node ${cls(b)}`} />
+    {/* n1 branches to both middle gates */}
+    <Wire d="M 184 100 H 190 V 58 H 200" bit={n1} />
+    <Wire d="M 190 100 V 152 H 200" bit={n1} />
+    <circle cx={190} cy={100} r={3} className={`sig-node ${cls(n1)}`} />
+    <GateBox x={230} y={30} name="NAND" inA={a} inB={n1} out={n2} />
+    <GateBox x={230} y={140} name="NAND" inA={n1} inB={b} out={n3} />
+    <Wire d="M 324 50 H 350 V 92 H 380" bit={n2} />
+    <Wire d="M 324 160 H 350 V 108 H 380" bit={n3} />
+    <GateBox x={410} y={80} name="NAND" inA={n2} inB={n3} out={x} />
+    {wide ? <>
+      <Wire d="M 504 100 H 520" bit={x} />
+      <GateBox x={550 - 60} y={80} name="NOT" inA={x} out={out} />
+    </> : null}
+    <Pin x={wide ? 530 : 430} y={wide ? 100 : 100} bit={out} label="OUT" />
+  </svg>;
+}
+
+/** Transistor-level or composition view of how a gate is built. */
+export function GateImplementation({ type, a, b }: { type: GateType; a: Bit; b: Bit }) {
+  const build = GATE_BUILD[type];
+  if (build.kind === 'cmos') return <CmosDiagram type={type as PrimitiveGate} a={a} b={b} />;
+  return <CompositeBuild type={type} a={a} b={b} />;
 }
