@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ffNext, fullAdder, gate, halfAdder, rippleAdd, srLatch, toBits, truthTable } from './logic-model';
+import { cmosNetworks, ffNext, fullAdder, gate, GATE_BUILD, halfAdder, mosConducts, rippleAdd, srLatch, toBits, truthTable, type PrimitiveGate } from './logic-model';
 
 describe('gates', () => {
   it('AND is 1 only when both inputs are 1', () => {

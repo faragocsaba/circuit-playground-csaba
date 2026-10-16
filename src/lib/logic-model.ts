@@ -38,6 +38,47 @@ export function truthTable(type: GateType): TruthRow[] {
   return rows;
 }
 
+// ---------- How gates are built from transistors (CMOS) ----------
+
+export type MosType = 'pmos' | 'nmos';
+
+/** A PMOS conducts when its gate is 0; an NMOS when its gate is 1. */
+export function mosConducts(type: MosType, gateInput: Bit): boolean {
+  return type === 'pmos' ? gateInput === 0 : gateInput === 1;
+}
+
+export type PrimitiveGate = 'not' | 'nand' | 'nor';
+
+/**
+ * The two transistor networks of a primitive CMOS gate.
+ * pullUp: PMOS network to the supply; pullDown: NMOS network to ground.
+ * Exactly one conducts in a healthy gate, and it sets the output.
+ */
+export function cmosNetworks(type: PrimitiveGate, a: Bit, b: Bit = 0): { pullUp: boolean; pullDown: boolean } {
+  switch (type) {
+    case 'not': return { pullUp: a === 0, pullDown: a === 1 };
+    case 'nand': return { pullUp: a === 0 || b === 0, pullDown: a === 1 && b === 1 };
+    case 'nor': return { pullUp: a === 0 && b === 0, pullDown: a === 1 || b === 1 };
+  }
+}
+
+export interface GateBuild {
+  kind: 'cmos' | 'composite';
+  transistors: number;
+  stages: GateType[];
+  note: string;
+}
+
+export const GATE_BUILD: Record<GateType, GateBuild> = {
+  not: { kind: 'cmos', transistors: 2, stages: ['not'], note: 'One PMOS pulls the output up to the supply when the input is 0; one NMOS pulls it down to ground when the input is 1. Exactly one conducts at a time.' },
+  nand: { kind: 'cmos', transistors: 4, stages: ['nand'], note: 'Two PMOS in parallel: either one pulls the output up when its input is 0. Two NMOS in series: both must conduct — both inputs 1 — to pull the output down.' },
+  nor: { kind: 'cmos', transistors: 4, stages: ['nor'], note: 'Two PMOS in series pull up only when both inputs are 0; two NMOS in parallel pull down if either input is 1. The mirror image of NAND.' },
+  and: { kind: 'composite', transistors: 6, stages: ['nand', 'not'], note: 'Built as a NAND gate followed by an inverter: 4 + 2 = 6 transistors. NAND is the natural CMOS gate, so AND costs extra.' },
+  or: { kind: 'composite', transistors: 6, stages: ['nor', 'not'], note: 'Built as a NOR gate followed by an inverter: 4 + 2 = 6 transistors.' },
+  xor: { kind: 'composite', transistors: 16, stages: ['nand', 'nand', 'nand', 'nand'], note: 'Built from four NAND gates — 16 transistors. (Dedicated CMOS XOR circuits manage with about 12.)' },
+  xnor: { kind: 'composite', transistors: 18, stages: ['nand', 'nand', 'nand', 'nand', 'not'], note: 'The four-NAND XOR circuit followed by an inverter: 18 transistors, just to test whether two bits are equal.' },
+};
+
 // ---------- Flip-flops ----------
 
 export type FFType = 'sr' | 'd' | 'jk' | 't';
