@@ -8,7 +8,7 @@ function NavGroup({ label, items }: { label: string; items: NavItem[] }) {
   return <div className="nav-group">
     <button type="button" className="tab flex items-center gap-1">{label}<ChevronDown size={13} /></button>
     <div className="nav-menu">
-      {items.map(i => <Link key={i.to} to={i.to} className="nav-item" activeProps={{ 'aria-current': 'page' }}>
+      {items.map(i => <Link key={i.to} to={i.to} className="nav-item" activeOptions={{ exact: true }} activeProps={{ 'aria-current': 'page' }}>
         {i.label}{i.soon && <span className="nav-soon">Soon</span>}
       </Link>)}
     </div>
