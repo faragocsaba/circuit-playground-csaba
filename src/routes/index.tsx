@@ -25,11 +25,11 @@ function Landing() {
   return <>
     <SiteHeader />
     <main className="shell">
-      <div className="lab-heading max-w-2xl"><div className="eyebrow mb-3 text-muted-foreground">INTERACTIVE ELECTRONICS</div><h1>See how circuits think<span className="text-primary">.</span></h1><p className="mt-4 text-muted-foreground">Five hands-on labs. Change the values, watch the charge move, and read what happens — from the simplest resistor to the transistor.</p></div>
+      <div className="lab-heading max-w-2xl"><div className="eyebrow mb-3" style={{ color: 'var(--amber)' }}>INTERACTIVE ELECTRONICS</div><h1>See how circuits think<span className="text-primary">.</span></h1><p className="mt-4 text-base text-muted-foreground">Five hands-on labs. Change the values, watch the charge move, and read what happens — from the simplest resistor to the transistor.</p></div>
       <div className="grid gap-4 pb-12 sm:grid-cols-2">
-        {labs.map(l => <Link key={l.to} to={l.to} className="group rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary" style={{ boxShadow: 'var(--shadow)' }}>
-          <div className="flex items-start justify-between"><span className="font-mono text-xs text-primary">{l.n}</span><svg viewBox="0 0 68 60" width="76" height="66" className="symbol text-foreground" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round">{l.icon}</svg></div>
-          <h2 className="mt-2 text-2xl font-semibold">{l.name}</h2><p className="mt-1 text-sm text-primary">{l.tag}</p><p className="mt-3 text-sm text-muted-foreground">{l.text}</p>
+        {labs.map(l => <Link key={l.to} to={l.to} className="lab-card group">
+          <div className="flex items-start justify-between"><span className="lab-card-num">{l.n}</span><span className="icon-chip"><svg viewBox="0 0 68 60" width="32" height="28" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">{l.icon}</svg></span></div>
+          <h2 className="mt-4 text-2xl font-semibold">{l.name}</h2><p className="mt-1 text-sm font-medium text-primary">{l.tag}</p><p className="mt-3 text-sm text-muted-foreground">{l.text}</p>
           <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium">Open lab <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" /></span>
         </Link>)}
       </div>
