@@ -85,7 +85,7 @@ export function FlipFlopDiagram({ type, inputs, q, clock, onToggle }: {
   onToggle: (name: string) => void;
 }) {
   if (type === 'sr') {
-    const sBar = inputs.sBar ?? 1, rBar = inputs.rBar ?? 1;
+    const sBar = inputs['sBar'] ?? 1, rBar = inputs['rBar'] ?? 1;
     const qBar = srLatchQBar(sBar, rBar, q);
     return <svg viewBox="0 0 400 280" className="circuit-svg" style={{ height: 300 }} role="img" aria-label="SR latch built from two NAND gates">
       <NandMini x={150} y={100} inA={sBar} inB={qBar} out={q} label="NAND 1" />
