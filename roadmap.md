@@ -12,6 +12,16 @@
 - [x] Add inductor lab (RL switching, LC tank, series RLC resonance) between capacitors and diodes; verify all three experiments.
 - [x] Add Theory tab (Ohm, KCL, KVL, capacitor and inductor energy) with links from every lab; verify deep links.
 - [x] Slow the initial animation speed in the resistor and inductor labs; measure both in the browser.
+- [x] Growth plan Step 0: section-based landing page and dropdown menu.
+- [x] Placeholder pages for /circuits, /lenz, /logic-gates, /flip-flops, /adders, /antennas; landing shows the full end structure.
+- [ ] Step 1: Circuits lab — switchable R/L/C series AC, impedance, phasor diagram.
+- [ ] Step 2: move Kirchhoff panels + RLC resonance into Circuits; Theory gains impedance topic.
+- [ ] Step 3: Lenz's law lab.
+- [ ] Step 4: Logic gates lab.
+- [ ] Step 5: Flip-flops lab.
+- [ ] Step 6: Adders lab.
+- [ ] Step 7: Antennas lab.
+- [ ] Step 8: Theory topics + final polish.
 - [x] Update README with project details.
 - [x] Re-theme: warm light "rich paper" look with serif display headings.
 
