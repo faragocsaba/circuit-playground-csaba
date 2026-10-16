@@ -6,7 +6,7 @@ import { SiteHeader } from '@/components/site-header';
 import { Circuit, Cutaway, ResponseTrace } from '@/components/transistor/diagrams';
 import { configurations, formatCurrent, transistorModel, type Configuration, type TransistorType } from '@/lib/transistor-model';
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/transistors')({
   head: () => ({ meta: [
     { title: 'Transistor Lab — Circuit Playground' },
     { name: 'description', content: 'Explore NPN and PNP transistors in six circuit arrangements with interactive currents and animated electron and hole flow.' },
