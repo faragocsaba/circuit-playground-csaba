@@ -77,7 +77,7 @@ function FlipFlopsLab() {
           </div></div>
           <div className="control-divider" />
           <div className="control-group"><div className="control-label">Inputs</div><div className="layout-options">
-            {inputControls.map(([n, lab, al]) => <BitToggle key={n} label={lab} bit={inputs[n] ?? 0} activeLow={al} onChange={bit => apply(n, bit)} />)}
+            {inputControls.map(([n, lab, al]) => <BitToggle key={n} label={lab} bit={inputs[n] ?? 0} activeLow={al ?? false} onChange={bit => apply(n, bit)} />)}
             {type !== 'sr' && <BitToggle label="Clock (click for edge)" bit={clock} onChange={bit => apply('clock', bit)} />}
           </div></div>
           <div className="control-divider" /><div className="info-note flex gap-2"><Info size={14} className="mt-0.5 shrink-0 text-primary" /><span>{FF_INFO[type].blurb}</span></div>
@@ -85,7 +85,7 @@ function FlipFlopsLab() {
       </div>
       <div className="lower-grid">
         <section><div className="section-top"><h2>Characteristic table</h2><span className="text-[10px] text-muted-foreground font-mono">NEXT STATE Q⁺</span></div><div className="figure-panel"><div className="p-5">
-          <table className="truth-table"><thead><tr>{rows[0].inputs.map(([n]) => <th key={n}>{n}</th>)}<th>Q⁺</th><th>ACTION</th></tr></thead><tbody>
+          <table className="truth-table"><thead><tr>{(rows[0]?.inputs ?? []).map(([n]) => <th key={n}>{n}</th>)}<th>Q⁺</th><th>ACTION</th></tr></thead><tbody>
             {rows.map((r, i) => <tr key={i} className={r.note === 'Forbidden' ? 'forbidden-row' : undefined}>{r.inputs.map(([n, v]) => <td key={n}>{v}</td>)}<td>{r.qNext}</td><td>{r.note}</td></tr>)}
           </tbody></table>
         </div><div className="panel-note"><Info size={13} className="shrink-0" /><span>{type === 'sr' ? 'Try it: pull S̄ low, then back high — Q stays 1. The latch remembers. Then pull both low to see the forbidden state.' : 'Change the data inputs and nothing happens until the clock rises. That edge-triggering is what keeps big digital systems orderly.'}</span></div></div></section>
