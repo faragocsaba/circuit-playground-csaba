@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { ArrowDownUp, ArrowLeftRight, ArrowUpRight, Check, ChevronDown, CircleHelp, Cpu, Info, Pause, Play, RotateCcw, Waves } from 'lucide-react';
+import { ArrowDownUp, ArrowLeftRight, ArrowUpRight, Check, ChevronDown, CircleHelp, Cpu, Info, Pause, Play, RotateCcw, Waves, Wrench } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
 import { Circuit, Cutaway, ResponseTrace } from '@/components/transistor/diagrams';
 import { FetLab } from '@/components/transistor/fet-lab';
+import { TransistorBuilder } from '@/components/transistor/builder';
+import { TEMPLATE_ORDER, type TemplateId } from '@/lib/transistor-builder';
 import { configurations, formatCurrent, transistorFlow, transistorModel, type Configuration, type TransistorType } from '@/lib/transistor-model';
 
 export const Route = createFileRoute('/transistors')({
@@ -15,11 +17,25 @@ export const Route = createFileRoute('/transistors')({
     { property: 'og:description', content: 'Compare BJT, MOSFET and JFET operation with adjustable current, gate voltage and animated circuits.' },
     { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' },
   ] }),
+  validateSearch: (s: Record<string, unknown>): TransistorSearch => {
+    const out: TransistorSearch = {};
+    if (s['view'] === 'bjt' || s['view'] === 'fet' || s['view'] === 'builder') out.view = s['view'];
+    if (typeof s['template'] === 'string' && (TEMPLATE_ORDER as string[]).includes(s['template'])) out.template = s['template'] as TemplateId;
+    const a = Number(s['a']), b = Number(s['b']);
+    if (a === 0 || a === 1) out.a = a;
+    if (b === 0 || b === 1) out.b = b;
+    return out;
+  },
   component: TransistorLab,
 });
 
+type TransistorSearch = { view?: 'bjt' | 'fet' | 'builder'; template?: TemplateId; a?: number; b?: number };
+
 function TransistorLab() {
-  const [family, setFamily] = useState<'bjt' | 'fet'>('bjt');
+  const search = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const family = search.view ?? 'bjt';
+  const setFamily = (view: 'bjt' | 'fet' | 'builder') => { void navigate({ search: view === 'bjt' ? {} : { view }, replace: true }); };
   const [type, setType] = useState<TransistorType>('npn');
   const [config, setConfig] = useState<Configuration>('emitter');
   const [drive, setDrive] = useState(40);
@@ -44,9 +60,9 @@ function TransistorLab() {
   return <>
     <SiteHeader><Button variant="ghost" size="icon" title="About this model" aria-label="About this model" onClick={() => setHelp(!help)}><CircleHelp size={19} /></Button></SiteHeader>
     <main className="shell">
-      <div className="lab-heading flex flex-wrap items-end justify-between gap-4"><div><div className="eyebrow mb-3 flex items-center gap-2 text-muted-foreground"><span className="text-primary">05</span><span>/</span> THE BUILDING BLOCKS</div><h1>Transistor lab<span className="text-primary">.</span></h1><p className="mt-3 text-sm text-muted-foreground">{family === 'bjt' ? 'Small current. Big possibilities.' : 'An electric field. A controlled channel.'}</p></div><div className="family-selector" role="group" aria-label="Transistor family"><Button variant="outline" className="layout-option" aria-pressed={family === 'bjt'} onClick={() => setFamily('bjt')}><Cpu size={14} /><span>Bipolar junction transistor</span><span className="ml-auto font-mono text-[10px]">BJT</span></Button><Button variant="outline" className="layout-option" aria-pressed={family === 'fet'} onClick={() => setFamily('fet')}><Waves size={14} /><span>Field-effect transistor</span><span className="ml-auto font-mono text-[10px]">FET</span></Button></div></div>
-      {help && <div className="info-note mb-5" role="note"><strong className="text-foreground">A simplified transistor model.</strong> {family === 'bjt' ? 'Fixed gain β = 100, a 0.7 V junction drop, and a 1 kΩ load. NPN electrons move against conventional current; PNP holes move with it. The waveforms show a small illustrative input variation around the selected drive.' : 'MOSFET and JFET both control drain current using gate–source voltage. This enhancement MOSFET starts off (threshold magnitude 2 V); the JFET starts on (cutoff magnitude 4 V). MOSFETs have insulated gates; JFETs use reverse-biased junction gates. Depletion MOSFETs also exist. Square-law channels and a 1 kΩ load are illustrative; real devices differ.'} The common terminal is the input/output reference. Carrier count and speed are illustrative, not to scale.</div>}
-      {family === 'fet' ? <FetLab /> : <><div className="lab-grid">
+      <div className="lab-heading flex flex-wrap items-end justify-between gap-4"><div><div className="eyebrow mb-3 flex items-center gap-2 text-muted-foreground"><span className="text-primary">05</span><span>/</span> THE BUILDING BLOCKS</div><h1>Transistor lab<span className="text-primary">.</span></h1><p className="mt-3 text-sm text-muted-foreground">{family === 'builder' ? 'Real parts. Real equations. Your circuit.' : family === 'bjt' ? 'Small current. Big possibilities.' : 'An electric field. A controlled channel.'}</p></div><div className="family-selector" role="group" aria-label="Transistor family"><Button variant="outline" className="layout-option" aria-pressed={family === 'bjt'} onClick={() => setFamily('bjt')}><Cpu size={14} /><span>Bipolar junction transistor</span><span className="ml-auto font-mono text-[10px]">BJT</span></Button><Button variant="outline" className="layout-option" aria-pressed={family === 'fet'} onClick={() => setFamily('fet')}><Waves size={14} /><span>Field-effect transistor</span><span className="ml-auto font-mono text-[10px]">FET</span></Button><Button variant="outline" className="layout-option" aria-pressed={family === 'builder'} onClick={() => setFamily('builder')}><Wrench size={14} /><span>Circuit builder · real parts</span><span className="ml-auto font-mono text-[10px]">BUILD</span></Button></div></div>
+      {help && <div className="info-note mb-5" role="note"><strong className="text-foreground">A simplified transistor model.</strong> {family === 'builder' ? 'The builder solves each circuit with real device equations (Ebers–Moll with Early effect for BJTs, square law with channel-length modulation for MOSFETs) using rounded datasheet values for each part.' : family === 'bjt' ? 'Fixed gain β = 100, a 0.7 V junction drop, and a 1 kΩ load. NPN electrons move against conventional current; PNP holes move with it. The waveforms show a small illustrative input variation around the selected drive.' : 'MOSFET and JFET both control drain current using gate–source voltage. This enhancement MOSFET starts off (threshold magnitude 2 V); the JFET starts on (cutoff magnitude 4 V). MOSFETs have insulated gates; JFETs use reverse-biased junction gates. Depletion MOSFETs also exist. Square-law channels and a 1 kΩ load are illustrative; real devices differ.'} The common terminal is the input/output reference. Carrier count and speed are illustrative, not to scale.</div>}
+      {family === 'builder' ? <><TransistorBuilder key={`${search.template ?? ''}-${search.a ?? ''}-${search.b ?? ''}`} initialTemplate={search.template ?? 'bjt-switch'} initialA={search.a} initialB={search.b} /><footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ebers–Moll BJT and square-law MOSFET models · datasheet-typical part values</span><span><Link to="/logic-gates" className="mr-3 text-primary hover:underline">Logic gates →</Link>circuit.playground / 05</span></footer></> : family === 'fet' ? <FetLab /> : <><div className="lab-grid">
         <section className="workspace" aria-label="Circuit workspace">
           <div className="workspace-head"><div className="flex items-center gap-2.5"><span className="eyebrow text-muted-foreground">LIVE CIRCUIT</span><span className="text-xs text-muted-foreground">/</span><span className="text-xs font-medium">{selected.name}</span></div><span className="live-status"><span className="legend-dot" />{playing ? 'Running' : 'Paused'}</span></div>
           <div className="circuit-space"><div className="absolute left-5 top-4 status-badge"><span className="legend-dot" />{model.state === 'Active' ? 'ACTIVE REGION' : model.state.toUpperCase()}</div><Circuit type={type} config={config} model={model} supply={supply} speed={speed} playing={playing} /></div>
