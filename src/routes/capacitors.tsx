@@ -4,6 +4,8 @@ import { Activity, ChevronDown, Info, Pause, Play, RotateCcw, SkipForward, Zap }
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
 import { CapacitorCircuit, CapacitorPlates, CapacitorTrace } from '@/components/capacitor/diagrams';
+import { CapacitorHelper } from '@/components/capacitor/helper';
+import { snapshotCapacitor } from '@/lib/capacitor-context';
 import { acResponse, advanceCapacitor, capacitorSample, defaultCapacitorSettings, timeConstant, type CapacitorSettings } from '@/lib/capacitor-model';
 
 export const Route = createFileRoute('/capacitors')({
@@ -88,6 +90,7 @@ function CapacitorLab() {
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Zap size={16} className="text-muted-foreground" /> Inside the capacitor</h2><span className="text-[10px] text-muted-foreground font-mono">OPPOSITE CHARGES</span></div><div className="figure-panel"><CapacitorPlates sample={sample} /><div className="panel-note"><Info size={13} className="shrink-0" /><span>{note}</span></div></div></section>
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Activity size={16} className="text-muted-foreground" /> Voltage &amp; current</h2><span className="text-[10px] text-muted-foreground font-mono">LAST 12 s</span></div><div className="figure-panel"><div className="capacitor-trace-legend"><span><i className="capacitor-source-key" />Source</span><span><i className="capacitor-voltage-key" />Capacitor</span><span><i className="capacitor-current-key" />Current</span></div><CapacitorTrace history={history} voltageScale={Math.max(1, Math.abs(settings.voltage), ...history.map(s => Math.abs(s.voltage)), ...history.map(s => Math.abs(s.source)))} /><div className="panel-note"><Info size={13} className="shrink-0" /><span>τ = R × C = {timeConstant(settings).toFixed(2)} s{settings.mode === 'ac' ? ` · Steady-state capacitor peak ${response.amplitude.toFixed(2)} V · voltage lags source ${response.lag.toFixed(1)}°` : ' · Capacitor voltage changes smoothly; current responds immediately.'}</span></div></div></section>
       </div>
+      <CapacitorHelper setup={snapshotCapacitor(settings, sample, history, playing)} />
       <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal RC model · no leakage or ESR · charge symbols and motion not to scale</span><span>circuit.playground / 03</span></footer>
     </main>
   </>;

@@ -12,7 +12,7 @@ export function createResponsesCall(
   config: { baseURL: string; apiKey: string; model: string },
   messages: ModelMessage[],
   instructions?: string,
-  gatewayFetch?: typeof fetch,
+  gatewayFetch?: (input: RequestInfo | URL, init: RequestInit | undefined, fetcher: typeof fetch) => Promise<Response>,
 ) {
   const runIdFetch = createLovableAiGatewayRunIdFetch(getLovableAiGatewayRunId(request));
   const provider = createOpenAI({
