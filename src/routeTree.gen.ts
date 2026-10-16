@@ -17,7 +17,6 @@ import { Route as CircuitsRouteImport } from './routes/circuits'
 import { Route as DiodesRouteImport } from './routes/diodes'
 import { Route as FlipFlopsRouteImport } from './routes/flip-flops'
 import { Route as InductorsRouteImport } from './routes/inductors'
-import { Route as LenzRouteImport } from './routes/lenz'
 import { Route as LogicGatesRouteImport } from './routes/logic-gates'
 import { Route as ResistorsRouteImport } from './routes/resistors'
 import { Route as TheoryRouteImport } from './routes/theory'
@@ -64,11 +63,6 @@ const InductorsRoute = InductorsRouteImport.update({
   path: '/inductors',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LenzRoute = LenzRouteImport.update({
-  id: '/lenz',
-  path: '/lenz',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LogicGatesRoute = LogicGatesRouteImport.update({
   id: '/logic-gates',
   path: '/logic-gates',
@@ -104,7 +98,6 @@ export interface FileRoutesByFullPath {
   '/diodes': typeof DiodesRoute
   '/flip-flops': typeof FlipFlopsRoute
   '/inductors': typeof InductorsRoute
-  '/lenz': typeof LenzRoute
   '/logic-gates': typeof LogicGatesRoute
   '/resistors': typeof ResistorsRoute
   '/theory': typeof TheoryRoute
@@ -120,7 +113,6 @@ export interface FileRoutesByTo {
   '/diodes': typeof DiodesRoute
   '/flip-flops': typeof FlipFlopsRoute
   '/inductors': typeof InductorsRoute
-  '/lenz': typeof LenzRoute
   '/logic-gates': typeof LogicGatesRoute
   '/resistors': typeof ResistorsRoute
   '/theory': typeof TheoryRoute
@@ -137,7 +129,6 @@ export interface FileRoutesById {
   '/diodes': typeof DiodesRoute
   '/flip-flops': typeof FlipFlopsRoute
   '/inductors': typeof InductorsRoute
-  '/lenz': typeof LenzRoute
   '/logic-gates': typeof LogicGatesRoute
   '/resistors': typeof ResistorsRoute
   '/theory': typeof TheoryRoute
@@ -155,7 +146,6 @@ export interface FileRouteTypes {
     | '/diodes'
     | '/flip-flops'
     | '/inductors'
-    | '/lenz'
     | '/logic-gates'
     | '/resistors'
     | '/theory'
@@ -171,7 +161,6 @@ export interface FileRouteTypes {
     | '/diodes'
     | '/flip-flops'
     | '/inductors'
-    | '/lenz'
     | '/logic-gates'
     | '/resistors'
     | '/theory'
@@ -187,7 +176,6 @@ export interface FileRouteTypes {
     | '/diodes'
     | '/flip-flops'
     | '/inductors'
-    | '/lenz'
     | '/logic-gates'
     | '/resistors'
     | '/theory'
@@ -204,7 +192,6 @@ export interface RootRouteChildren {
   DiodesRoute: typeof DiodesRoute
   FlipFlopsRoute: typeof FlipFlopsRoute
   InductorsRoute: typeof InductorsRoute
-  LenzRoute: typeof LenzRoute
   LogicGatesRoute: typeof LogicGatesRoute
   ResistorsRoute: typeof ResistorsRoute
   TheoryRoute: typeof TheoryRoute
@@ -270,13 +257,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InductorsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lenz': {
-      id: '/lenz'
-      path: '/lenz'
-      fullPath: '/lenz'
-      preLoaderRoute: typeof LenzRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/logic-gates': {
       id: '/logic-gates'
       path: '/logic-gates'
@@ -324,7 +304,6 @@ const rootRouteChildren: RootRouteChildren = {
   DiodesRoute: DiodesRoute,
   FlipFlopsRoute: FlipFlopsRoute,
   InductorsRoute: InductorsRoute,
-  LenzRoute: LenzRoute,
   LogicGatesRoute: LogicGatesRoute,
   ResistorsRoute: ResistorsRoute,
   TheoryRoute: TheoryRoute,
