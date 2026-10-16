@@ -96,6 +96,14 @@ h1 { font-weight: 550; font-size: 42px; line-height: 1.15; }
 .capacitor-current-key { background: var(--flow-collector); }
 .capacitor-readouts .eyebrow { font-size: 9px; letter-spacing: 0; }
 .capacitor-readouts .readout-value { font-size: 19px; }
+.capacitor-helper { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--border); }
+.helper-context { padding: 10px 0; line-height: 1.8; overflow-wrap: anywhere; }
+.helper-conversation { height: 340px; min-height: 0; margin-bottom: 14px; }
+.capacitor-helper .is-user > div { background: var(--primary); color: var(--primary-foreground); }
+.capacitor-helper .is-assistant > div { background: transparent; }
+.capacitor-helper [data-slot="input-group"] { background: var(--card); }
+.capacitor-helper [data-slot="input-group-control"] { min-height: 80px; }
+.capacitor-helper .is-assistant { max-width: 100%; overflow-wrap: anywhere; }
 @media (max-width: 1100px) and (min-width: 761px) { .capacitor-readouts { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 14px; } .capacitor-readouts .readout:nth-child(2n) { border-right: 0; } }
 @media (max-width: 400px) { .topbar .shell > div:first-child { gap: 12px; } .tab { padding: 6px 9px; } }
 .carrier-text { fill: var(--coral) !important; }
