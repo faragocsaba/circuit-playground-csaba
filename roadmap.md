@@ -6,3 +6,4 @@
 - [x] Request publishing at circuit-playground-csaba (chosen alternative; original slugs unavailable).
 - [x] Add capacitor lab with DC charge/discharge and AC, synchronized diagrams and graphs; verify both experiments.
 - [x] Add a setup-aware capacitor AI helper with a single unsaved conversation; verify DC, AC, follow-up and Stop.
+- [x] Resistor tab, tab order, /transistors URL, landing page.
