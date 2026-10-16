@@ -24,3 +24,20 @@ describe('resistor model', () => {
     expect(colorBands(10)).toEqual(['brown', 'black', 'black', 'gold']);
   });
 });
+
+import { kirchhoff } from './resistor-model';
+describe('kirchhoff', () => {
+  it('parallel junction: 9 V across 470 Ω and 1 kΩ splits 28.15 mA into 19.15 + 9 mA', () => {
+    const { kcl } = kirchhoff({ arrangement: 'parallel', voltage: 9, r1: 470, r2: 1000 });
+    expect(kcl.out[0]).toBeCloseTo(19.149, 2); expect(kcl.out[1]).toBeCloseTo(9, 5);
+    expect(kcl.into).toBeCloseTo(kcl.out[0]! + kcl.out[1]!, 9);
+  });
+  it('series loop: drops add up to the 9 V source', () => {
+    const { loops } = kirchhoff({ arrangement: 'series', voltage: 9, r1: 470, r2: 1000 });
+    expect(loops).toHaveLength(1); expect(loops[0]!.drops[0]! + loops[0]!.drops[1]!).toBeCloseTo(9, 9);
+  });
+  it('parallel has two loops, each dropping the full source voltage', () => {
+    const { loops } = kirchhoff({ arrangement: 'parallel', voltage: 6, r1: 330, r2: 2200 });
+    expect(loops.map(l => l.drops[0])).toEqual([expect.closeTo(6, 9), expect.closeTo(6, 9)]);
+  });
+});

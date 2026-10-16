@@ -25,3 +25,16 @@ export function colorBands(ohms: number): BandColor[] {
 export function formatOhms(ohms: number) {
   return ohms >= 1000 ? `${+(ohms / 1000).toFixed(2)} kΩ` : `${+ohms.toFixed(1)} Ω`;
 }
+
+/** Kirchhoff checks built from the same model results. KCL: current in = sum out at the junction. KVL: source rise = sum of drops around each loop. */
+export function kirchhoff(settings: ResistorSettings) {
+  const m = resistorModel(settings);
+  const { arrangement, voltage } = settings;
+  const kcl = arrangement === 'parallel'
+    ? { into: m.current, out: [m.i1, m.i2] }
+    : { into: m.current, out: [m.i1] };
+  const loops = arrangement === 'series' ? [{ source: voltage, drops: [m.v1, m.v2] }]
+    : arrangement === 'parallel' ? [{ source: voltage, drops: [m.v1] }, { source: voltage, drops: [m.v2] }]
+      : [{ source: voltage, drops: [m.v1] }];
+  return { kcl, loops };
+}
