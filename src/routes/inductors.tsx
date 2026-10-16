@@ -39,7 +39,7 @@ function RangeControl({ id, label, value, unit, min, max, step, onChange }: { id
 function InductorLab() {
   const [lab, setLab] = useState(() => fresh(defaultInductorSettings));
   const [playing, setPlaying] = useState(true);
-  const [speed, setSpeed] = useState(1);
+  const [speed, setSpeed] = useState(DEFAULT_SPEED);
   const { settings, state, history, motion } = lab;
   const s = read(settings, state);
   useEffect(() => {
