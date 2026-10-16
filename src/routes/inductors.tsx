@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { Activity, ChevronDown, Info, Magnet, Pause, Play, RotateCcw, Target, Waves } from 'lucide-react';
+import { Activity, ChevronDown, Info, Magnet, Pause, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
-import { InductorCircuit, InductorInside, InductorTrace, ResonanceCurve } from '@/components/inductor/diagrams';
-import { acResponse, advance, defaultInductorSettings, initialState, qualityFactor, resonantFrequency, sample as read, timeConstant, type InductorMode, type InductorSample, type InductorSettings, type InductorState } from '@/lib/inductor-model';
+import { InductorCircuit, InductorInside, InductorTrace } from '@/components/inductor/diagrams';
+import { advance, defaultInductorSettings, initialState, resonantFrequency, sample as read, timeConstant, type InductorMode, type InductorSample, type InductorSettings, type InductorState } from '@/lib/inductor-model';
 
 export const Route = createFileRoute('/inductors')({
   head: () => ({ meta: [
@@ -18,7 +18,7 @@ export const Route = createFileRoute('/inductors')({
 });
 
 const modes: Record<InductorMode, { name: string; short: string }> = {
-  rl: { name: 'RL switching', short: 'RL' }, lc: { name: 'LC tank', short: 'LC' }, rlc: { name: 'RLC resonance', short: 'RLC' },
+  rl: { name: 'RL switching', short: 'RL' }, lc: { name: 'LC tank', short: 'LC' },
 };
 interface Lab { settings: InductorSettings; state: InductorState; history: InductorSample[]; motion: number }
 function fresh(settings: InductorSettings): Lab { const state = initialState(settings); return { settings, state, history: [read(settings, state)], motion: 0 }; }
@@ -56,19 +56,18 @@ function InductorLab() {
   }, [playing, speed]);
   const update = (patch: Partial<InductorSettings>) => setLab(p => ({ ...p, settings: { ...p.settings, ...patch } }));
   const setMode = (mode: InductorMode) => setLab(p => fresh({ ...p.settings, mode, resistance: mode === 'lc' ? 2 : Math.max(5, p.settings.resistance), voltage: Math.max(1, p.settings.voltage) }));
-  const ac = acResponse(settings); const f0 = resonantFrequency(settings);
-  const fieldScale = settings.mode === 'rlc' ? Math.max(1, settings.voltage / settings.resistance * 1000) : settings.mode === 'lc' ? settings.voltage * Math.sqrt(settings.capacitance * 1e-6 / settings.inductance) * 1000 : Math.max(1, settings.voltage / settings.resistance * 1000);
+  const f0 = resonantFrequency(settings);
+  const fieldScale = settings.mode === 'lc' ? settings.voltage * Math.sqrt(settings.capacitance * 1e-6 / settings.inductance) * 1000 : Math.max(1, settings.voltage / settings.resistance * 1000);
   const status = settings.mode === 'rl'
     ? Math.abs(s.vL) < 0.05 ? settings.connected ? 'Steady' : 'No current' : settings.connected ? 'Building up' : 'Collapsing'
-    : settings.mode === 'lc' ? (s.energyL + s.energyC < 0.05 ? 'Rung out' : 'Ringing') : Math.abs(settings.frequency - f0) < 0.08 ? 'At resonance' : 'Driven';
+    : s.energyL + s.energyC < 0.05 ? 'Rung out' : 'Ringing';
   const note = settings.mode === 'rl'
     ? settings.connected ? 'Switch on: the coil pushes back with a voltage that opposes the change, so current rises gradually instead of jumping. Once steady, the coil is just a wire.'
       : 'Switch off: the collapsing magnetic field keeps the current flowing in the same direction. The coil voltage flips to keep it going.'
-    : settings.mode === 'lc' ? 'The charged capacitor drives current into the coil. Energy swaps back and forth between the electric field (C) and the magnetic field (L). The resistor slowly turns it into heat.'
-      : 'Below resonance the capacitor dominates and current leads; above it the coil dominates and current lags. At f₀ their effects cancel and only R limits the current — and the coil and capacitor voltages can grow far larger than the source while cancelling each other.';
+    : 'The charged capacitor drives current into the coil. Energy swaps back and forth between the electric field (C) and the magnetic field (L). The resistor slowly turns it into heat.';
   const readouts: [string, string, string][] = [
     ['CURRENT', s.current.toFixed(1), 'mA'], ['COIL VOLTAGE', s.vL.toFixed(2), 'V'], ['FIELD ENERGY', s.energyL.toFixed(1), 'mJ'],
-    settings.mode === 'rl' ? ['τ = L / R', timeConstant(settings).toFixed(2), 's'] : settings.mode === 'lc' ? ['CAPACITOR ENERGY', s.energyC.toFixed(1), 'mJ'] : ['IMPEDANCE', ac.impedance.toFixed(0), 'Ω'],
+    settings.mode === 'rl' ? ['τ = L / R', timeConstant(settings).toFixed(2), 's'] : ['CAPACITOR ENERGY', s.energyC.toFixed(1), 'mJ'],
   ];
   return <>
     <SiteHeader />
