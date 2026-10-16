@@ -20,7 +20,7 @@ export async function handleCapacitorChat(request: Request) {
     const { data: blocked, error: stateError } = await supabaseAdmin.from('ai_access_state').select('message,status').eq('feature', 'capacitor-helper').maybeSingle();
     if (stateError) return Response.json({ error: 'The AI helper cannot check its availability right now.' }, { status: 503 });
     if (blocked) return Response.json({ error: blocked.message }, { status: blocked.status });
-    const key = process.env.LOVABLE_API_KEY;
+    const key = process.env['LOVABLE_API_KEY'];
     if (!key) return Response.json({ error: 'The AI helper is not configured yet.' }, { status: 401 });
     let failure: { status: number; message: string } | undefined;
     const call = createResponsesCall(request, { baseURL: 'https://ai.gateway.lovable.dev/v1', apiKey: key, model: 'openai/gpt-6-astra' }, await convertToModelMessages(messages),
