@@ -1,49 +1,70 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
-def simulate_rc(R_kOhm, C_uF, dt, duration, vs_func, v0=0.0):
-    tau = R_kOhm * C_uF / 1000.0  # seconds
+def test_rc():
+    # Units
+    R_kOhm = 2.0
+    C_uF = 100.0
+    dt = 0.01 # 10ms
+    tau = R_kOhm * C_uF / 1000.0 # 2.0 * 100 / 1000 = 0.2s
+    
     alpha = np.exp(-dt / tau)
     
-    t_axis = np.arange(0, duration, dt)
-    vc = np.zeros_like(t_axis)
-    current = np.zeros_like(t_axis)
+    # DC Charge test
+    v_c = 0.0
+    v_s = 10.0
     
-    v = v0
-    for i, t in enumerate(t_axis):
-        vs = vs_func(t)
-        # Time-stepping formula
-        v = v * alpha + vs * (1 - alpha)
-        vc[i] = v
-        current[i] = (vs - v) / R_kOhm # mA
+    # 1 step update
+    v_c_next = v_s * (1 - alpha) + v_c * alpha
+    
+    # Exact DC at t = dt
+    v_c_exact = v_s * (1 - np.exp(-dt / tau))
+    
+    print(f"DC 1-step error: {v_c_next - v_c_exact}")
+    
+    # Energy and Charge units
+    # C = 100 uF, V = 10 V
+    # Q = 100 * 10 = 1000 uC
+    # E = 0.5 * 100e-6 * 10^2 = 0.5 * 100e-6 * 100 = 5000e-6 = 0.005 J = 5 mJ
+    Q = C_uF * v_s
+    E = 0.5 * C_uF * v_s**2 / 1000.0
+    print(f"Q (uC): {Q}")
+    print(f"E (mJ): {E}")
+
+    # AC Phase test
+    # Vs = A sin(wt)
+    # Vc = A/sqrt(1+(wT)^2) * sin(wt - arctan(wT))
+    # I = C dVc/dt
+    # For low freq wT << 1, Vc ~ Vs, Phase lag ~ 0
+    # For high freq wT >> 1, Vc ~ Vs / (wT) * sin(wt - 90), Phase lag ~ 90
+    
+    freq = 1.0 # 1 Hz
+    omega = 2 * np.pi * freq
+    wT = omega * tau
+    expected_gain = 1.0 / np.sqrt(1 + wT**2)
+    expected_phase_lag = np.degrees(np.arctan(wT))
+    
+    print(f"AC expected gain: {expected_gain}")
+    print(f"AC expected phase lag: {expected_phase_lag} deg")
+    
+    # Simulating AC with midpoint Vs for better accuracy
+    v_c = 0.0
+    t = 0.0
+    duration = 5.0
+    vs_vals = []
+    vc_vals = []
+    t_vals = []
+    while t < duration:
+        # Use Vs at midpoint to improve AC accuracy
+        vs_mid = 10.0 * np.sin(omega * (t + dt/2))
+        v_c = vs_mid * (1 - alpha) + v_c * alpha
+        t += dt
+        t_vals.append(t)
+        vc_vals.append(v_c)
+        vs_vals.append(10.0 * np.sin(omega * t))
         
-    return t_axis, vc, current
-
-# Case 1: DC Charge
-R = 1.0 # kOhm
-C = 10.0 # uF
-dt = 0.0001
-duration = 0.1
-t, vc, i = simulate_rc(R, C, dt, duration, lambda t: 5.0)
-
-# Exact DC
-tau = R * C / 1000.0
-vc_exact = 5.0 * (1 - np.exp(-t / tau))
-print(f"DC Max error: {np.max(np.abs(vc - vc_exact))}")
-
-# Case 2: AC
-freq = 60
-omega = 2 * np.pi * freq
-t_ac, vc_ac, i_ac = simulate_rc(R, C, dt, duration, lambda t: 5.0 * np.sin(omega * t))
-
-# Exact AC Steady State
-# Vc = (A / sqrt(1 + (w*tau)^2)) * sin(w*t - arctan(w*tau))
-A = 5.0
-phase_lag = np.arctan(omega * tau)
-gain = 1.0 / np.sqrt(1 + (omega * tau)**2)
-vc_ac_ss = A * gain * np.sin(omega * t_ac - phase_lag)
-
-# We need to account for the transient to check exactness
-# Or just check if it converges to steady state
-print(f"AC SS Amplitude ratio: {np.max(vc_ac[-1000:]) / A} (Expected: {gain})")
-print(f"AC Phase lag (approx): {np.angle(np.mean(np.exp(1j * (omega * t_ac[-100:] - np.arcsin(vc_ac[-100:]/(A*gain))))))}")
+    # Analyze last cycle
+    last_cycle = vc_vals[-int(1.0/dt):]
+    actual_gain = np.max(last_cycle) / 10.0
+    print(f"AC simulated gain: {actual_gain}")
+    
+test_rc()
