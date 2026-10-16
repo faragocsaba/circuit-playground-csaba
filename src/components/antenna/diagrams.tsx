@@ -42,7 +42,7 @@ export function AntennaScene({ s, phase, scale }: { s: AntennaSettings; phase: n
     {[[-80, 1.1, 'reflector'], [0, 1, 'driven'], [80, 0.9, 'director']].map(([x, k, label]) => <g key={label as string}>
       <line x1={CX + (x as number)} y1={CY - half * (k as number)} x2={CX + (x as number)} y2={CY + half * (k as number)} className="wire" strokeWidth={label === 'driven' ? 5 : 3.5} />
       {dots(half * (k as number), CX + (x as number), label === 'driven' ? 1 : -0.6)}
-      <text x={CX + (x as number)} y={CY + half * (k as number) + 16} textAnchor="middle" className="ant-label">{label as string}</text>
+      <text x={CX + (x as number)} y={CY - half * (k as number) - 8} textAnchor="middle" className="ant-label">{label as string}</text>
     </g>)}
     <path className="wire" d={`M${CX} ${CY + 6}V${H - 30}`} strokeWidth={1.5} />
   </g>;

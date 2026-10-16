@@ -79,7 +79,7 @@ function AntennaLab() {
           <div className="figure-panel p-5 text-sm leading-relaxed text-muted-foreground">
             <p>{physics[s.type]}</p>
             <ul className="mt-4 grid gap-2">
-              <li><b className="text-foreground">Wavelength:</b> λ = c / f = 3·10⁸ / {(s.frequencyMHz * 1e6).toExponential(1)} = {formatLength(m.lambda)}.</li>
+              <li><b className="text-foreground">Wavelength:</b> λ = c / f = 300 000 km/s ÷ {s.frequencyMHz} MHz = {formatLength(m.lambda)}.</li>
               <li><b className="text-foreground">Resonance:</b> best length is about {antennaInfo[s.type].resonantFraction} λ = {formatLength(m.resonantLength)}. Yours accepts {pct(m.match)}% of the power{s.type === 'loop' ? ' (tuned by a capacitor)' : ''}; the rest bounces back to the radio.</li>
               <li><b className="text-foreground">Efficiency:</b> radiation resistance {m.radiationResistance.toFixed(1)} Ω vs ≈2 Ω of losses → {pct(m.efficiency)}% becomes waves, the rest heat.</li>
               <li><b className="text-foreground">Polarization:</b> {antennaInfo[s.type].polarization}. Tilt the receiver 90° and the signal nearly vanishes.</li>
