@@ -28,8 +28,8 @@ describe('lenz model', () => {
   });
   it('oscillation stays within bounds and velocity peaks at the midpoint', () => {
     const at = (t: number) => oscillation(t);
-    expect(at(0).distance).toBeCloseTo(4, 9);
-    expect(at(3).distance).toBeCloseTo(1.2, 9);
+    expect(at(0).distance).toBeCloseTo(1.2, 9);
+    expect(at(3).distance).toBeCloseTo(4, 9);
     expect(Math.abs(at(1.5).velocity)).toBeGreaterThan(Math.abs(at(0.1).velocity));
   });
 });

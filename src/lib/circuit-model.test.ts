@@ -14,8 +14,9 @@ describe('circuit model', () => {
     expect(a.xC).toBeCloseTo(159.15, 1);
     expect(a.phase).toBeCloseTo(90, 6);
   });
-  it('RLC at resonance (1.59 Hz): impedance equals R and current is in phase', () => {
-    const a = analyze(d);
+  it('RLC at resonance: impedance equals R and current is in phase', () => {
+    const f0 = 1 / (2 * Math.PI * Math.sqrt(d.inductance * d.capacitance * 1e-6));
+    const a = analyze({ ...d, frequency: f0 });
     expect(a.resonant).toBe(true);
     expect(a.impedance).toBeCloseTo(20, 6);
     expect(a.phase).toBeCloseTo(0, 6);
@@ -26,7 +27,8 @@ describe('circuit model', () => {
     expect(analyze({ ...d, frequency: 5 }).phase).toBeLessThan(0);
   });
   it('component voltages: at resonance vL and vC cancel and can exceed the source', () => {
-    const a = analyze(d);
+    const f0 = 1 / (2 * Math.PI * Math.sqrt(d.inductance * d.capacitance * 1e-6));
+    const a = analyze({ ...d, frequency: f0 });
     expect(a.vL).toBeCloseTo(a.vC, 6);
     expect(a.vL).toBeGreaterThan(d.voltage);
     expect(a.vR).toBeCloseTo(d.voltage, 6);
