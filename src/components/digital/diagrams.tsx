@@ -235,8 +235,7 @@ function Mosfet({ x, y, type, label, bit }: { x: number; y: number; type: 'pmos'
     <path d={`M ${x + 5} ${y - 7} H ${x + 14} V ${y - 20}`} className={`symbol ${ch}`} style={{ strokeWidth: 1.8 }} />
     <path d={`M ${x + 5} ${y + 7} H ${x + 14} V ${y + 20}`} className={`symbol ${ch}`} style={{ strokeWidth: 1.8 }} />
     <text x={x - 40} y={y + 4} textAnchor="end" className="terminal-label" style={{ fontSize: 11 }}>{label}</text>
-    <text x={x + 26} y={y - 24} className="terminal-label" style={{ fontSize: 9 }}>{type === 'pmos' ? 'PMOS' : 'NMOS'}</text>
-    <text x={x + 26} y={y + 30} className="terminal-label" style={{ fontSize: 9, fill: on ? 'var(--primary)' : 'var(--muted-foreground)' }}>{on ? 'ON' : 'off'}</text>
+    <text x={x + 26} y={y + 4} className="terminal-label" style={{ fontSize: 9, fill: on ? 'var(--primary)' : 'var(--muted-foreground)' }}>{on ? 'ON' : 'off'}</text>
   </g>;
 }
 
@@ -332,17 +331,17 @@ export function CompositeBuild({ type, a, b }: { type: GateType; a: Bit; b: Bit 
   const x = gate('nand', n2, n3);
   const out = type === 'xnor' ? gate('not', x) : x;
   const wide = type === 'xnor';
-  return <svg viewBox={`0 0 ${wide ? 630 : 440} 210`} className="circuit-svg" style={{ height: 230 }} role="img" aria-label={`${GATE_INFO[type].name} built from NAND gates`}>
-    <Pin x={24} y={92} bit={a} label="A" />
-    <Pin x={24} y={118} bit={b} label="B" />
-    <Wire d="M 34 92 H 60" bit={a} />
-    <Wire d="M 34 118 H 60" bit={b} />
+  return <svg viewBox={`0 0 ${wide ? 670 : 540} 210`} className="circuit-svg" style={{ height: 230 }} role="img" aria-label={`${GATE_INFO[type].name} built from NAND gates`}>
+    <Pin x={24} y={72} bit={a} label="A" />
+    <Pin x={24} y={138} bit={b} label="B" />
+    <Wire d="M 34 72 H 50 V 92 H 60" bit={a} />
+    <Wire d="M 34 138 H 50 V 118 H 60" bit={b} />
     <GateBox x={90} y={80} name="NAND" inA={a} inB={b} out={n1} />
     {/* A and B branch to the middle gates */}
-    <Wire d="M 48 92 V 42 H 200" bit={a} />
-    <Wire d="M 48 118 V 168 H 200" bit={b} />
-    <circle cx={48} cy={92} r={3} className={`sig-node ${cls(a)}`} />
-    <circle cx={48} cy={118} r={3} className={`sig-node ${cls(b)}`} />
+    <Wire d="M 44 72 V 42 H 200" bit={a} />
+    <Wire d="M 44 138 V 168 H 200" bit={b} />
+    <circle cx={44} cy={72} r={3} className={`sig-node ${cls(a)}`} />
+    <circle cx={44} cy={138} r={3} className={`sig-node ${cls(b)}`} />
     {/* n1 branches to both middle gates */}
     <Wire d="M 184 100 H 190 V 58 H 200" bit={n1} />
     <Wire d="M 190 100 V 152 H 200" bit={n1} />
@@ -352,8 +351,8 @@ export function CompositeBuild({ type, a, b }: { type: GateType; a: Bit; b: Bit 
     <Wire d="M 324 50 H 350 V 92 H 380" bit={n2} />
     <Wire d="M 324 160 H 350 V 108 H 380" bit={n3} />
     <GateBox x={410} y={80} name="NAND" inA={n2} inB={n3} out={x} />
-    {wide && <GateBox x={510} y={80} name="NOT" inA={x} out={out} />}
-    <Pin x={wide ? 614 : 430} y={100} bit={out} label="OUT" />
+    {wide && <GateBox x={540} y={80} name="NOT" inA={x} out={out} />}
+    <Pin x={wide ? 654 : 524} y={100} bit={out} label="OUT" />
   </svg>;
 }
 
