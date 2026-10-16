@@ -35,7 +35,7 @@ const digitalLabs: Lab[] = [
 ];
 
 const radioLabs: Lab[] = [
-  { to: '/antennas', n: '10', name: 'Antennas', tag: 'Current becomes waves.', text: 'Dipole, monopole, loop and Yagi — see how each shape radiates into space.', soon: true, icon: <><path d="M34 30V52M20 30H48M34 30L20 12M34 30L48 12" /><path d="M26 6a12 12 0 0 1 16 0M22 1a18 18 0 0 1 24 0" /></> },
+  { to: '/antennas', n: '10', name: 'Antennas', tag: 'Current becomes waves.', text: 'Dipole, monopole, loop and Yagi — see how each shape radiates into space.', icon: <><path d="M34 30V52M20 30H48M34 30L20 12M34 30L48 12" /><path d="M26 6a12 12 0 0 1 16 0M22 1a18 18 0 0 1 24 0" /></> },
 ];
 
 function LabCard({ lab }: { lab: Lab }) {

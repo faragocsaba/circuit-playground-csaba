@@ -206,3 +206,12 @@ h1 { font-family: var(--font-display); font-weight: 400; font-size: 46px; line-h
 .nav-item[aria-current=page] { color: var(--primary); background: var(--accent); }
 .nav-soon { padding: 8px 12px; font-size: 13px; color: var(--muted-foreground); display: flex; flex-direction: column; gap: 2px; }
 .nav-soon-note { font-size: 11px; opacity: 0.8; }
+.ant-wave { fill: none; stroke: var(--primary); stroke-width: 1.6; }
+.ant-grid { fill: none; stroke: var(--border); stroke-width: 1; }
+.ant-pattern { fill: color-mix(in oklch, var(--primary) 22%, transparent); stroke: var(--primary); stroke-width: 2; }
+.ant-label { fill: var(--muted-foreground); font-size: 11px; font-family: var(--font-mono, monospace); }
+.ant-axis { stroke: var(--muted-foreground); stroke-dasharray: 4 4; }
+.ant-arrow { stroke: var(--amber); stroke-width: 2; marker-end: none; }
+.ant-ground { fill: var(--muted-foreground); opacity: .5; }
+.ant-box { fill: var(--card); stroke: var(--border); }
+.ant-box-text { font-size: 9px; letter-spacing: .08em; }
