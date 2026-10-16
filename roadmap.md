@@ -17,9 +17,9 @@
 - [x] Remove the standalone Lenz page: Lenz's law will live inside the Inductors lab / Circuits section instead.
 - [x] Step 1: Circuits lab — switchable R/L/C series AC, impedance, phasor diagram.
 - [x] Step 2: Kirchhoff panels + RLC resonance moved into Circuits; Lenz's law lab in Circuits section.
-- [ ] Step 4: Logic gates lab.
-- [ ] Step 5: Flip-flops lab.
-- [ ] Step 6: Adders lab.
+- [x] Step 4: Logic gates lab (7 gates, truth tables, live pins); verified.
+- [x] Step 5: Flip-flops lab (NAND SR latch, D, JK, T; clock edges); verified.
+- [x] Step 6: Adders lab (half, full, 4-bit ripple-carry); verified.
 - [ ] Step 7: Antennas lab.
 - [ ] Step 8: Theory topics + final polish.
 - [x] Update README with project details.
@@ -29,8 +29,8 @@
 - [ ] Step 0: section-based landing page + section menu in header (Components / Circuits / Digital / Radio).
 - [ ] Step 1: Circuits lab (/circuits) — combined R/L/C AC circuit, impedance, phasor diagram.
 - [ ] Step 2: move Kirchhoff panels and RLC resonance into Circuits section; Lenz's law experiment inside Inductors; Theory: impedance topic.
-- [ ] Step 4: Logic gates lab (/logic-gates) with shared gate engine.
-- [ ] Step 5: Flip-flops lab (/flip-flops) from NAND gates.
-- [ ] Step 6: Adder lab (/adders).
+- [x] Step 4: Logic gates lab (7 gates, truth tables, live pins); verified.(/logic-gates) with shared gate engine.
+- [x] Step 5: Flip-flops lab (NAND SR latch, D, JK, T; clock edges); verified.(/flip-flops) from NAND gates.
+- [x] Step 6: Adder lab (/adders).
 - [ ] Step 7: Antennas lab (/antennas), Radio section.
 - [ ] Step 8: Theory topics (impedance, Lenz, logic, waves) + final polish.
