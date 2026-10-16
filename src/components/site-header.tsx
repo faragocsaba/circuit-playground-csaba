@@ -9,6 +9,7 @@ export function SiteHeader({ children }: { children?: ReactNode }) {
       <nav className="tabs" aria-label="Components">
         <Link to="/resistors" className="tab" activeProps={{ 'aria-current': 'page' }}>Resistors</Link>
         <Link to="/capacitors" className="tab" activeProps={{ 'aria-current': 'page' }}>Capacitors</Link>
+        <Link to="/inductors" className="tab" activeProps={{ 'aria-current': 'page' }}>Inductors</Link>
         <Link to="/diodes" className="tab" activeProps={{ 'aria-current': 'page' }}>Diodes</Link>
         <Link to="/transistors" className="tab" activeProps={{ 'aria-current': 'page' }}>Transistors</Link>
       </nav>
