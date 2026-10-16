@@ -6,7 +6,7 @@ import { SiteHeader } from '@/components/site-header';
 import { InductorCircuit, InductorTrace, ResonanceCurve } from '@/components/inductor/diagrams';
 import { acResponse, advance, defaultInductorSettings, initialState, qualityFactor, resonantFrequency, sample as read, type InductorSample, type InductorSettings, type InductorState } from '@/lib/inductor-model';
 
-export const Route = createFileRoute('/circuits/resonance')({
+export const Route = createFileRoute('/circuits_/resonance')({
   head: () => ({ meta: [
     { title: 'Resonance — Circuit Playground' },
     { name: 'description', content: 'Drive a series RLC circuit with AC and find the frequency where the coil and capacitor cancel: the resonance peak, live.' },

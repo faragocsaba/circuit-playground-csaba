@@ -6,7 +6,7 @@ import { SiteHeader } from '@/components/site-header';
 import { LenzDiagram, LenzTrace } from '@/components/circuits/diagrams';
 import { coilFace, defaultLenzSettings, inducedCurrent, oscillation, type LenzSettings, type Pole } from '@/lib/lenz-model';
 
-export const Route = createFileRoute('/circuits/lenz')({
+export const Route = createFileRoute('/circuits_/lenz')({
   head: () => ({ meta: [
     { title: 'Lenz’s Law — Circuit Playground' },
     { name: 'description', content: 'Move a magnet toward and away from a coil and watch the induced current always fight the motion — Lenz’s law made visible.' },

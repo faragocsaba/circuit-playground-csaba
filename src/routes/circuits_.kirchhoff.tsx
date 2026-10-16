@@ -6,7 +6,7 @@ import { SiteHeader } from '@/components/site-header';
 import { ResistorCircuit } from '@/components/resistor/diagrams';
 import { defaultResistorSettings, formatOhms, kirchhoff, resistorModel, type Arrangement, type ResistorSettings } from '@/lib/resistor-model';
 
-export const Route = createFileRoute('/circuits/kirchhoff')({
+export const Route = createFileRoute('/circuits_/kirchhoff')({
   head: () => ({ meta: [
     { title: 'Kirchhoff’s Laws — Circuit Playground' },
     { name: 'description', content: 'Kirchhoff’s current and voltage laws hands-on: watch charge split at a junction and voltage drops add up around every loop.' },
