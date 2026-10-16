@@ -40,7 +40,7 @@ function LogicGatesLab() {
           <div className="workspace-head"><div className="flex items-center gap-2.5"><span className="eyebrow text-muted-foreground">LIVE GATE</span><span className="text-xs text-muted-foreground">/</span><span className="text-xs font-medium">{GATE_INFO[type].name}</span></div><span className="live-status"><span className="legend-dot" />OUT = {out}</span></div>
           <div className="circuit-space">
             <div className="absolute left-5 top-4 status-badge"><span className="legend-dot" />{out ? 'OUTPUT HIGH' : 'OUTPUT LOW'}</div>
-            <GateSymbol type={type} a={a} b={b} onToggleA={() => setA(a ? 0 : 1)} onToggleB={two ? () => setB(b ? 0 : 1) : undefined} />
+            <GateSymbol type={type} a={a} b={b} onToggleA={() => setA(a ? 0 : 1)} onToggleB={() => setB(b ? 0 : 1)} />
           </div>
           <div className="circuit-footer"><div className="flex flex-wrap items-center gap-3 text-[11px] text-muted-foreground"><span className="flex items-center gap-2"><span className="legend-dot" />Logic 1 (high)</span><span className="flex items-center gap-2"><span className="legend-dot" style={{ background: 'var(--border)' }} />Logic 0 (low)</span><span>Click the round pins to flip them</span></div></div>
           <div className="readouts" aria-live="polite">
