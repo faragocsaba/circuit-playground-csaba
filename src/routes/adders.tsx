@@ -73,8 +73,8 @@ function AddersLab() {
             <BitToggle label="Input B" bit={b} onChange={setB} />
             {mode === 'full' && <BitToggle label="Carry in" bit={cin} onChange={setCin} />}
           </div></div> : <div className="control-group"><div className="control-label">Inputs (least-significant bit last)</div><div className="layout-options">
-            <div className="grid grid-cols-4 gap-2">{[3, 2, 1, 0].map(i => <BitToggle key={`a${i}`} label={`A${i}`} bit={bitsA[i]} onChange={() => flipA(i)} />)}</div>
-            <div className="grid grid-cols-4 gap-2">{[3, 2, 1, 0].map(i => <BitToggle key={`b${i}`} label={`B${i}`} bit={bitsB[i]} onChange={() => flipB(i)} />)}</div>
+            <div className="grid grid-cols-4 gap-2">{[3, 2, 1, 0].map(i => <BitToggle key={`a${i}`} label={`A${i}`} bit={bitsA[i] ?? 0} onChange={() => flipA(i)} />)}</div>
+            <div className="grid grid-cols-4 gap-2">{[3, 2, 1, 0].map(i => <BitToggle key={`b${i}`} label={`B${i}`} bit={bitsB[i] ?? 0} onChange={() => flipB(i)} />)}</div>
           </div></div>}
           <div className="control-divider" /><div className="info-note flex gap-2"><Info size={14} className="mt-0.5 shrink-0 text-primary" /><span>{mode === 'half' ? 'The sum bit is XOR, the carry bit is AND — two gates add two bits. It cannot accept a carry from a previous stage, hence "half".' : mode === 'full' ? 'A full adder also takes the carry in, so it can be chained. It is two half adders plus an OR gate.' : 'Four full adders chained: each carry out feeds the next carry in. The carry "ripples" from right to left — that delay is why real CPUs use faster carry-lookahead designs.'}</span></div>
         </aside>
