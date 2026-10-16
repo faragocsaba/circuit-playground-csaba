@@ -20,3 +20,4 @@
 - The capacitor helper uses AI Elements and AI SDK UI-message streaming through a server-only Responses helper; every question carries a frozen setup snapshot and sampled trace to ground explanations in the pure RC model.
 - Keep learner conversations in React memory only; the service-role-only AI access state stores terminal provider denials, never questions or answers.
 - Inductor experiments (RL, LC tank, series RLC) share one pure series R-L-C model: RL steps are exact, LC/RLC use fine RK4 substeps; circuit, energy bars, traces and resonance curve consume the same samples.
+- The transistor circuit builder is a third view of /transistors (?view=builder&template=…&a=&b=); its pure model solves fill-in templates with real part data (Ebers–Moll BJT, square-law MOSFET) so the schematic, device table and curves share one solution, and logic-gate pages deep-link into the matching CMOS template.
