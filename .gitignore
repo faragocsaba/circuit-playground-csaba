@@ -30,3 +30,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local environment / backend config
+.env
+.env.local
+
+# Build artifacts
+tsconfig.tsbuildinfo
