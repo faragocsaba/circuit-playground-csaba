@@ -291,6 +291,7 @@ export function CmosDiagram({ type, a, b }: { type: PrimitiveGate; a: Bit; b: Bi
       <Wire d={`M 240 230 V ${gndY}`} bit={0} />
     </>}
     <text x={30} y={30} className="terminal-label" style={{ fontSize: 11 }}>{pullUp ? 'Pulled UP to 1' : pullDown ? 'Pulled DOWN to 0' : ''}</text>
+    <text x={30} y={292} className="terminal-label" style={{ fontSize: 10 }}>Top: PMOS (bubbled gate) conducts on 0 · Bottom: NMOS conducts on 1</text>
   </svg>;
 }
 
