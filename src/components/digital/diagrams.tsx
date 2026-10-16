@@ -1,4 +1,4 @@
-// SVG diagrams for the digital labs: gate symbols, flip-flops, adders.
+// SVG diagrams for the digital labs: gate symbols, flip-flops, adders, transistor-level gates.
 // Signal colors come from CSS classes .sig-high / .sig-low (see styles.css).
 
 import type { Bit, FFType, GateType, PrimitiveGate, RippleResult } from '@/lib/logic-model';
@@ -332,7 +332,7 @@ export function CompositeBuild({ type, a, b }: { type: GateType; a: Bit; b: Bit 
   const x = gate('nand', n2, n3);
   const out = type === 'xnor' ? gate('not', x) : x;
   const wide = type === 'xnor';
-  return <svg viewBox={`0 0 ${wide ? 540 : 440} 210`} className="circuit-svg" style={{ height: 230 }} role="img" aria-label={`${GATE_INFO[type].name} built from NAND gates`}>
+  return <svg viewBox={`0 0 ${wide ? 630 : 440} 210`} className="circuit-svg" style={{ height: 230 }} role="img" aria-label={`${GATE_INFO[type].name} built from NAND gates`}>
     <Pin x={24} y={92} bit={a} label="A" />
     <Pin x={24} y={118} bit={b} label="B" />
     <Wire d="M 34 92 H 60" bit={a} />
@@ -352,11 +352,8 @@ export function CompositeBuild({ type, a, b }: { type: GateType; a: Bit; b: Bit 
     <Wire d="M 324 50 H 350 V 92 H 380" bit={n2} />
     <Wire d="M 324 160 H 350 V 108 H 380" bit={n3} />
     <GateBox x={410} y={80} name="NAND" inA={n2} inB={n3} out={x} />
-    {wide ? <>
-      <Wire d="M 504 100 H 520" bit={x} />
-      <GateBox x={550 - 60} y={80} name="NOT" inA={x} out={out} />
-    </> : null}
-    <Pin x={wide ? 530 : 430} y={wide ? 100 : 100} bit={out} label="OUT" />
+    {wide && <GateBox x={510} y={80} name="NOT" inA={x} out={out} />}
+    <Pin x={wide ? 614 : 430} y={100} bit={out} label="OUT" />
   </svg>;
 }
 
