@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { Activity, Info, Palette, Pause, Play, RotateCcw } from 'lucide-react';
+import { Activity, GitFork, Info, Repeat, Palette, Pause, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
 import { ColorCode, OhmPlot, ResistorCircuit } from '@/components/resistor/diagrams';
-import { defaultResistorSettings, formatOhms, resistorModel, type Arrangement, type ResistorSettings } from '@/lib/resistor-model';
+import { defaultResistorSettings, formatOhms, kirchhoff, resistorModel, type Arrangement, type ResistorSettings } from '@/lib/resistor-model';
 
 export const Route = createFileRoute('/resistors')({
   head: () => ({ meta: [
@@ -27,6 +27,7 @@ function ResistorLab() {
   const [playing, setPlaying] = useState(true);
   const [phase, setPhase] = useState(0);
   const m = resistorModel(settings);
+  const k = kirchhoff(settings);
   const update = (patch: Partial<ResistorSettings>) => setSettings(s => ({ ...s, ...patch }));
   useEffect(() => {
     if (!playing || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -63,6 +64,12 @@ function ResistorLab() {
       <div className="lower-grid">
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Palette size={16} className="text-muted-foreground" /> Color code</h2><span className="text-[10px] text-muted-foreground font-mono">4-BAND</span></div><div className="figure-panel"><div className="p-4"><ColorCode ohms={settings.r1} label={`R₁ ${formatOhms(settings.r1)}`} />{two && <ColorCode ohms={settings.r2} label={`R₂ ${formatOhms(settings.r2)}`} />}</div><div className="panel-note"><Info size={13} className="shrink-0" /><span>First two bands are digits, the third is the number of zeros, gold means ±5% tolerance.</span></div></div></section>
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Activity size={16} className="text-muted-foreground" /> Current vs. voltage</h2><span className="text-[10px] text-muted-foreground font-mono">I = V / R</span></div><div className="figure-panel"><OhmPlot settings={settings} /><div className="panel-note"><Info size={13} className="shrink-0" /><span>A resistor gives a straight line: steeper means less resistance. The dot is your working point.</span></div></div></section>
+      </div>
+      <div className="lower-grid">
+        <section><div className="section-top"><h2 className="flex items-center gap-2"><GitFork size={16} className="text-muted-foreground" /> Kirchhoff 1 · junction rule</h2><span className="text-[10px] text-muted-foreground font-mono">ΣI in = ΣI out</span></div><div className="figure-panel"><div className="p-5 font-mono text-sm leading-7">{settings.arrangement === 'parallel'
+          ? <><div>I = I₁ + I₂</div><div className="text-primary">{k.kcl.into.toFixed(2)} mA = {k.kcl.out[0]!.toFixed(2)} + {k.kcl.out[1]!.toFixed(2)} mA</div></>
+          : <><div>I in = I out</div><div className="text-primary">{k.kcl.into.toFixed(2)} mA = {k.kcl.out[0]!.toFixed(2)} mA</div></>}</div><div className="panel-note"><Info size={13} className="shrink-0" /><span>{settings.arrangement === 'parallel' ? 'Charge is never lost: the current arriving at the junction splits, and the branch dots add back up to the total.' : 'With no junction, there is nowhere else to go: the same current flows everywhere in the loop. Choose Parallel to see a real split.'}</span></div></div></section>
+        <section><div className="section-top"><h2 className="flex items-center gap-2"><Repeat size={16} className="text-muted-foreground" /> Kirchhoff 2 · loop rule</h2><span className="text-[10px] text-muted-foreground font-mono">ΣV = 0</span></div><div className="figure-panel"><div className="p-5 font-mono text-sm leading-7">{k.loops.map((l, i) => <div key={i}><span className="text-muted-foreground">{k.loops.length > 1 ? `Loop ${i + 1}: ` : ''}</span>{l.source.toFixed(2)} V − {l.drops.map((d, j) => `${d.toFixed(2)} V`).join(' − ')} = <span className="text-primary">{(l.source - l.drops.reduce((a, b) => a + b, 0)).toFixed(2)} V</span><span className="text-muted-foreground text-xs"> ({k.loops.length > 1 ? `through R${i + 1}` : settings.arrangement === 'series' ? 'V₁ + V₂' : 'V₁'})</span></div>)}</div><div className="panel-note"><Info size={13} className="shrink-0" /><span>{settings.arrangement === 'parallel' ? 'Each branch forms its own loop, so each resistor drops the full source voltage.' : 'Energy is conserved: walk once around the loop and the voltage the source gives is used up exactly by the resistors.'}</span></div></div></section>
       </div>
       <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal resistors · no temperature effects · motion not to scale</span><span>circuit.playground / 01</span></footer>
     </main>
