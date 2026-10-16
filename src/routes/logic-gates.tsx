@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
-import { GateSymbol } from '@/components/digital/diagrams';
-import { GATE_INFO, GATE_ORDER, gate, truthTable, type Bit, type GateType } from '@/lib/logic-model';
+import { GateImplementation, GateSymbol } from '@/components/digital/diagrams';
+import { GATE_BUILD, GATE_INFO, GATE_ORDER, gate, truthTable, type Bit, type GateType } from '@/lib/logic-model';
 
 export const Route = createFileRoute('/logic-gates')({
   head: () => ({ meta: [
@@ -62,6 +62,9 @@ function LogicGatesLab() {
           <div className="control-divider" /><div className="info-note flex gap-2"><Info size={14} className="mt-0.5 shrink-0 text-primary" /><span>{GATE_INFO[type].blurb}</span></div>
         </aside>
       </div>
+      <section className="mt-8"><div className="section-top"><h2>How it's built from transistors</h2><span className="text-[10px] text-muted-foreground font-mono">{GATE_BUILD[type].transistors} TRANSISTORS · CMOS</span></div><div className="figure-panel"><div className="p-5">
+        <GateImplementation type={type} a={a} b={b} />
+      </div><div className="panel-note"><Info size={13} className="shrink-0" /><span>{GATE_BUILD[type].note} Flip the inputs above and watch which transistors conduct. The <Link to="/transistors" className="text-primary hover:underline">transistor lab</Link> shows how each one works inside.</span></div></div></section>
       <div className="lower-grid">
         <section><div className="section-top"><h2>Truth table</h2><span className="text-[10px] text-muted-foreground font-mono">CURRENT ROW HIGHLIGHTED</span></div><div className="figure-panel"><div className="p-5">
           <table className="truth-table"><thead><tr><th>A</th>{two && <th>B</th>}<th>OUT</th></tr></thead><tbody>
