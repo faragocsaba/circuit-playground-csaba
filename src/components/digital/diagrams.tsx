@@ -90,10 +90,9 @@ export function FlipFlopDiagram({ type, inputs, q, clock, onToggle }: {
     return <svg viewBox="0 0 400 280" className="circuit-svg" style={{ height: 300 }} role="img" aria-label="SR latch built from two NAND gates">
       <NandMini x={150} y={100} inA={sBar} inB={qBar} out={q} label="NAND 1" />
       <NandMini x={150} y={190} inA={q} inB={rBar} out={qBar} label="NAND 2" />
-      {/* cross-coupling wires */}
-      <Wire d={`M 212 100 H 250 V 176 H 124 V 198 H 124`} bit={q} />
-      <path d="M 250 100 H 250" className="sig-wire" />
-      <Wire d={`M 212 190 H 262 V 114 H 124 V 92 H 124`} bit={qBar} />
+      {/* cross-coupling wires: Q feeds NAND 2's upper input, Q̄ feeds NAND 1's lower input */}
+      <Wire d={`M 212 100 H 250 V 182 H 124`} bit={q} />
+      <Wire d={`M 212 190 H 262 V 108 H 124`} bit={qBar} />
       <circle cx={250} cy={100} r={3} className={`sig-node ${cls(q)}`} />
       <circle cx={262} cy={190} r={3} className={`sig-node ${cls(qBar)}`} />
       <Wire d={`M 60 92 H 124`} bit={sBar} />
