@@ -25,17 +25,20 @@ const componentLabs: Lab[] = [
 ];
 
 const circuitLabs: Lab[] = [
-  { to: '/circuits', n: '06', name: 'Circuits', tag: 'R, L and C together.', text: 'Combine the components in one AC circuit and meet impedance, phase, resonance and Lenz\'s law.', soon: true, icon: <path d="M4 30H12a5 6 0 0 1 10 0a5 6 0 0 1 10 0H40M40 14V46M48 14V46M48 30H64" /> },
+  { to: '/circuits', n: '06', name: 'Combined R/L/C', tag: 'R, L and C together.', text: 'Switch components in and out of one AC circuit and meet impedance, phase and the phasor diagram.', icon: <path d="M4 30H12a5 6 0 0 1 10 0a5 6 0 0 1 10 0H40M40 14V46M48 14V46M48 30H64" /> },
+  { to: '/circuits/kirchhoff', n: '07', name: 'Kirchhoff’s laws', tag: 'Nothing is lost.', text: 'Charge splits at junctions, voltage drops add up around loops — the two rules of every circuit.', icon: <><circle cx="34" cy="30" r="3" /><path d="M4 30H31M37 30H64M34 27V8M34 33V52" /></> },
+  { to: '/circuits/resonance', n: '08', name: 'Resonance', tag: 'The peak frequency.', text: 'Tune an AC source until the coil and capacitor cancel and the current peaks.', icon: <path d="M4 44C14 44 18 12 34 12C50 12 54 44 64 44" /> },
+  { to: '/circuits/lenz', n: '09', name: 'Lenz’s law', tag: 'Nature pushes back.', text: 'Move a magnet toward a coil and watch the induced current always fight the motion.', icon: <><rect x="4" y="22" width="18" height="16" rx="2" /><path d="M30 30h8a5 6 0 0 1 10 0a5 6 0 0 1 10 0h6" /></> },
 ];
 
 const digitalLabs: Lab[] = [
-  { to: '/logic-gates', n: '07', name: 'Logic gates', tag: 'The atoms of digital.', text: 'AND, OR, NOT, NAND, NOR, XOR — flip the inputs, watch the output, read the truth table.', soon: true, icon: <><path d="M4 20H16M4 40H16M16 12H34a18 18 0 0 1 0 36H16Z M52 30H64" /></> },
-  { to: '/flip-flops', n: '08', name: 'Flip-flops', tag: 'Gates that remember.', text: 'Wire NAND gates back into themselves and build SR, D, JK and T memory cells.', soon: true, icon: <><rect x="16" y="12" width="32" height="36" rx="2" /><path d="M4 20H16M4 40H16M48 20H64M48 40H64" /></> },
-  { to: '/adders', n: '09', name: 'Adders', tag: 'Addition is just gates.', text: 'Half adder, full adder, then a 4-bit ripple-carry adder with the carry animated.', soon: true, icon: <><path d="M4 18H22M4 42H22M34 8V52M22 30H46M46 18H64M46 42H64" /></> },
+  { to: '/logic-gates', n: '10', name: 'Logic gates', tag: 'The atoms of digital.', text: 'AND, OR, NOT, NAND, NOR, XOR — flip the inputs, watch the output, read the truth table.', soon: true, icon: <><path d="M4 20H16M4 40H16M16 12H34a18 18 0 0 1 0 36H16Z M52 30H64" /></> },
+  { to: '/flip-flops', n: '11', name: 'Flip-flops', tag: 'Gates that remember.', text: 'Wire NAND gates back into themselves and build SR, D, JK and T memory cells.', soon: true, icon: <><rect x="16" y="12" width="32" height="36" rx="2" /><path d="M4 20H16M4 40H16M48 20H64M48 40H64" /></> },
+  { to: '/adders', n: '12', name: 'Adders', tag: 'Addition is just gates.', text: 'Half adder, full adder, then a 4-bit ripple-carry adder with the carry animated.', soon: true, icon: <><path d="M4 18H22M4 42H22M34 8V52M22 30H46M46 18H64M46 42H64" /></> },
 ];
 
 const radioLabs: Lab[] = [
-  { to: '/antennas', n: '10', name: 'Antennas', tag: 'Current becomes waves.', text: 'Dipole, monopole, loop and Yagi — see how each shape radiates into space.', icon: <><path d="M34 30V52M20 30H48M34 30L20 12M34 30L48 12" /><path d="M26 6a12 12 0 0 1 16 0M22 1a18 18 0 0 1 24 0" /></> },
+  { to: '/antennas', n: '13', name: 'Antennas', tag: 'Current becomes waves.', text: 'Dipole, monopole, loop and Yagi — see how each shape radiates into space.', icon: <><path d="M34 30V52M20 30H48M34 30L20 12M34 30L48 12" /><path d="M26 6a12 12 0 0 1 16 0M22 1a18 18 0 0 1 24 0" /></> },
 ];
 
 function LabCard({ lab }: { lab: Lab }) {
