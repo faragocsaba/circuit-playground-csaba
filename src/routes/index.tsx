@@ -32,9 +32,9 @@ const circuitLabs: Lab[] = [
 ];
 
 const digitalLabs: Lab[] = [
-  { to: '/logic-gates', n: '10', name: 'Logic gates', tag: 'The atoms of digital.', text: 'AND, OR, NOT, NAND, NOR, XOR — flip the inputs, watch the output, read the truth table.', soon: true, icon: <><path d="M4 20H16M4 40H16M16 12H34a18 18 0 0 1 0 36H16Z M52 30H64" /></> },
-  { to: '/flip-flops', n: '11', name: 'Flip-flops', tag: 'Gates that remember.', text: 'Wire NAND gates back into themselves and build SR, D, JK and T memory cells.', soon: true, icon: <><rect x="16" y="12" width="32" height="36" rx="2" /><path d="M4 20H16M4 40H16M48 20H64M48 40H64" /></> },
-  { to: '/adders', n: '12', name: 'Adders', tag: 'Addition is just gates.', text: 'Half adder, full adder, then a 4-bit ripple-carry adder with the carry animated.', soon: true, icon: <><path d="M4 18H22M4 42H22M34 8V52M22 30H46M46 18H64M46 42H64" /></> },
+  { to: '/logic-gates', n: '10', name: 'Logic gates', tag: 'The atoms of digital.', text: 'AND, OR, NOT, NAND, NOR, XOR — flip the inputs, watch the output, read the truth table.', icon: <><path d="M4 20H16M4 40H16M16 12H34a18 18 0 0 1 0 36H16Z M52 30H64" /></> },
+  { to: '/flip-flops', n: '11', name: 'Flip-flops', tag: 'Gates that remember.', text: 'Wire NAND gates back into themselves and build SR, D, JK and T memory cells.', icon: <><rect x="16" y="12" width="32" height="36" rx="2" /><path d="M4 20H16M4 40H16M48 20H64M48 40H64" /></> },
+  { to: '/adders', n: '12', name: 'Adders', tag: 'Addition is just gates.', text: 'Half adder, full adder, then a 4-bit ripple-carry adder with the carry animated.', icon: <><path d="M4 18H22M4 42H22M34 8V52M22 30H46M46 18H64M46 42H64" /></> },
 ];
 
 const radioLabs: Lab[] = [
