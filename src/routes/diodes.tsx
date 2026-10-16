@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import { ChevronDown, Cpu, Info, Pause, Play, RotateCcw, Activity } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -64,7 +64,7 @@ function DiodeLab() {
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Activity size={16} className="text-muted-foreground" /> Current vs. voltage</h2><span className="text-[10px] text-muted-foreground font-mono">● operating point</span></div><div className="figure-panel"><IVPlot kind={kind} model={model} color={color} /><div className="panel-note"><Info size={13} className="shrink-0" /><span>{kind === 'zener' ? 'Flat in reverse until −5.1 V, then a sharp downward knee: the breakdown region.' : 'Almost no current until the knee, then current rises steeply. In reverse it stays near zero.'}</span></div></div></section>
       </div>
       </>}
-      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Simplified educational model · ideal knee voltage · carrier motion not to scale</span><span>circuit.playground / 04</span></footer>
+      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Simplified educational model · ideal knee voltage · carrier motion not to scale</span><span><Link to="/theory" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 04</span></footer>
     </main>
   </>;
 }
