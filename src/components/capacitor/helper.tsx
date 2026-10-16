@@ -23,8 +23,8 @@ export function CapacitorHelper({ setup }: { setup: CapacitorContext }) {
     if (!response.ok) { const body = await response.json().catch(() => ({})); throw new Error(body.error ?? 'The AI helper is unavailable right now.'); }
     return response;
   } }), []);
-  const { messages, sendMessage, status, stop, error, setMessages, clearError } = useChat({ transport, onFinish: ({ message, isAborted, isError }) => {
-    if (!isAborted && !isError && !message.parts.some(p => p.type === 'text' && p.text.trim())) setNotice('The model did not provide an answer to this question.');
+  const { messages, sendMessage, status, stop, error, setMessages, clearError } = useChat({ transport, onFinish: ({ message, isAbort, isError }) => {
+    if (!isAbort && !isError && !message.parts.some(p => p.type === 'text' && p.text.trim())) setNotice('The model did not provide an answer to this question.');
   } });
   const busy = status === 'submitted' || status === 'streaming';
   useEffect(() => {
