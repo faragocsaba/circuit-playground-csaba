@@ -284,11 +284,11 @@ export function CmosDiagram({ type, a, b }: { type: PrimitiveGate; a: Bit; b: Bi
       <Wire d={`M 200 84 V 100`} bit={pullUp ? 1 : out} />
       <Wire d={`M 200 140 V ${outY}`} bit={out} />
       {/* NMOS pair in parallel */}
-      <Mosfet x={146} y={210} type="nmos" label="A" bit={a} />
-      <Mosfet x={226} y={210} type="nmos" label="B" bit={b} />
-      <Wire d={`M ${outX} ${outY} V 190 H 160 M 240 190 V 190 H ${outX}`} bit={out} />
-      <Wire d={`M 160 230 V ${gndY}`} bit={0} />
-      <Wire d={`M 240 230 V ${gndY}`} bit={0} />
+      <Mosfet x={130} y={210} type="nmos" label="A" bit={a} />
+      <Mosfet x={250} y={210} type="nmos" label="B" bit={b} />
+      <Wire d={`M ${outX} ${outY} V 190 M 144 190 H 264`} bit={out} />
+      <Wire d={`M 144 230 V ${gndY}`} bit={0} />
+      <Wire d={`M 264 230 V ${gndY}`} bit={0} />
     </>}
     <text x={30} y={30} className="terminal-label" style={{ fontSize: 11 }}>{pullUp ? 'Pulled UP to 1' : pullDown ? 'Pulled DOWN to 0' : ''}</text>
     <text x={30} y={292} className="terminal-label" style={{ fontSize: 10 }}>Top: PMOS (bubbled gate) conducts on 0 · Bottom: NMOS conducts on 1</text>
