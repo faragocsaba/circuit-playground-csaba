@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CapacitorsRouteImport } from './routes/capacitors'
 import { Route as DiodesRouteImport } from './routes/diodes'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CapacitorsRoute = CapacitorsRouteImport.update({
+  id: '/capacitors',
+  path: '/capacitors',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DiodesRoute = DiodesRouteImport.update({
@@ -25,27 +31,31 @@ const DiodesRoute = DiodesRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/capacitors': typeof CapacitorsRoute
   '/diodes': typeof DiodesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/capacitors': typeof CapacitorsRoute
   '/diodes': typeof DiodesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/capacitors': typeof CapacitorsRoute
   '/diodes': typeof DiodesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/diodes'
+  fullPaths: '/' | '/capacitors' | '/diodes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/diodes'
-  id: '__root__' | '/' | '/diodes'
+  to: '/' | '/capacitors' | '/diodes'
+  id: '__root__' | '/' | '/capacitors' | '/diodes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CapacitorsRoute: typeof CapacitorsRoute
   DiodesRoute: typeof DiodesRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/capacitors': {
+      id: '/capacitors'
+      path: '/capacitors'
+      fullPath: '/capacitors'
+      preLoaderRoute: typeof CapacitorsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/diodes': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CapacitorsRoute: CapacitorsRoute,
   DiodesRoute: DiodesRoute,
 }
 export const routeTree = rootRouteImport
