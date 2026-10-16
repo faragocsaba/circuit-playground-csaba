@@ -9,7 +9,7 @@ import { advance, defaultInductorSettings, initialState, resonantFrequency, samp
 export const Route = createFileRoute('/inductors')({
   head: () => ({ meta: [
     { title: 'Inductor Lab — Circuit Playground' },
-    { name: 'description', content: 'Explore inductors with RL switching, an oscillating LC tank and series RLC resonance, with animated current and live graphs.' },
+    { name: 'description', content: 'Explore inductors with RL switching and an oscillating LC tank, with animated current and live graphs.' },
     { property: 'og:title', content: 'Inductor Lab — Circuit Playground' },
     { property: 'og:description', content: 'Watch an inductor resist change, store energy in its magnetic field and resonate with a capacitor.' },
     { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' },
@@ -17,7 +17,7 @@ export const Route = createFileRoute('/inductors')({
   component: InductorLab,
 });
 
-const modes: Record<InductorMode, { name: string; short: string }> = {
+const modes: Record<'rl' | 'lc', { name: string; short: string }> = {
   rl: { name: 'RL switching', short: 'RL' }, lc: { name: 'LC tank', short: 'LC' },
 };
 interface Lab { settings: InductorSettings; state: InductorState; history: InductorSample[]; motion: number }
@@ -73,7 +73,7 @@ function InductorLab() {
     <SiteHeader />
     <main className="shell">
       <div className="lab-heading flex flex-wrap items-end justify-between gap-4"><div><div className="eyebrow mb-3 flex items-center gap-2 text-muted-foreground"><span className="text-primary">03</span><span>/</span> THE BUILDING BLOCKS</div><h1>Inductor lab<span className="text-primary">.</span></h1><p className="mt-3 text-sm text-muted-foreground">Resist change. Store a field.</p></div>
-        <div className="segment" aria-label="Circuit">{(Object.keys(modes) as InductorMode[]).map(m => <Button key={m} variant="ghost" size="sm" aria-pressed={settings.mode === m} onClick={() => setMode(m)}>{modes[m].name}</Button>)}</div></div>
+        <div className="segment" aria-label="Circuit">{(Object.keys(modes) as ('rl' | 'lc')[]).map(m => <Button key={m} variant="ghost" size="sm" aria-pressed={settings.mode === m} onClick={() => setMode(m)}>{modes[m].name}</Button>)}</div></div>
       <div className="lab-grid">
         <section className="workspace" aria-label="Inductor circuit workspace">
           <div className="workspace-head"><div className="flex items-center gap-2.5"><span className="eyebrow text-muted-foreground">LIVE CIRCUIT</span><span className="text-xs text-muted-foreground">/</span><span className="text-xs font-medium">Series {modes[settings.mode].short}</span></div><span className="live-status"><span className="legend-dot" />{playing ? 'Running' : 'Paused'}</span></div>
