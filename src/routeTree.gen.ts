@@ -22,6 +22,9 @@ import { Route as ResistorsRouteImport } from './routes/resistors'
 import { Route as TheoryRouteImport } from './routes/theory'
 import { Route as TransistorsRouteImport } from './routes/transistors'
 import { Route as ApiCapacitorChatRouteImport } from './routes/api.capacitor-chat'
+import { Route as CircuitsKirchhoffRouteImport } from './routes/circuits.kirchhoff'
+import { Route as CircuitsLenzRouteImport } from './routes/circuits.lenz'
+import { Route as CircuitsResonanceRouteImport } from './routes/circuits.resonance'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -88,13 +91,28 @@ const ApiCapacitorChatRoute = ApiCapacitorChatRouteImport.update({
   path: '/api/capacitor-chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CircuitsKirchhoffRoute = CircuitsKirchhoffRouteImport.update({
+  id: '/kirchhoff',
+  path: '/kirchhoff',
+  getParentRoute: () => CircuitsRoute,
+} as any)
+const CircuitsLenzRoute = CircuitsLenzRouteImport.update({
+  id: '/lenz',
+  path: '/lenz',
+  getParentRoute: () => CircuitsRoute,
+} as any)
+const CircuitsResonanceRoute = CircuitsResonanceRouteImport.update({
+  id: '/resonance',
+  path: '/resonance',
+  getParentRoute: () => CircuitsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/adders': typeof AddersRoute
   '/antennas': typeof AntennasRoute
   '/capacitors': typeof CapacitorsRoute
-  '/circuits': typeof CircuitsRoute
+  '/circuits': typeof CircuitsRouteWithChildren
   '/diodes': typeof DiodesRoute
   '/flip-flops': typeof FlipFlopsRoute
   '/inductors': typeof InductorsRoute
@@ -103,13 +121,16 @@ export interface FileRoutesByFullPath {
   '/theory': typeof TheoryRoute
   '/transistors': typeof TransistorsRoute
   '/api/capacitor-chat': typeof ApiCapacitorChatRoute
+  '/circuits/kirchhoff': typeof CircuitsKirchhoffRoute
+  '/circuits/lenz': typeof CircuitsLenzRoute
+  '/circuits/resonance': typeof CircuitsResonanceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/adders': typeof AddersRoute
   '/antennas': typeof AntennasRoute
   '/capacitors': typeof CapacitorsRoute
-  '/circuits': typeof CircuitsRoute
+  '/circuits': typeof CircuitsRouteWithChildren
   '/diodes': typeof DiodesRoute
   '/flip-flops': typeof FlipFlopsRoute
   '/inductors': typeof InductorsRoute
@@ -118,6 +139,9 @@ export interface FileRoutesByTo {
   '/theory': typeof TheoryRoute
   '/transistors': typeof TransistorsRoute
   '/api/capacitor-chat': typeof ApiCapacitorChatRoute
+  '/circuits/kirchhoff': typeof CircuitsKirchhoffRoute
+  '/circuits/lenz': typeof CircuitsLenzRoute
+  '/circuits/resonance': typeof CircuitsResonanceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -125,7 +149,7 @@ export interface FileRoutesById {
   '/adders': typeof AddersRoute
   '/antennas': typeof AntennasRoute
   '/capacitors': typeof CapacitorsRoute
-  '/circuits': typeof CircuitsRoute
+  '/circuits': typeof CircuitsRouteWithChildren
   '/diodes': typeof DiodesRoute
   '/flip-flops': typeof FlipFlopsRoute
   '/inductors': typeof InductorsRoute
@@ -134,6 +158,9 @@ export interface FileRoutesById {
   '/theory': typeof TheoryRoute
   '/transistors': typeof TransistorsRoute
   '/api/capacitor-chat': typeof ApiCapacitorChatRoute
+  '/circuits/kirchhoff': typeof CircuitsKirchhoffRoute
+  '/circuits/lenz': typeof CircuitsLenzRoute
+  '/circuits/resonance': typeof CircuitsResonanceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +178,9 @@ export interface FileRouteTypes {
     | '/theory'
     | '/transistors'
     | '/api/capacitor-chat'
+    | '/circuits/kirchhoff'
+    | '/circuits/lenz'
+    | '/circuits/resonance'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,6 +196,9 @@ export interface FileRouteTypes {
     | '/theory'
     | '/transistors'
     | '/api/capacitor-chat'
+    | '/circuits/kirchhoff'
+    | '/circuits/lenz'
+    | '/circuits/resonance'
   id:
     | '__root__'
     | '/'
@@ -181,6 +214,9 @@ export interface FileRouteTypes {
     | '/theory'
     | '/transistors'
     | '/api/capacitor-chat'
+    | '/circuits/kirchhoff'
+    | '/circuits/lenz'
+    | '/circuits/resonance'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -188,7 +224,7 @@ export interface RootRouteChildren {
   AddersRoute: typeof AddersRoute
   AntennasRoute: typeof AntennasRoute
   CapacitorsRoute: typeof CapacitorsRoute
-  CircuitsRoute: typeof CircuitsRoute
+  CircuitsRoute: typeof CircuitsRouteWithChildren
   DiodesRoute: typeof DiodesRoute
   FlipFlopsRoute: typeof FlipFlopsRoute
   InductorsRoute: typeof InductorsRoute
@@ -292,15 +328,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCapacitorChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/circuits/kirchhoff': {
+      id: '/circuits/kirchhoff'
+      path: '/kirchhoff'
+      fullPath: '/circuits/kirchhoff'
+      preLoaderRoute: typeof CircuitsKirchhoffRouteImport
+      parentRoute: typeof CircuitsRoute
+    }
+    '/circuits/lenz': {
+      id: '/circuits/lenz'
+      path: '/lenz'
+      fullPath: '/circuits/lenz'
+      preLoaderRoute: typeof CircuitsLenzRouteImport
+      parentRoute: typeof CircuitsRoute
+    }
+    '/circuits/resonance': {
+      id: '/circuits/resonance'
+      path: '/resonance'
+      fullPath: '/circuits/resonance'
+      preLoaderRoute: typeof CircuitsResonanceRouteImport
+      parentRoute: typeof CircuitsRoute
+    }
   }
 }
+
+interface CircuitsRouteChildren {
+  CircuitsKirchhoffRoute: typeof CircuitsKirchhoffRoute
+  CircuitsLenzRoute: typeof CircuitsLenzRoute
+  CircuitsResonanceRoute: typeof CircuitsResonanceRoute
+}
+
+const CircuitsRouteChildren: CircuitsRouteChildren = {
+  CircuitsKirchhoffRoute: CircuitsKirchhoffRoute,
+  CircuitsLenzRoute: CircuitsLenzRoute,
+  CircuitsResonanceRoute: CircuitsResonanceRoute,
+}
+
+const CircuitsRouteWithChildren = CircuitsRoute._addFileChildren(
+  CircuitsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AddersRoute: AddersRoute,
   AntennasRoute: AntennasRoute,
   CapacitorsRoute: CapacitorsRoute,
-  CircuitsRoute: CircuitsRoute,
+  CircuitsRoute: CircuitsRouteWithChildren,
   DiodesRoute: DiodesRoute,
   FlipFlopsRoute: FlipFlopsRoute,
   InductorsRoute: InductorsRoute,
