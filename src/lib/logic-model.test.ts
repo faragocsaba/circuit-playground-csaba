@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ffNext, fullAdder, gate, halfAdder, rippleAdd, srLatch, toBits, truthTable } from './logic-model';
+import { cmosNetworks, ffNext, fullAdder, gate, GATE_BUILD, halfAdder, mosConducts, rippleAdd, srLatch, toBits, truthTable, type PrimitiveGate } from './logic-model';
 
 describe('gates', () => {
   it('AND is 1 only when both inputs are 1', () => {
@@ -85,5 +85,35 @@ describe('adders', () => {
   it('carry ripples: 15 + 1 sets the carry out of every stage', () => {
     const r = rippleAdd(toBits(15, 4), toBits(1, 4));
     expect(r.bits.every(b => b.cout === 1)).toBe(true);
+  });
+});
+
+describe('CMOS transistor implementation', () => {
+  it('a PMOS conducts on gate 0, an NMOS on gate 1', () => {
+    expect(mosConducts('pmos', 0)).toBe(true);
+    expect(mosConducts('pmos', 1)).toBe(false);
+    expect(mosConducts('nmos', 1)).toBe(true);
+    expect(mosConducts('nmos', 0)).toBe(false);
+  });
+  it('exactly one network conducts for every input of every primitive gate', () => {
+    for (const type of ['not', 'nand', 'nor'] as PrimitiveGate[]) {
+      for (const a of [0, 1] as const) for (const b of [0, 1] as const) {
+        const { pullUp, pullDown } = cmosNetworks(type, a, b);
+        expect(pullUp).not.toBe(pullDown);
+        // the conducting network sets the output: up = 1, down = 0
+        expect(pullUp ? 1 : 0).toBe(gate(type, a, b));
+      }
+    }
+  });
+  it('NAND pulls down only when both inputs are 1', () => {
+    expect(cmosNetworks('nand', 1, 1).pullDown).toBe(true);
+    expect(cmosNetworks('nand', 1, 0).pullUp).toBe(true);
+  });
+  it('transistor counts: NOT 2, NAND/NOR 4, AND/OR 6', () => {
+    expect(GATE_BUILD.not.transistors).toBe(2);
+    expect(GATE_BUILD.nand.transistors).toBe(4);
+    expect(GATE_BUILD.nor.transistors).toBe(4);
+    expect(GATE_BUILD.and.transistors).toBe(6);
+    expect(GATE_BUILD.or.transistors).toBe(6);
   });
 });
