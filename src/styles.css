@@ -226,3 +226,23 @@ h1 { font-family: var(--font-display); font-weight: 400; font-size: 46px; line-h
 .phasor-l-text { fill: var(--coral) !important; }
 .phasor-c-text { fill: var(--flow-collector) !important; }
 .phasor-s-text { fill: var(--amber) !important; font-weight: 600; }
+
+/* Digital labs: signal levels */
+.sig-wire { stroke: var(--border); stroke-width: 2.5; fill: none; stroke-linecap: round; transition: stroke 0.15s; }
+.sig-wire.sig-high { stroke: var(--primary); }
+.sig-pin { fill: var(--card); stroke: var(--border); stroke-width: 2; transition: all 0.15s; }
+.sig-pin.sig-high { fill: var(--primary); stroke: var(--primary); }
+.sig-pin-text { font-family: var(--font-mono); font-size: 10px; font-weight: 600; fill: var(--muted-foreground); pointer-events: none; }
+.sig-pin.sig-high + .sig-pin-text, .sig-high .sig-pin-text { fill: var(--primary-foreground); }
+.sig-node { fill: var(--border); }
+.sig-node.sig-high { fill: var(--primary); }
+.sig-pulse { fill: var(--primary); opacity: 0.85; }
+.truth-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; }
+.truth-table th, .truth-table td { padding: 7px 12px; text-align: center; border-bottom: 1px solid var(--border); }
+.truth-table th { font-size: 10px; letter-spacing: 1px; color: var(--muted-foreground); font-weight: 500; }
+.truth-table tr.current-row td { background: var(--accent); color: var(--primary); font-weight: 650; }
+.truth-table tr.forbidden-row td { background: var(--carrier-soft); color: var(--coral); }
+.bit-toggle { font-family: var(--font-mono); font-weight: 650; width: 100%; height: 42px; justify-content: flex-start; background: var(--card); }
+.bit-toggle[aria-pressed=true] { color: var(--primary); border-color: var(--primary); background: var(--accent); }
+.bit-badge { margin-left: auto; font-family: var(--font-mono); font-size: 12px; font-weight: 650; color: var(--muted-foreground); background: var(--secondary); border-radius: 4px; padding: 3px 8px; }
+.bit-toggle[aria-pressed=true] .bit-badge { background: var(--primary); color: var(--primary-foreground); }
