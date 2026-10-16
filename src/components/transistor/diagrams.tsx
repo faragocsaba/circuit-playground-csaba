@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { configurations, transistorModel, type Configuration, type Model, type TransistorType } from '@/lib/transistor-model';
+import { configurations, transistorFlow, transistorModel, type Configuration, type Model, type TransistorType } from '@/lib/transistor-model';
 
 function useSvgPlayback(playing: boolean) {
   const ref = useRef<SVGSVGElement>(null);
@@ -11,10 +11,9 @@ function useSvgPlayback(playing: boolean) {
   }, [playing]);
   return ref;
 }
-function Flow({ path, amount, speed, reverse = false, kind, mixBase = false }: { path: string; amount: number; speed: number; reverse?: boolean; kind: 'collector' | 'base' | 'emitter'; mixBase?: boolean }) {
-  const count = amount > 0 ? (kind === 'emitter' ? 8 : Math.min(7, Math.max(2, Math.ceil(amount)))) : 0;
-  const cls = (i: number) => kind === 'emitter' ? (mixBase && i % 4 === 3 ? 'current-particle flow-base' : 'current-particle flow-collector') : `current-particle flow-${kind}`;
-  return <>{Array.from({ length: count }, (_, i) => <circle key={i} r="3.5" className={cls(i)}><animateMotion path={path} dur={`${3 / speed}s`} begin={`${-i * 3 / speed / count}s`} repeatCount="indefinite" keyPoints={reverse ? '1;0' : '0;1'} keyTimes="0;1" calcMode="linear" /></circle>)}</>;
+function Flow({ path, count, period, reverse = false, kind, baseCount = 0 }: { path: string; count: number; period: number; reverse?: boolean; kind: 'collector' | 'base' | 'emitter'; baseCount?: number }) {
+  const cls = (i: number) => kind === 'emitter' ? (i >= count - baseCount ? 'current-particle flow-base' : 'current-particle flow-collector') : `current-particle flow-${kind}`;
+  return <g data-flow={kind}>{Array.from({ length: count }, (_, i) => <circle key={i} r="3.5" className={cls(i)}><animateMotion path={path} dur={`${period}s`} begin={`${-i * period / count}s`} repeatCount="indefinite" keyPoints={reverse ? '1;0' : '0;1'} keyTimes="0;1" calcMode="linear" /></circle>)}</g>;
 }
 function Ground({ x, y }: { x: number; y: number }) {
   return <g className="wire"><path d={`M${x} ${y}v10m-13 0h26m-9 6h-8m3 6h2`} /></g>;
@@ -29,6 +28,8 @@ export function Circuit({ type, config, model, supply, speed, playing }: { type:
   const lower = cc ? 'M330 230L390 255V340H520' : cb ? 'M330 230L390 255V320H150' : 'M330 230L390 255V320';
   const base = 'M150 210H330';
   const reverse = type === 'pnp';
+  const flow = transistorFlow(model);
+  const period = flow.period / speed;
   return <svg ref={ref} className="circuit-svg" viewBox="0 0 720 390" role="img" aria-label={`${type.toUpperCase()} ${configurations[config].name} circuit, ${model.state}`}>
     <defs><marker id="emitter-arrow" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="var(--foreground)" /></marker></defs>
     <g className="wire"><path d={upper} /><path d={lower} /><path d={base} /></g>
@@ -45,7 +46,7 @@ export function Circuit({ type, config, model, supply, speed, playing }: { type:
     <path d={cc ? 'M390 255H540' : 'M390 168H540'} className="wire" /><circle cx="390" cy={cc ? 255 : 168} r="3.5" className="node" /><circle cx="540" cy={cc ? 255 : 168} r="5" fill="var(--card)" stroke="var(--primary)" strokeWidth="2" />
     <text x="557" y={cc ? 249 : 162} className="current-text">OUTPUT</text><text x="557" y={cc ? 269 : 182}>{model.output.toFixed(2)} V</text>
     <text x="215" y="233" className="current-text flow-text-base">Iᵦ</text><text x="354" y="78" className="current-text flow-text-collector">I꜀</text><text x="354" y={cb ? 313 : 313} className="current-text">Iₑ = I꜀ + Iᵦ</text>
-    <Flow kind="collector" path={upper} amount={model.ic} speed={speed} reverse={reverse} /><Flow kind="emitter" mixBase={model.ib > 0} path={lower} amount={model.ie} speed={speed} reverse={reverse} /><Flow kind="base" path={base} amount={model.ib * 40} speed={speed} reverse={cb ? !reverse : reverse} />
+    <Flow kind="collector" path={upper} count={flow.collector} period={period} reverse={reverse} /><Flow kind="emitter" baseCount={flow.base} path={lower} count={flow.emitter} period={period} reverse={reverse} /><Flow kind="base" path={base} count={flow.base} period={period} reverse={reverse} />
   </svg>;
 }
 export function Cutaway({ type, model, speed, playing }: { type: TransistorType; model: Model; speed: number; playing: boolean }) {

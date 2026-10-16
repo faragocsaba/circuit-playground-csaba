@@ -30,4 +30,18 @@ export function transistorModel(type: TransistorType, config: Configuration, dri
   return { ib, ic, ie, sign, state: !active ? 'Cutoff' : saturated ? 'Saturation' : 'Active', output: sign * (config === 'collector' ? emitterVoltage : collectorVoltage), vb: sign * (config === 'base' ? 0 : active ? emitterVoltage + 0.7 : 0), ve: sign * emitterVoltage, vc: sign * collectorVoltage, conducting: active, saturated };
 }
 export type Model = ReturnType<typeof transistorModel>;
+// Compress the numerical gain to a readable 10:1 active-region dot ratio.
+// Every branch has the same transit period, so counts also represent dot rates.
+export function transistorFlow(model: Model) {
+  const base = model.ib > 0 ? 1 : 0;
+  const collector = model.ic > 0
+    ? Math.max(1, Math.min(10, Math.round(10 * model.ic / Math.max(model.ib * BETA, Number.EPSILON))))
+    : 0;
+  return {
+    base,
+    collector,
+    emitter: collector + base,
+    period: 3 * Math.max(0.75, Math.min(4, Math.sqrt(4.04 / Math.max(model.ie, 0.001)))),
+  };
+}
 export function formatCurrent(ma: number) { return ma < 1 ? { value: (ma * 1000).toFixed(ma === 0 ? 0 : 1), unit: 'µA' } : { value: ma.toFixed(2), unit: 'mA' }; }

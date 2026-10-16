@@ -11,6 +11,7 @@
 
 ## Application architecture
 - Keep each component's educational model (transistor, diode, …) in a browser-safe pure module under src/lib with unit tests; visualizations consume the same results to keep circuit values and carrier flow consistent.
+- Derive transistor branch dot counts and a shared transit period from the pure transistor model; emitter dots combine both terminal contributions so displayed counts and rates conserve current across every arrangement.
 - Use purpose-built SVG circuit and semiconductor diagrams for the interactive lab; animation must remain adjustable and pausable rather than using prerecorded media.
 - Each component type is its own route tab (/resistors, /capacitors, /diodes, /transistors) with a landing page at / linking to each sharing SiteHeader; simulations remain browser-side without authentication.
 - Capacitor experiments use exact RC time steps and retain capacitor voltage across source changes; circuit motion, plate charge and live traces consume the same sample so transient and AC views stay synchronized.

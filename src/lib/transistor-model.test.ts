@@ -1,8 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { transistorModel, BETA, type Configuration, type TransistorType } from './transistor-model';
+import { transistorModel, transistorFlow, BETA, type Configuration, type TransistorType } from './transistor-model';
 const configs: Configuration[] = ['emitter', 'base', 'collector'];
 describe('Educational BJT model', () => {
   for (const config of configs) for (const type of ['npn', 'pnp'] as TransistorType[]) {
+    it(`${type} ${config} illustrates one base plus ten collector dots as eleven emitter dots`, () => {
+      const model = transistorModel(type, config, config === 'base' ? 4.04 : 40, 12);
+      const flow = transistorFlow(model);
+      expect(flow.base).toBe(1);
+      expect(flow.collector).toBe(10);
+      expect(flow.emitter).toBe(11);
+      expect(model.ic / model.ib).toBeCloseTo(100);
+    });
     it(`${type} ${config} conserves current and respects the load`, () => {
       for (const supply of [0, .5, 1, 5, 12]) for (const drive of [0, 1, 4, 40, 150]) {
         const m = transistorModel(type, config, drive, supply);
@@ -25,6 +33,20 @@ describe('Educational BJT model', () => {
       expect(n.ic).toBe(p.ic); expect(n.ib).toBe(p.ib);
       expect(n.output).toBe(-p.output); expect(n.vb).toBe(-p.vb);
     }
+  });
+  it('preserves dot contributions in saturation and stops all dots at cutoff', () => {
+    for (const config of configs) {
+      const saturated = transistorFlow(transistorModel('npn', config, 150, 5));
+      expect(saturated.collector).toBeLessThan(10);
+      expect(saturated.emitter).toBe(saturated.base + saturated.collector);
+      const cutoff = transistorFlow(transistorModel('npn', config, 0, 5));
+      expect([cutoff.base, cutoff.collector, cutoff.emitter]).toEqual([0, 0, 0]);
+    }
+  });
+  it('increases dot rate when current increases', () => {
+    const low = transistorFlow(transistorModel('npn', 'emitter', 10, 12));
+    const high = transistorFlow(transistorModel('npn', 'emitter', 40, 12));
+    expect(high.period).toBeLessThan(low.period);
   });
   it('follows active gain and response directions', () => {
     const a = transistorModel('npn', 'emitter', 20, 12), b = transistorModel('npn', 'emitter', 40, 12);
