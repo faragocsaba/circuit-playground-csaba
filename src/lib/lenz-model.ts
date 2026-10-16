@@ -14,7 +14,8 @@ export const fluxRate = (d: number, v: number) => (2 * v) / (d * d * d);
 /** Induced EMF opposes the change: ε = −dΦ/dt. Sign flipped for a south pole. */
 export function inducedEmf(s: LenzSettings, d: number, v: number) {
   const emf = -fluxRate(d, v);
-  return s.pole === 'north' ? emf : -emf;
+  const signed = s.pole === 'north' ? emf : -emf;
+  return signed === 0 ? 0 : signed; // avoid -0
 }
 
 /** Induced current = ε / R. */
