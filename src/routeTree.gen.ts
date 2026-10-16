@@ -14,6 +14,7 @@ import { Route as CapacitorsRouteImport } from './routes/capacitors'
 import { Route as DiodesRouteImport } from './routes/diodes'
 import { Route as InductorsRouteImport } from './routes/inductors'
 import { Route as ResistorsRouteImport } from './routes/resistors'
+import { Route as TheoryRouteImport } from './routes/theory'
 import { Route as TransistorsRouteImport } from './routes/transistors'
 import { Route as ApiCapacitorChatRouteImport } from './routes/api.capacitor-chat'
 
@@ -42,6 +43,11 @@ const ResistorsRoute = ResistorsRouteImport.update({
   path: '/resistors',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TheoryRoute = TheoryRouteImport.update({
+  id: '/theory',
+  path: '/theory',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TransistorsRoute = TransistorsRouteImport.update({
   id: '/transistors',
   path: '/transistors',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/diodes': typeof DiodesRoute
   '/inductors': typeof InductorsRoute
   '/resistors': typeof ResistorsRoute
+  '/theory': typeof TheoryRoute
   '/transistors': typeof TransistorsRoute
   '/api/capacitor-chat': typeof ApiCapacitorChatRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/diodes': typeof DiodesRoute
   '/inductors': typeof InductorsRoute
   '/resistors': typeof ResistorsRoute
+  '/theory': typeof TheoryRoute
   '/transistors': typeof TransistorsRoute
   '/api/capacitor-chat': typeof ApiCapacitorChatRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/diodes': typeof DiodesRoute
   '/inductors': typeof InductorsRoute
   '/resistors': typeof ResistorsRoute
+  '/theory': typeof TheoryRoute
   '/transistors': typeof TransistorsRoute
   '/api/capacitor-chat': typeof ApiCapacitorChatRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/diodes'
     | '/inductors'
     | '/resistors'
+    | '/theory'
     | '/transistors'
     | '/api/capacitor-chat'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/diodes'
     | '/inductors'
     | '/resistors'
+    | '/theory'
     | '/transistors'
     | '/api/capacitor-chat'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/diodes'
     | '/inductors'
     | '/resistors'
+    | '/theory'
     | '/transistors'
     | '/api/capacitor-chat'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   DiodesRoute: typeof DiodesRoute
   InductorsRoute: typeof InductorsRoute
   ResistorsRoute: typeof ResistorsRoute
+  TheoryRoute: typeof TheoryRoute
   TransistorsRoute: typeof TransistorsRoute
   ApiCapacitorChatRoute: typeof ApiCapacitorChatRoute
 }
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResistorsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/theory': {
+      id: '/theory'
+      path: '/theory'
+      fullPath: '/theory'
+      preLoaderRoute: typeof TheoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/transistors': {
       id: '/transistors'
       path: '/transistors'
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   DiodesRoute: DiodesRoute,
   InductorsRoute: InductorsRoute,
   ResistorsRoute: ResistorsRoute,
+  TheoryRoute: TheoryRoute,
   TransistorsRoute: TransistorsRoute,
   ApiCapacitorChatRoute: ApiCapacitorChatRoute,
 }
