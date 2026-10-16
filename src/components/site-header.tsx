@@ -29,7 +29,6 @@ export function SiteHeader({ children }: { children?: ReactNode }) {
         ]} />
         <NavGroup label="Circuits" items={[
           { to: '/circuits', label: 'Circuits', soon: true },
-          { to: '/lenz', label: "Lenz's law", soon: true },
         ]} />
         <NavGroup label="Digital" items={[
           { to: '/logic-gates', label: 'Logic gates', soon: true },
