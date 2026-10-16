@@ -1,25 +1,30 @@
 import type { CapacitorSample, CapacitorSettings } from '@/lib/capacitor-model';
 
-function along(points: number[][], progress: number) {
-  const lengths = points.slice(1).map((p, i) => Math.hypot(p[0] - points[i][0], p[1] - points[i][1]));
-  let distance = progress * lengths.reduce((a, b) => a + b, 0);
-  for (let i = 0; i < lengths.length; i++) {
-    if (distance <= lengths[i]) {
-      const ratio = distance / lengths[i];
-      return { cx: points[i][0] + ratio * (points[i + 1][0] - points[i][0]), cy: points[i][1] + ratio * (points[i + 1][1] - points[i][1]) };
+type Point = [number, number];
+function along(points: Point[], progress: number) {
+  const segments = points.slice(1).flatMap((end, i) => {
+    const start = points[i];
+    return start ? [{ start, end, length: Math.hypot(end[0] - start[0], end[1] - start[1]) }] : [];
+  });
+  let distance = progress * segments.reduce((sum, segment) => sum + segment.length, 0);
+  for (const { start, end, length } of segments) {
+    if (distance <= length && length > 0) {
+      const ratio = distance / length;
+      return { cx: start[0] + ratio * (end[0] - start[0]), cy: start[1] + ratio * (end[1] - start[1]) };
     }
-    distance -= lengths[i];
+    distance -= length;
   }
-  return { cx: points[0][0], cy: points[0][1] };
+  const first = points[0];
+  return { cx: first?.[0] ?? 0, cy: first?.[1] ?? 0 };
 }
 
 export function CapacitorCircuit({ settings, sample, motion }: { settings: CapacitorSettings; sample: CapacitorSample; motion: number }) {
   const count = Math.abs(sample.current) > 0.02 ? Math.min(12, Math.max(3, Math.ceil(Math.abs(sample.current)))) : 0;
-  const paths = [[[150, 155], [150, 90], [560, 90], [560, 185]], [[560, 205], [560, 300], [150, 300], [150, 235]]];
+  const paths: Point[][] = [[[150, 155], [150, 90], [560, 90], [560, 185]], [[560, 205], [560, 300], [150, 300], [150, 235]]];
   return <svg className="circuit-svg" viewBox="0 0 720 390" role="img" aria-label={`Capacitor series RC circuit, ${settings.mode === 'ac' ? 'alternating source' : settings.connected ? 'charging' : 'discharging'}`}>
     <path d="M150 155V90H560V185M560 205V300H150V235" className="wire" />
     <circle cx="150" cy="195" r="40" className="symbol" />
-    {settings.mode === 'ac' ? <path d="M125 195q12-28 25 0t25 0" className="symbol" /> : <><text x="150" y="185" textAnchor="middle" className="terminal-label">{settings.connected ? '+' : '0'}</text><text x="150" y="214" textAnchor="middle" className="terminal-label">{settings.connected ? '−' : 'V'}</text></>}
+    {settings.mode === 'ac' ? <path d="M125 195q12-28 25 0t25 0" className="symbol" /> : <><text x="150" y="185" textAnchor="middle" className="terminal-label">{settings.connected ? settings.voltage >= 0 ? '+' : '−' : '0'}</text><text x="150" y="214" textAnchor="middle" className="terminal-label">{settings.connected ? settings.voltage >= 0 ? '−' : '+' : 'V'}</text></>}
     <text x="60" y="140">{settings.mode === 'ac' ? 'AC SOURCE' : settings.connected ? 'DC SOURCE' : 'DISCHARGE'}</text><text x="60" y="264">{sample.source.toFixed(2)} V</text>
     <rect x="320" y="77" width="100" height="26" fill="var(--card)" />
     <path d="M320 90h10l6-10 12 20 12-20 12 20 12-20 12 20 6-10h18" className="wire" />
