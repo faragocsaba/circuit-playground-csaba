@@ -358,8 +358,8 @@ export function CompositeBuild({ type, a, b }: { type: GateType; a: Bit; b: Bit 
     <Wire d="M 324 50 H 350 V 92 H 380" bit={n2} />
     <Wire d="M 324 160 H 350 V 108 H 380" bit={n3} />
     <GateBox x={410} y={80} name="NAND" inA={n2} inB={n3} out={x} />
-    {wide && <GateBox x={540} y={80} name="NOT" inA={x} out={out} />}
-    <Pin x={wide ? 654 : 524} y={100} bit={out} label="OUT" />
+    {wide && <GateBox x={534} y={80} name="NOT" inA={x} out={out} />}
+    <Pin x={wide ? 637 : 513} y={100} bit={out} label="OUT" />
   </svg>;
 }
 
