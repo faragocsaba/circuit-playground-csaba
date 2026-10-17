@@ -79,7 +79,7 @@ function LogicGatesLab() {
         </div><div className="panel-note"><Info size={13} className="shrink-0" /><span>Next step: <Link to="/flip-flops" className="text-primary hover:underline">build flip-flops from these gates →</Link></span></div></div></section>
       </div>
       <PhysicalParts kind="gates" />
-      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal gates · 0 = low, 1 = high</span><span><Link to="/theory" hash="digital-logic" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 10</span></footer>
+      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal gates · 0 = low, 1 = high</span><span><Link to="/theory/digital" hash="gates" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 10</span></footer>
     </main>
   </>;
 }
