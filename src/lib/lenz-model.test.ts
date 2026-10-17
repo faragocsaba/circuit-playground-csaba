@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { coilFace, defaultLenzSettings as d, flux, fluxRate, inducedCurrent, inducedEmf, oscillation } from './lenz-model';
+import { coilFace, defaultLenzSettings as d, flux, fluxRate, inducedCurrent, inducedEmf, manualMotion, oscillation } from './lenz-model';
 
 describe('lenz model', () => {
   it('flux falls off with distance squared', () => {
@@ -31,5 +31,23 @@ describe('lenz model', () => {
     expect(at(0).distance).toBeCloseTo(1.2, 9);
     expect(at(3).distance).toBeCloseTo(4, 9);
     expect(Math.abs(at(1.5).velocity)).toBeGreaterThan(Math.abs(at(0.1).velocity));
+  });
+  it('automatic velocity agrees with decreasing distance and the flux derivative', () => {
+    const t = 1.5, dt = 0.00001;
+    const motion = oscillation(t);
+    const derivative = (oscillation(t + dt).distance - oscillation(t - dt).distance) / (2 * dt);
+    expect(motion.velocity).toBeCloseTo(-derivative, 7);
+    const fluxDerivative = (flux(oscillation(t + dt).distance) - flux(oscillation(t - dt).distance)) / (2 * dt);
+    expect(fluxRate(motion.distance, motion.velocity)).toBeCloseTo(fluxDerivative, 7);
+  });
+  it('manual approach repels a north pole and retreat attracts it', () => {
+    const approach = manualMotion(3, 2, 1);
+    expect(approach.velocity).toBe(1);
+    expect(inducedCurrent(d, approach.distance, approach.velocity)).toBeCloseTo(-0.025, 9);
+    expect(coilFace(d, approach.velocity)).toBe('north');
+    expect(coilFace(d, manualMotion(2, 3, 1).velocity)).toBe('south');
+  });
+  it('twice the speed induces twice the current', () => {
+    expect(inducedCurrent(d, 2, 2)).toBeCloseTo(2 * inducedCurrent(d, 2, 1), 9);
   });
 });

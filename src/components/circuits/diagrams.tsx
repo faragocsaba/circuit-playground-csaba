@@ -108,7 +108,7 @@ export function PhasorDiagram({ settings, time }: { settings: CircuitSettings; t
 export function LenzDiagram({ settings, distance, velocity }: { settings: LenzSettings; distance: number; velocity: number }) {
   const emf = inducedCurrent(settings, distance, velocity);
   const face = coilFace(settings, velocity);
-  const magX = 90 + (distance - 1.2) * 90; // magnet centre
+  const magX = 320 - (distance - 1.2) * 80; // smaller distance moves the magnet toward the coil
   const coilX = 430;
   const strength = Math.min(1, Math.abs(emf) / 0.12);
   const rings = Math.round(strength * 3);
@@ -117,11 +117,11 @@ export function LenzDiagram({ settings, distance, velocity }: { settings: LenzSe
   return <svg className="circuit-svg" viewBox="0 0 720 390" role="img" aria-label={`Magnet ${velocity > 0.01 ? 'approaching' : velocity < -0.01 ? 'receding from' : 'resting near'} the coil; induced current ${(Math.abs(emf) * 1000).toFixed(0)} milliunits`}>
     {/* magnet */}
     <g>
-      <rect x={magX - 70} y="160" width="70" height="44" fill={north ? 'var(--coral)' : 'var(--flow-collector)'} rx="3" />
-      <rect x={magX} y="160" width="70" height="44" fill={north ? 'var(--flow-collector)' : 'var(--coral)'} rx="3" />
-      <text x={magX - 35} y="187" textAnchor="middle" style={{ fill: 'var(--card)', fontWeight: 700 }}>{north ? 'N' : 'S'}</text>
-      <text x={magX + 35} y="187" textAnchor="middle" style={{ fill: 'var(--card)', fontWeight: 700 }}>{north ? 'S' : 'N'}</text>
-      {Math.abs(velocity) > 0.01 && <path d={velocity > 0 ? `M${magX + 82} 182h34m-9-7 9 7-9 7` : `M${magX - 82} 182h-34m9-7-9 7 9 7`} className="ant-arrow" />}
+      <rect x={magX - 70} y="160" width="70" height="44" fill={north ? 'var(--flow-collector)' : 'var(--coral)'} rx="3" />
+      <rect x={magX} y="160" width="70" height="44" fill={north ? 'var(--coral)' : 'var(--flow-collector)'} rx="3" />
+      <text x={magX - 35} y="187" textAnchor="middle" style={{ fill: 'var(--card)', fontWeight: 700 }}>{north ? 'S' : 'N'}</text>
+      <text x={magX + 35} y="187" textAnchor="middle" style={{ fill: 'var(--card)', fontWeight: 700 }}>{north ? 'N' : 'S'}</text>
+      {Math.abs(velocity) > 0.01 && <path d={velocity > 0 ? `M${magX - 20} 224h40m-9-7 9 7-9 7` : `M${magX + 20} 224h-40m9-7-9 7 9 7`} className="ant-arrow" />}
       <text x={magX} y="140" textAnchor="middle">{velocity > 0.01 ? 'approaching' : velocity < -0.01 ? 'receding' : 'at rest'}</text>
     </g>
     {/* coil */}
@@ -131,7 +131,7 @@ export function LenzDiagram({ settings, distance, velocity }: { settings: LenzSe
     <text x={coilX} y="300" textAnchor="middle">COIL</text>
     {face !== 'none' && <text x={coilX - 40} y="112" textAnchor="end" className="font-mono" style={{ fill: 'var(--coral)', fontWeight: 700 }}>this face: {face.toUpperCase()}</text>}
     {/* wires to galvanometer */}
-    <path d={`M${coilX - 26} 270V340H300M${coilX + 26} 270V340H420`} className="wire" />
+    <path d={`M${coilX - 26} 270V306H300V340H334M${coilX + 26} 270V340H386`} className="wire" />
     {/* galvanometer */}
     <circle cx="360" cy="340" r="26" className="symbol" fill="var(--card)" />
     <line x1="360" y1="340" x2={360 + needle * 18} y2={340 - 16} stroke="var(--coral)" strokeWidth="2.5" />

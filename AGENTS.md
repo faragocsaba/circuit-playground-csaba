@@ -22,3 +22,5 @@
 - Inductor experiments (RL, LC tank, series RLC) share one pure series R-L-C model: RL steps are exact, LC/RLC use fine RK4 substeps; circuit, energy bars, traces and resonance curve consume the same samples.
 - The transistor circuit builder is a third view of /transistors (?view=builder&template=…&a=&b=); its pure model solves fill-in templates with real part data (Ebers–Moll BJT, square-law MOSFET) so the schematic, device table and curves share one solution, and logic-gate pages deep-link into the matching CMOS template.
 - Use the shared PhysicalParts gallery for physical component examples; label generated pictures as illustrations and generic chip packages as generic so learners do not infer an exact part or pinout from the image.
+- Share one LenzExperiment between Inductors and the dedicated Circuits lab; automatic and manual motion use the pure Lenz model's positive-approach convention so diagrams, meters and traces agree.
+- Derive numerical Theory examples from the existing pure lab models when available so explanations stay aligned with simulation values.
