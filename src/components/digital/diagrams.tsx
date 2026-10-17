@@ -140,21 +140,23 @@ export function FlipFlopDiagram({ type, inputs, q, clock, onToggle }: {
 export function HalfAdderDiagram({ a, b, onToggleA, onToggleB }: { a: Bit; b: Bit; onToggleA: () => void; onToggleB: () => void }) {
   const sum = gate('xor', a, b), carry = gate('and', a, b);
   return <svg viewBox="0 0 400 280" className="circuit-svg" style={{ height: 300 }} role="img" aria-label="Half adder: XOR for the sum, AND for the carry">
-    <Wire d="M 50 90 H 120 V 120 H 148" bit={a} />
-    <Wire d="M 50 190 H 110 V 150 H 148" bit={b} />
-    <circle cx={120} cy={90} r={3} className={`sig-node ${cls(a)}`} />
-    <circle cx={110} cy={190} r={3} className={`sig-node ${cls(b)}`} />
-    <Wire d="M 120 90 V 60 H 218" bit={a} />
-    <Wire d="M 110 190 V 220 H 218" bit={b} />
+    {/* Each input branches to both gates. B bridges over A's vertical
+        branch without a junction; the dots mark only real connections. */}
+    <Wire d="M 50 90 H 110 V 112 H 214.48" bit={a} />
+    <Wire d="M 110 112 V 207 H 210" bit={a} />
+    <Wire d="M 50 180 H 104 Q 110 168 116 180 H 140 V 128 H 214.48" bit={b} />
+    <Wire d="M 140 180 V 223 H 210" bit={b} />
+    <circle cx={110} cy={112} r={3} className={`sig-node ${cls(a)}`} />
+    <circle cx={140} cy={180} r={3} className={`sig-node ${cls(b)}`} />
     {/* XOR gate */}
-    <path d="M 148 105 q 12 15 0 30 q 21 -8 41 -15 q -20 -7 -41 -15 z" className="symbol" style={{ strokeWidth: 2 }} />
-    <path d="M 141 105 q 12 15 0 30" className="symbol" style={{ strokeWidth: 2 }} />
-    <Wire d="M 189 120 H 340" bit={sum} />
+    <path d="M 210 105 q 12 15 0 30 q 21 -8 41 -15 q -20 -7 -41 -15 z" className="symbol" style={{ strokeWidth: 2 }} />
+    <path d="M 203 105 q 12 15 0 30" className="symbol" style={{ strokeWidth: 2 }} />
+    <Wire d="M 251 120 H 348" bit={sum} />
     {/* AND gate */}
-    <path d="M 218 185 h 14 a 15 15 0 0 1 0 30 h -14 z" className="symbol" style={{ strokeWidth: 2 }} transform="translate(0 15)" />
-    <Wire d="M 247 215 H 340" bit={carry} />
+    <path d="M 210 200 h 14 a 15 15 0 0 1 0 30 h -14 z" className="symbol" style={{ strokeWidth: 2 }} />
+    <Wire d="M 239 215 H 348" bit={carry} />
     <Pin x={50} y={90} bit={a} label="A" onToggle={onToggleA} />
-    <Pin x={50} y={190} bit={b} label="B" onToggle={onToggleB} />
+    <Pin x={50} y={180} bit={b} label="B" onToggle={onToggleB} />
     <Pin x={348} y={120} bit={sum} label="SUM" />
     <Pin x={348} y={215} bit={carry} label="CARRY" />
   </svg>;
