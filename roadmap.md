@@ -1,5 +1,5 @@
 # Circuit playground
-- [ ] Add real-world component photographs to component and digital labs; verify images and layouts.
+- [x] Add labeled realistic component illustrations to component and digital labs; verify image loading, enlargement, and mobile layout.
 - [x] Transistor lab (six arrangements, color-coded currents).
 - [x] Diode lab tab: rectifier, Schottky, LED, Zener with circuit, junction view, I–V curve.
 - [x] Rename branding to circuit playground.
