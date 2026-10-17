@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
+import { PhysicalParts } from '@/components/physical-parts';
 import { FullAdderDiagram, HalfAdderDiagram, RippleAdderDiagram } from '@/components/digital/diagrams';
 import { fullAdder, halfAdder, rippleAdd, toBits, type Bit } from '@/lib/logic-model';
 
@@ -89,6 +90,7 @@ function AddersLab() {
           <p className="mt-3">Real chips use <em className="text-foreground not-italic font-medium">carry-lookahead</em> logic that computes all the carries in parallel — one of the classic speed-versus-size trade-offs of hardware design.</p>
         </div><div className="panel-note"><Info size={13} className="shrink-0" /><span>Overflow: when the result needs 5 bits (like 9 + 8 = 17), the last carry out lights up as C₄.</span></div></div></section>
       </div>
+      <PhysicalParts kind="adders" />
       <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal gates · 4-bit unsigned numbers 0–15</span><span><Link to="/theory" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 12</span></footer>
     </main>
   </>;

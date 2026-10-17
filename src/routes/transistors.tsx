@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { ArrowDownUp, ArrowLeftRight, ArrowUpRight, Check, ChevronDown, CircleHelp, Cpu, Info, Pause, Play, RotateCcw, Waves, Wrench } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
+import { PhysicalParts } from '@/components/physical-parts';
 import { Circuit, Cutaway, ResponseTrace } from '@/components/transistor/diagrams';
 import { FetLab } from '@/components/transistor/fet-lab';
 import { TransistorBuilder } from '@/components/transistor/builder';
@@ -86,6 +87,7 @@ function TransistorLab() {
       </div>
       <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Simplified educational model · β = 100 · 1 kΩ load · carrier motion not to scale</span><span className="flex items-center gap-1.5"><Check size={12} className="text-primary" /> Iₑ = Iᵦ + I꜀ <span className="mx-2 text-border">|</span> <Link to="/theory" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 05</span></footer>
       </>}
+      <PhysicalParts kind="transistors" />
     </main>
   </>;
 }

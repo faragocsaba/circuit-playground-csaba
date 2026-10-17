@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
+import { PhysicalParts } from '@/components/physical-parts';
 import { FlipFlopDiagram } from '@/components/digital/diagrams';
 import { FF_INFO, FF_ORDER, ffNext, ffRows, srLatch, srLatchQBar, type Bit, type FFType } from '@/lib/logic-model';
 
@@ -94,6 +95,7 @@ function FlipFlopsLab() {
           <p className="mt-3">Add a clock and the memory only changes on the clock's rising edge. Millions of these in a row make registers; billions make the RAM in your computer.</p>
         </div><div className="panel-note"><Info size={13} className="shrink-0" /><span>Next step: <Link to="/adders" className="text-primary hover:underline">do arithmetic with gates →</Link></span></div></div></section>
       </div>
+      <PhysicalParts kind="flipFlops" />
       <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal gates · edge-triggered on clock 0 → 1</span><span><Link to="/theory" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 11</span></footer>
     </main>
   </>;

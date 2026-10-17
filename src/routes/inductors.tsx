@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Activity, ChevronDown, Info, Magnet, Pause, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
+import { PhysicalParts } from '@/components/physical-parts';
 import { InductorCircuit, InductorInside, InductorTrace } from '@/components/inductor/diagrams';
 import { advance, defaultInductorSettings, initialState, resonantFrequency, sample as read, timeConstant, type InductorMode, type InductorSample, type InductorSettings, type InductorState } from '@/lib/inductor-model';
 
@@ -97,6 +98,7 @@ function InductorLab() {
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Magnet size={16} className="text-muted-foreground" /> Inside the inductor</h2><span className="text-[10px] text-muted-foreground font-mono">MAGNETIC FIELD</span></div><div className="figure-panel"><InductorInside sample={s} /><div className="panel-note"><Info size={13} className="shrink-0" /><span>{note}</span></div></div></section>
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Activity size={16} className="text-muted-foreground" /> Voltage &amp; current</h2><span className="text-[10px] text-muted-foreground font-mono">LAST {WINDOW} s</span></div><div className="figure-panel"><div className="capacitor-trace-legend"><span><i className="capacitor-source-key" />Source</span><span><i className="capacitor-voltage-key" />{settings.mode === 'rl' ? 'Coil' : 'Capacitor'}</span><span><i className="capacitor-current-key" />Current</span></div><InductorTrace history={history} window={WINDOW} showCap={settings.mode !== 'rl'} /><div className="panel-note"><Info size={13} className="shrink-0" /><span>{settings.mode === 'rl' ? 'Current changes smoothly; the coil voltage jumps when you flip the switch.' : 'Current is largest when the capacitor is empty, and zero when it is fully charged: a quarter-cycle apart.'}</span></div></div></section>
       </div>
+      <PhysicalParts kind="inductors" />
       <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal coil · no core losses · large values chosen so motion is visible</span><span><Link to="/theory" hash="inductor-energy" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 03</span></footer>
     </main>
   </>;
