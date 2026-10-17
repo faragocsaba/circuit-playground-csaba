@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Activity, Info, Palette, Pause, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
+import { PhysicalParts } from '@/components/physical-parts';
 import { ColorCode, OhmPlot, ResistorCircuit } from '@/components/resistor/diagrams';
 import { defaultResistorSettings, formatOhms, resistorModel, type Arrangement, type ResistorSettings } from '@/lib/resistor-model';
 
@@ -64,6 +65,7 @@ function ResistorLab() {
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Palette size={16} className="text-muted-foreground" /> Color code</h2><span className="text-[10px] text-muted-foreground font-mono">4-BAND</span></div><div className="figure-panel"><div className="p-4"><ColorCode ohms={settings.r1} label={`R₁ ${formatOhms(settings.r1)}`} />{two && <ColorCode ohms={settings.r2} label={`R₂ ${formatOhms(settings.r2)}`} />}</div><div className="panel-note"><Info size={13} className="shrink-0" /><span>First two bands are digits, the third is the number of zeros, gold means ±5% tolerance.</span></div></div></section>
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Activity size={16} className="text-muted-foreground" /> Current vs. voltage</h2><span className="text-[10px] text-muted-foreground font-mono">I = V / R</span></div><div className="figure-panel"><OhmPlot settings={settings} /><div className="panel-note"><Info size={13} className="shrink-0" /><span>A resistor gives a straight line: steeper means less resistance. The dot is your working point.</span></div></div></section>
       </div>
+      <PhysicalParts kind="resistors" />
       <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal resistors · no temperature effects · motion not to scale</span><span><Link to="/circuits/kirchhoff" className="mr-3 text-primary hover:underline">Kirchhoff’s laws →</Link><Link to="/theory" hash="ohm" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 01</span></footer>
     </main>
   </>;

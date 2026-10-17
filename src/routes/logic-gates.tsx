@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
+import { PhysicalParts } from '@/components/physical-parts';
 import { GateImplementation, GateSymbol } from '@/components/digital/diagrams';
 import { templateForGate } from '@/lib/transistor-builder';
 import { GATE_BUILD, GATE_INFO, GATE_ORDER, gate, truthTable, type Bit, type GateType } from '@/lib/logic-model';
@@ -77,6 +78,7 @@ function LogicGatesLab() {
           <p className="mt-3">That is why the next lab builds memory — a flip-flop — out of nothing but two cross-coupled NAND gates, and why real chips are full of them.</p>
         </div><div className="panel-note"><Info size={13} className="shrink-0" /><span>Next step: <Link to="/flip-flops" className="text-primary hover:underline">build flip-flops from these gates →</Link></span></div></div></section>
       </div>
+      <PhysicalParts kind="gates" />
       <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal gates · 0 = low, 1 = high</span><span><Link to="/theory" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 10</span></footer>
     </main>
   </>;
