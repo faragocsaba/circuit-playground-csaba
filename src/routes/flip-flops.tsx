@@ -96,7 +96,7 @@ function FlipFlopsLab() {
         </div><div className="panel-note"><Info size={13} className="shrink-0" /><span>Next step: <Link to="/adders" className="text-primary hover:underline">do arithmetic with gates →</Link></span></div></div></section>
       </div>
       <PhysicalParts kind="flipFlops" />
-      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal gates · edge-triggered on clock 0 → 1</span><span><Link to="/theory" hash="digital-logic" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 11</span></footer>
+      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal gates · edge-triggered on clock 0 → 1</span><span><Link to="/theory/digital" hash="memory" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 11</span></footer>
     </main>
   </>;
 }
