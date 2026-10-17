@@ -249,6 +249,12 @@ h1 { font-family: var(--font-display); font-weight: 400; font-size: 46px; line-h
 .bit-toggle[aria-pressed=true] { color: var(--primary); border-color: var(--primary); background: var(--accent); }
 .bit-badge { margin-left: auto; font-family: var(--font-mono); font-size: 12px; font-weight: 650; color: var(--muted-foreground); background: var(--secondary); border-radius: 4px; padding: 3px 8px; }
 .bit-toggle[aria-pressed=true] .bit-badge { background: var(--primary); color: var(--primary-foreground); }
+.shift-svg { width: 100%; height: auto; display: block; aspect-ratio: 720 / 350; }
+.shift-svg text { font: 12px var(--font-mono); fill: var(--muted-foreground); }
+.shift-svg .shift-bit { font-size: 22px; font-weight: 600; }
+.shift-svg .sig-pin.sig-high + .shift-bit { fill: var(--primary-foreground); }
+.shift-svg .shift-fill { font-size: 10px; fill: var(--amber); }
+.shift-svg marker { color: var(--wire); }
 .physical-parts { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); }
 .physical-parts .section-top { flex-wrap: wrap; }
 .physical-parts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 24px; }
