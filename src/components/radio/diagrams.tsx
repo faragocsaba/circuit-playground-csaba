@@ -49,8 +49,8 @@ export function RadioCircuit({ settings, kind }: { settings: RadioSettings; kind
     <path d="M30 145H70M750 145H790" className="wire" />
     {(kind === 'transmitter' ? ['Mic + preamp', fm ? 'Varactor VCO' : 'Oscillator + AM mixer', 'RF transistor PA', 'LC matching', 'Antenna'] : ['LC tuned input', 'RF mixer', '10.7 MHz IF', 'Limiter / discriminator', 'Audio amplifier']).map((name, i) => <g key={name}>
       <rect x={70 + i * 136} y="105" width="120" height="80" rx="4" className="radio-stage" />
-      <text x={130 + i * 136} y="138" textAnchor="middle">{name.split(' / ')[0]}</text>
-      <text x={130 + i * 136} y="157" textAnchor="middle">{name.split(' / ')[1] ?? ['Input signal', 'Frequency conversion', 'Gain / filtering', 'Signal processing', 'Output'][i]}</text>
+      <text x={130 + i * 136} y="138" textAnchor="middle">{name === 'Oscillator + AM mixer' ? 'Oscillator' : name.split(' / ')[0]}</text>
+      <text x={130 + i * 136} y="157" textAnchor="middle">{name === 'Oscillator + AM mixer' ? '+ AM modulator' : name.split(' / ')[1] ?? (kind === 'transmitter' ? ['Audio signal', 'RF generation', 'Power gain', 'Impedance match', 'Radiated field'] : ['Input signal', 'Frequency conversion', 'Gain / filtering', 'Signal processing', 'Output'])[i]}</text>
       {i < 4 && <path d={`M${190 + i * 136} 145h16`} className="wire" />}
     </g>)}
     {kind === 'receiver' && <><rect x="216" y="220" width="120" height="40" className="radio-stage" /><text x="276" y="244" textAnchor="middle">LO {formatRadioFrequency(a.loHz)}</text><path d="M276 220V185" className="wire" /></>}
@@ -64,7 +64,7 @@ export function RadioCircuit({ settings, kind }: { settings: RadioSettings; kind
     <path d="M385 80V110L405 95ZM405 80V110" className="symbol" />
     <path d="M462 160H498M462 190H498M570 140l-8 8 16 12-16 12 16 12-16 12 8 8v11" className="symbol" />
     <path d="M570 95H625M625 70V120L690 95ZM690 95H740M740 72V118L765 132V58Z" className="symbol" />
-    <path d="M590 280h25M595 287h15M600 294h5" className="wire" />
+    <path d="M590 280H605V285M590 285h30M595 292h20M600 299h10" className="wire" />
     <circle cx="160" cy="95" r="3" className="node" /><circle cx="480" cy="95" r="3" className="node" />
     <text x="40" y="24">ANTENNA</text><text x="110" y="242">L · 250 µH</text><text x="200" y="242">C · {a.tankCapPf.toFixed(1)} pF</text>
     <text x="338" y="60">D · rectifier</text><text x="455" y="242">Cdet</text><text x="585" y="180">Rdet</text><text x="632" y="150">Audio amp</text><text x="726" y="160">Speaker</text>
