@@ -93,7 +93,7 @@ function AntennaLab() {
           </div>
         </section>
       </div>
-      <footer className="footer"><span className="flex items-center gap-2"><Radio size={14} /> Simplified textbook formulas; animation slowed enormously.</span><Link to="/theory" className="text-primary">Theory →</Link></footer>
+      <footer className="footer"><span className="flex items-center gap-2"><Radio size={14} /> Simplified textbook formulas; animation slowed enormously.</span><Link to="/theory" hash="electromagnetic-waves" className="text-primary">Theory →</Link></footer>
     </main>
   </>;
 }

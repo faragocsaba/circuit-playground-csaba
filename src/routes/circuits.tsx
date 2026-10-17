@@ -94,7 +94,7 @@ function CircuitsLab() {
           <p className="mt-3">{note}</p>
         </div><div className="panel-note"><Info size={13} className="shrink-0" /><span>Try switching out L or C to build RC and RL circuits, or lower the resistor toward 5 Ω and watch the phase swing widen.</span></div></div></section>
       </div>
-      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal components · steady-state phasor analysis · large values so motion is visible</span><span><Link to="/theory" hash="inductor-energy" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 06</span></footer>
+      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal components · steady-state phasor analysis · large values so motion is visible</span><span><Link to="/theory" hash="impedance" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 06</span></footer>
     </main>
   </>;
 }
