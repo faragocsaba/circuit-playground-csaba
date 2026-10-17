@@ -3,9 +3,10 @@ import { useState } from 'react';
 import { Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { TheoryChapter, TheorySection, WorkedExample } from '@/components/theory/chapter';
-import { PhasorDiagram } from '@/components/circuits/diagrams';
+import { TheoryPhasors } from '@/components/theory/phasors';
 import { analyze, defaultCircuitSettings } from '@/lib/circuit-model';
 import { resistorModel, defaultResistorSettings } from '@/lib/resistor-model';
+import { resonantFrequency, qualityFactor, defaultInductorSettings } from '@/lib/inductor-model';
 
 export const Route = createFileRoute('/theory_/circuits')({
   head: () => ({ meta: [
@@ -21,9 +22,10 @@ function CircuitsTheory() {
   const [frequency, setFrequency] = useState(defaultCircuitSettings.frequency);
   const s = { ...defaultCircuitSettings, frequency };
   const ac = analyze(s);
-  const f0 = 1 / (2 * Math.PI * Math.sqrt(s.inductance * s.capacitance * 1e-6));
+  const inductor = { ...defaultInductorSettings, inductance: s.inductance, capacitance: s.capacitance, resistance: s.resistance };
+  const f0 = resonantFrequency(inductor);
   const resonant = analyze({ ...s, frequency: f0 });
-  const q = resonant.xL / s.resistance;
+  const q = qualityFactor(inductor);
   const parallel = resistorModel({ ...defaultResistorSettings, arrangement: 'parallel' });
   const series = resistorModel({ ...defaultResistorSettings, arrangement: 'series' });
   return <TheoryChapter title="Circuits theory" description="From charge conservation to the timing, power and resonance of alternating current." contents={[
@@ -42,7 +44,7 @@ function CircuitsTheory() {
     </TheorySection>
     <TheorySection id="phasors" title="Phasors: adding voltages as arrows" equations={['V̂source = V̂R + V̂L + V̂C', 'With current as reference: V̂R = Ipeak R; V̂L = j Ipeak XL; V̂C = −j Ipeak XC', 'i(t) = Ipeak sin(ωt + φI)']}>
       <p>Use current as the horizontal reference. The resistor voltage points right, the coil voltage up, and the capacitor voltage down. Their vector sum is the source. All arrows would rotate together at the same rate; this diagram holds the reference still.</p>
-      <div className="figure-panel"><PhasorDiagram settings={s} time={0.08 / frequency} /></div>
+      <div className="figure-panel"><TheoryPhasors settings={s} /></div>
       <div className="max-w-lg"><label htmlFor="theory-frequency" className="control-label">Example frequency <output>{frequency.toFixed(3)} Hz</output></label><input id="theory-frequency" aria-label="Example frequency" className="range" type="range" min="0.2" max="5" step="0.01" value={frequency} onChange={e => setFrequency(Number(e.target.value))} /><Button variant="outline" onClick={() => setFrequency(f0)}><Target /> At resonance</Button></div>
       <WorkedExample><output aria-label="Circuit example result">6 V peak, 20 Ω, 10 H, 1000 µF: XL = {ac.xL.toFixed(2)} Ω; XC = {ac.xC.toFixed(2)} Ω; |Z| = {ac.impedance.toFixed(2)} Ω. Ipeak = {ac.peakCurrent.toFixed(2)} mA; current {Math.abs(ac.phase) < 0.001 ? 'is in phase (0.00°)' : `${ac.phase < 0 ? 'lags' : 'leads'} by ${Math.abs(ac.phase).toFixed(2)}°`}.</output></WorkedExample><Link to="/circuits" className="text-primary">Open the combined R/L/C lab →</Link>
     </TheorySection>
