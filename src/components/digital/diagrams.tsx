@@ -245,7 +245,7 @@ function Mosfet({ x, y, type, label, bit }: { x: number; y: number; type: 'pmos'
 export function CmosDiagram({ type, a, b }: { type: PrimitiveGate; a: Bit; b: Bit }) {
   const { pullUp, pullDown } = cmosNetworks(type, a, b);
   const out = gate(type, a, b);
-  const vddY = 34, gndY = 266, outY = 150, outX = 214;
+  const vddY = 34, gndY = 266, outY = 150, outX = 200;
   return <svg viewBox="0 0 400 300" className="circuit-svg" style={{ height: 320 }} role="img" aria-label={`${GATE_INFO[type].name} gate built from transistors`}>
     {/* supply rails */}
     <path d={`M 120 ${vddY} H 280`} className="sig-wire sig-high" />
@@ -255,13 +255,15 @@ export function CmosDiagram({ type, a, b }: { type: PrimitiveGate; a: Bit; b: Bi
     <text x={290} y={gndY + 4} className="terminal-label" style={{ fontSize: 11 }}>GND = 0</text>
     {/* output node */}
     <Wire d={`M ${outX} ${outY} H 330`} bit={out} />
+    <circle cx={outX} cy={outY} r={3} className={`sig-node ${cls(out)}`} />
     <Pin x={340} y={outY} bit={out} label="OUT" />
     {type === 'not' && <>
       <Wire d={`M ${outX} ${vddY} V 70`} bit={1} />
       <Mosfet x={186} y={90} type="pmos" label="A" bit={a} />
       <Wire d={`M 200 110 V ${outY}`} bit={out} />
       <Mosfet x={186} y={210} type="nmos" label="A" bit={a} />
-      <Wire d={`M 200 190 V ${outY} M 200 230 V ${gndY}`} bit={out} />
+      <Wire d={`M 200 190 V ${outY}`} bit={out} />
+      <Wire d={`M 200 230 V ${gndY}`} bit={0} />
     </>}
     {type === 'nand' && <>
       {/* PMOS pair in parallel */}
