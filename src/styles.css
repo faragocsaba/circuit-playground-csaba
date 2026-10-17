@@ -162,6 +162,9 @@ h1 { font-family: var(--font-display); font-weight: 400; font-size: 46px; line-h
 .live-status { display: inline-flex; align-items: center; gap: 7px; color: var(--primary); font-size: 11px; }
 .status-badge { color: var(--amber); background: var(--amber-soft); border: 1px solid var(--border); display: inline-flex; align-items: center; gap: 6px; border-radius: 4px; font: 10px var(--font-mono); padding: 5px 8px; }
 .footer { padding: 23px 0 28px; margin-top: 25px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; color: var(--muted-foreground); font-size: 10px; }
+.page-credit { margin: 0; padding: 2px 0 32px; text-align: center; color: var(--muted-foreground); font-size: 11px; letter-spacing: 0.02em; }
+.page-credit-link { color: var(--primary); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s ease; }
+.page-credit-link:hover { border-bottom-color: var(--primary); }
 .info-note { padding: 12px; background: var(--secondary); border-radius: 5px; font-size: 11px; line-height: 1.6; color: var(--muted-foreground); }
 .comparison-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
 .comparison-heading h2 { font-size: 18px; font-weight: 600; }
