@@ -342,7 +342,7 @@ export function CompositeBuild({ type, a, b }: { type: GateType; a: Bit; b: Bit 
     <Pin x={24} y={72} bit={a} label="A" />
     <Pin x={24} y={138} bit={b} label="B" />
     <Wire d="M 34 72 H 50 V 92 H 60" bit={a} />
-    <Wire d="M 34 138 H 50 V 118 H 60" bit={b} />
+    <Wire d="M 34 138 H 50 V 108 H 60" bit={b} />
     <GateBox x={90} y={80} name="NAND" inA={a} inB={b} out={n1} />
     {/* A and B branch to the middle gates */}
     <Wire d="M 44 72 V 42 H 200" bit={a} />
