@@ -37,6 +37,7 @@ export function SiteHeader({ children }: { children?: ReactNode }) {
           { to: '/logic-gates', label: 'Logic gates' },
           { to: '/flip-flops', label: 'Flip-flops' },
           { to: '/adders', label: 'Adders' },
+          { to: '/bit-shifts', label: 'Bit shifts' },
         ]} />
         <NavGroup label="Radio" items={[
           { to: '/antennas', label: 'Antennas' },

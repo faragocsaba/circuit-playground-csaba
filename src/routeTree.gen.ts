@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AddersRouteImport } from './routes/adders'
 import { Route as AntennasRouteImport } from './routes/antennas'
+import { Route as BitShiftsRouteImport } from './routes/bit-shifts'
 import { Route as CapacitorsRouteImport } from './routes/capacitors'
 import { Route as CircuitsRouteImport } from './routes/circuits'
 import { Route as DiodesRouteImport } from './routes/diodes'
@@ -45,6 +46,11 @@ const AddersRoute = AddersRouteImport.update({
 const AntennasRoute = AntennasRouteImport.update({
   id: '/antennas',
   path: '/antennas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BitShiftsRoute = BitShiftsRouteImport.update({
+  id: '/bit-shifts',
+  path: '/bit-shifts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CapacitorsRoute = CapacitorsRouteImport.update({
@@ -147,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/adders': typeof AddersRoute
   '/antennas': typeof AntennasRoute
+  '/bit-shifts': typeof BitShiftsRoute
   '/capacitors': typeof CapacitorsRoute
   '/circuits': typeof CircuitsRoute
   '/diodes': typeof DiodesRoute
@@ -171,6 +178,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/adders': typeof AddersRoute
   '/antennas': typeof AntennasRoute
+  '/bit-shifts': typeof BitShiftsRoute
   '/capacitors': typeof CapacitorsRoute
   '/circuits': typeof CircuitsRoute
   '/diodes': typeof DiodesRoute
@@ -196,6 +204,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/adders': typeof AddersRoute
   '/antennas': typeof AntennasRoute
+  '/bit-shifts': typeof BitShiftsRoute
   '/capacitors': typeof CapacitorsRoute
   '/circuits': typeof CircuitsRoute
   '/diodes': typeof DiodesRoute
@@ -222,6 +231,7 @@ export interface FileRouteTypes {
     | '/'
     | '/adders'
     | '/antennas'
+    | '/bit-shifts'
     | '/capacitors'
     | '/circuits'
     | '/diodes'
@@ -246,6 +256,7 @@ export interface FileRouteTypes {
     | '/'
     | '/adders'
     | '/antennas'
+    | '/bit-shifts'
     | '/capacitors'
     | '/circuits'
     | '/diodes'
@@ -270,6 +281,7 @@ export interface FileRouteTypes {
     | '/'
     | '/adders'
     | '/antennas'
+    | '/bit-shifts'
     | '/capacitors'
     | '/circuits'
     | '/diodes'
@@ -295,6 +307,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AddersRoute: typeof AddersRoute
   AntennasRoute: typeof AntennasRoute
+  BitShiftsRoute: typeof BitShiftsRoute
   CapacitorsRoute: typeof CapacitorsRoute
   CircuitsRoute: typeof CircuitsRoute
   DiodesRoute: typeof DiodesRoute
@@ -337,6 +350,13 @@ declare module '@tanstack/react-router' {
       path: '/antennas'
       fullPath: '/antennas'
       preLoaderRoute: typeof AntennasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bit-shifts': {
+      id: '/bit-shifts'
+      path: '/bit-shifts'
+      fullPath: '/bit-shifts'
+      preLoaderRoute: typeof BitShiftsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/capacitors': {
@@ -479,6 +499,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AddersRoute: AddersRoute,
   AntennasRoute: AntennasRoute,
+  BitShiftsRoute: BitShiftsRoute,
   CapacitorsRoute: CapacitorsRoute,
   CircuitsRoute: CircuitsRoute,
   DiodesRoute: DiodesRoute,
