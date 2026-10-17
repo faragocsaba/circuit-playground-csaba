@@ -17,7 +17,7 @@ function NavGroup({ label, items }: { label: string; items: NavItem[] }) {
 
 export function SiteHeader({ children }: { children?: ReactNode }) {
   return <header className="topbar"><div className="shell flex h-full items-center justify-between gap-4">
-    <div className="flex items-center gap-8">
+    <div className="site-nav-row flex items-center gap-8">
       <Link to="/" className="flex items-center gap-3" aria-label="Circuit playground home"><span className="brand-icon"><Zap size={20} strokeWidth={1.7} /></span><span className="brand-word">circuit<span className="brand-dot">.</span>playground</span></Link>
       <nav className="tabs" aria-label="Labs">
         <NavGroup label="Components" items={[
@@ -40,6 +40,9 @@ export function SiteHeader({ children }: { children?: ReactNode }) {
         ]} />
         <NavGroup label="Radio" items={[
           { to: '/antennas', label: 'Antennas' },
+          { to: '/radio/modulation', label: 'AM & FM modulation' },
+          { to: '/radio/receiver', label: 'Radio receiver' },
+          { to: '/radio/transmitter', label: 'Radio transmitter' },
         ]} />
         <Link to="/theory" className="tab" activeProps={{ 'aria-current': 'page' }}>Theory</Link>
       </nav>
