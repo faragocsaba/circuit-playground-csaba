@@ -4,15 +4,16 @@ import { Activity, ChevronDown, Info, Magnet, Pause, Play, RotateCcw } from 'luc
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
 import { PhysicalParts } from '@/components/physical-parts';
+import { LenzExperiment } from '@/components/inductor/lenz-experiment';
 import { InductorCircuit, InductorInside, InductorTrace } from '@/components/inductor/diagrams';
 import { advance, defaultInductorSettings, initialState, resonantFrequency, sample as read, timeConstant, type InductorMode, type InductorSample, type InductorSettings, type InductorState } from '@/lib/inductor-model';
 
 export const Route = createFileRoute('/inductors')({
   head: () => ({ meta: [
     { title: 'Inductor Lab — Circuit Playground' },
-    { name: 'description', content: 'Explore inductors with RL switching and an oscillating LC tank, with animated current and live graphs.' },
+    { name: 'description', content: 'Explore RL switching, an LC tank and Lenz’s law with a moving magnet, coil and galvanometer.' },
     { property: 'og:title', content: 'Inductor Lab — Circuit Playground' },
-    { property: 'og:description', content: 'Watch an inductor resist change, store energy in its magnetic field and resonate with a capacitor.' },
+    { property: 'og:description', content: 'Watch inductors store magnetic energy, exchange it with capacitors and oppose changing flux in a magnet-and-coil experiment.' },
     { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' },
   ] }),
   component: InductorLab,
@@ -41,6 +42,7 @@ function RangeControl({ id, label, value, unit, min, max, step, onChange }: { id
 const DEFAULT_SPEED = 0.5;
 
 function InductorLab() {
+  const [experiment, setExperiment] = useState<'circuit' | 'lenz'>('circuit');
   const [lab, setLab] = useState(() => fresh(defaultInductorSettings));
   const [playing, setPlaying] = useState(true);
   const [speed, setSpeed] = useState(DEFAULT_SPEED);
@@ -51,10 +53,10 @@ function InductorLab() {
     if (media.matches) setPlaying(false);
   }, []);
   useEffect(() => {
-    if (!playing) return;
+    if (!playing || experiment === 'lenz') return;
     const timer = window.setInterval(() => setLab(p => step(p, 0.04 * speed)), 40);
     return () => window.clearInterval(timer);
-  }, [playing, speed]);
+  }, [playing, speed, experiment]);
   const update = (patch: Partial<InductorSettings>) => setLab(p => ({ ...p, settings: { ...p.settings, ...patch } }));
   const setMode = (mode: InductorMode) => setLab(p => fresh({ ...p.settings, mode, resistance: mode === 'lc' ? 2 : Math.max(5, p.settings.resistance), voltage: Math.max(1, p.settings.voltage) }));
   const f0 = resonantFrequency(settings);
@@ -74,7 +76,8 @@ function InductorLab() {
     <SiteHeader />
     <main className="shell">
       <div className="lab-heading flex flex-wrap items-end justify-between gap-4"><div><div className="eyebrow mb-3 flex items-center gap-2 text-muted-foreground"><span className="text-primary">03</span><span>/</span> THE BUILDING BLOCKS</div><h1>Inductor lab<span className="text-primary">.</span></h1><p className="mt-3 text-sm text-muted-foreground">Resist change. Store a field.</p></div>
-        <div className="segment" aria-label="Circuit">{(Object.keys(modes) as ('rl' | 'lc')[]).map(m => <Button key={m} variant="ghost" size="sm" aria-pressed={settings.mode === m} onClick={() => setMode(m)}>{modes[m].name}</Button>)}</div></div>
+        <div className="segment flex-wrap" aria-label="Circuit">{(Object.keys(modes) as ('rl' | 'lc')[]).map(m => <Button key={m} variant="ghost" size="sm" aria-pressed={experiment === 'circuit' && settings.mode === m} onClick={() => { setExperiment('circuit'); setMode(m); }}>{modes[m].name}</Button>)}<Button variant="ghost" size="sm" aria-pressed={experiment === 'lenz'} onClick={() => setExperiment('lenz')}>Lenz’s law</Button></div></div>
+      {experiment === 'lenz' ? <LenzExperiment /> : <>
       <div className="lab-grid">
         <section className="workspace" aria-label="Inductor circuit workspace">
           <div className="workspace-head"><div className="flex items-center gap-2.5"><span className="eyebrow text-muted-foreground">LIVE CIRCUIT</span><span className="text-xs text-muted-foreground">/</span><span className="text-xs font-medium">Series {modes[settings.mode as 'rl' | 'lc'].short}</span></div><span className="live-status"><span className="legend-dot" />{playing ? 'Running' : 'Paused'}</span></div>
@@ -98,8 +101,9 @@ function InductorLab() {
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Magnet size={16} className="text-muted-foreground" /> Inside the inductor</h2><span className="text-[10px] text-muted-foreground font-mono">MAGNETIC FIELD</span></div><div className="figure-panel"><InductorInside sample={s} /><div className="panel-note"><Info size={13} className="shrink-0" /><span>{note}</span></div></div></section>
         <section><div className="section-top"><h2 className="flex items-center gap-2"><Activity size={16} className="text-muted-foreground" /> Voltage &amp; current</h2><span className="text-[10px] text-muted-foreground font-mono">LAST {WINDOW} s</span></div><div className="figure-panel"><div className="capacitor-trace-legend"><span><i className="capacitor-source-key" />Source</span><span><i className="capacitor-voltage-key" />{settings.mode === 'rl' ? 'Coil' : 'Capacitor'}</span><span><i className="capacitor-current-key" />Current</span></div><InductorTrace history={history} window={WINDOW} showCap={settings.mode !== 'rl'} /><div className="panel-note"><Info size={13} className="shrink-0" /><span>{settings.mode === 'rl' ? 'Current changes smoothly; the coil voltage jumps when you flip the switch.' : 'Current is largest when the capacitor is empty, and zero when it is fully charged: a quarter-cycle apart.'}</span></div></div></section>
       </div>
+      </>}
       <PhysicalParts kind="inductors" />
-      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal coil · no core losses · large values chosen so motion is visible</span><span><Link to="/theory" hash="inductor-energy" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 03</span></footer>
+      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal coil · no core losses · large values chosen so motion is visible</span><span><Link to="/theory" hash={experiment === 'lenz' ? 'lenz' : 'inductor-energy'} className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 03</span></footer>
     </main>
   </>;
 }
