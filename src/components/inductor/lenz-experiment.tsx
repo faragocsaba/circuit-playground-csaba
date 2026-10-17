@@ -52,7 +52,7 @@ export function LenzExperiment() {
   }
   const { time, history } = experiment;
   const manual = experiment.distance;
-  const motion = { distance: experiment.distance, velocity: auto && !playing ? 0 : experiment.velocity };
+  const motion = { distance: experiment.distance, velocity: experiment.velocity };
   const current = inducedCurrent(settings, motion.distance, motion.velocity);
   const face = coilFace(settings, motion.velocity);
   const readouts: [string, string, string][] = [

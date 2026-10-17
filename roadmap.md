@@ -22,7 +22,7 @@
 - [x] Step 5: Flip-flops lab (NAND SR latch, D, JK, T; clock edges); verified.
 - [x] Step 6: Adders lab (half, full, 4-bit ripple-carry); verified.
 - [x] Step 7: Antennas lab (dipole, monopole, loop, Yagi, radiation patterns); verified.
-- [ ] Step 8: Theory topics + final polish.
+- [x] Step 8: Theory topics completed with worked examples and direct lab links; wider final polish deferred outside this request.
 - [x] Update README with project details.
 - [x] Re-theme: warm light "rich paper" look with serif display headings.
 - [x] "Created by Csaba Faragó" credit linking to faragocsaba.hu at the end of every page.
@@ -30,9 +30,9 @@
 ## Growth plan (approved 2026-10-16, .lovable/plan/circuit-playground-growth-plan-2026-10-16.md)
 - [x] Step 0: section-based landing page + section menu in header (Components / Circuits / Digital / Radio).
 - [x] Step 1: Circuits lab (/circuits) — combined R/L/C AC circuit, impedance, phasor diagram.
-- [ ] Current request: add a shared Lenz's-law experiment inside Inductors and complete Theory topics (impedance/phase, Lenz, digital logic, electromagnetic waves); verify both.
+- [x] Current request: shared Lenz's-law experiment inside Inductors; Theory topics (impedance/phase, Lenz, digital logic, electromagnetic waves); browser-verified controls and links, 137 tests passing.
 - [x] Step 4: Logic gates lab (7 gates, truth tables, live pins); verified.(/logic-gates) with shared gate engine.
 - [x] Step 5: Flip-flops lab (NAND SR latch, D, JK, T; clock edges); verified.(/flip-flops) from NAND gates.
 - [x] Step 6: Adder lab (/adders).
 - [x] Step 7: Antennas lab (/antennas), Radio section.
-- [ ] Step 8: Theory topics (impedance, Lenz, logic, waves) + final polish.
+- [x] Step 8: Theory topics (impedance, Lenz, logic, waves), worked examples and relevant Theory links complete. Wider menu/landing/footer polish is outside this request.
