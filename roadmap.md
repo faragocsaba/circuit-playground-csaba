@@ -1,5 +1,5 @@
 # Circuit playground
-- [ ] Add Bit Shifts beside Adders with a tested shift model, interactive binary diagram and verified navigation/controls.
+- [x] Add Bit Shifts beside Adders with a tested shift model, interactive binary diagram and verified navigation/controls on desktop and mobile.
 - [x] Expand Theory with dedicated Circuits, Digital and Radio pages, equations, model-derived examples, diagrams and lab links; navigation, resonance, XOR, clocked memory, FM and tablet/phone layout browser-verified; 155 tests passing.
 - [x] Radio expansion: AM/FM modulation, tuned AM/FM receiver with circuit diagrams and audio recovery, transmitter stages; main-page cards, Radio navigation and Antennas links added; 152 tests pass and all three labs browser-verified on desktop and mobile.
 - [x] Add labeled realistic component illustrations to component and digital labs; verify image loading, enlargement, and mobile layout.
