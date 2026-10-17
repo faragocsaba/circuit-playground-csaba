@@ -19,13 +19,13 @@ export const Route = createFileRoute('/theory')({
 
 type LabPath = '/resistors' | '/capacitors' | '/inductors' | '/circuits' | '/circuits/kirchhoff' | '/circuits/lenz' | '/logic-gates' | '/antennas';
 function Topic({ id, n, title, formula, lab, labName, children, example }: { id: string; n: string; title: string; formula: string; lab: LabPath; labName: string; children: ReactNode; example: ReactNode }) {
-  return <section id={id} className="scroll-mt-24 border-t border-border py-8">
+  return <section id={id} className="scroll-mt-24 border-t border-border py-5">
     <div className="font-mono text-xs text-primary">{n}</div>
     <h2 className="mt-2 text-2xl font-semibold">{title}</h2>
-    <div className="my-5 border-l-2 border-primary bg-secondary px-5 py-4 font-mono text-base sm:text-xl break-words">{formula}</div>
+    <div className="my-3 border-l-2 border-primary bg-secondary px-5 py-3 font-mono text-base sm:text-xl break-words">{formula}</div>
     <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">{children}</div>
-    <div className="mt-5 rounded-md border border-border p-4 text-sm"><div className="eyebrow mb-2 text-muted-foreground">WORKED EXAMPLE</div>{example}</div>
-    <Link to={lab} className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary">Try it in the {labName} <ArrowRight size={15} /></Link>
+    <div className="mt-3 rounded-md border border-border p-4 text-sm"><div className="eyebrow mb-2 text-muted-foreground">WORKED EXAMPLE</div>{example}</div>
+    <Link to={lab} className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary">Try it in the {labName} <ArrowRight size={15} /></Link>
   </section>;
 }
 
@@ -38,12 +38,12 @@ function Theory() {
     <SiteHeader />
     <main className="shell">
       <div className="lab-heading max-w-2xl"><div className="eyebrow mb-3 text-muted-foreground">THE RULES BEHIND THE LABS</div><h1>Theory<span className="text-primary">.</span></h1><p className="mt-4 text-muted-foreground">From charge flowing through a resistor to information carried by radio waves.</p></div>
-      <nav aria-label="Theory chapters" className="mb-8 grid gap-6 border-y border-border py-6 sm:grid-cols-3">
+      <nav aria-label="Theory chapters" className="mb-5 grid gap-4 border-y border-border py-3 sm:grid-cols-3">
         <Link to="/theory/circuits" className="group"><h2 className="text-lg font-semibold text-primary">Circuits <ArrowRight size={16} className="inline" /></h2><p className="mt-2 text-sm text-muted-foreground">Kirchhoff, complex impedance, phasors, RMS power and resonance.</p></Link>
         <Link to="/theory/digital" className="group"><h2 className="text-lg font-semibold text-primary">Digital <ArrowRight size={16} className="inline" /></h2><p className="mt-2 text-sm text-muted-foreground">Boolean algebra, truth tables, CMOS, memory and binary addition.</p></Link>
         <Link to="/theory/radio" className="group"><h2 className="text-lg font-semibold text-primary">Radio <ArrowRight size={16} className="inline" /></h2><p className="mt-2 text-sm text-muted-foreground">Waves, AM/FM, tuning, mixing, detectors and transmitter power.</p></Link>
       </nav>
-      <nav aria-label="Theory contents" className="mb-8 flex flex-wrap gap-2">{contents.map(([id, name]) => <a key={id} href={`#${id}`} className="rounded-md bg-secondary px-3 py-1.5 text-xs font-medium hover:text-primary">{name}</a>)}</nav>
+      <nav aria-label="Theory contents" className="mb-5 flex flex-wrap gap-2">{contents.map(([id, name]) => <a key={id} href={`#${id}`} className="rounded-md bg-secondary px-3 py-1.5 text-xs font-medium hover:text-primary">{name}</a>)}</nav>
       <div className="max-w-4xl pb-12">
         <Topic id="ohm" n="01" title="Ohm's law" formula="V = I × R" lab="/resistors" labName="resistor lab" example={<>9 V across 470 Ω gives I = 9 ÷ 470 = <b>19.1 mA</b>. The power turned into heat is P = V × I = 9 × 0.0191 = <b>172 mW</b>.</>}>
           <p>Voltage (V, in volts) is the push. Resistance (R, in ohms) is how hard the component resists. Current (I, in amperes) is how much charge flows each second.</p>
