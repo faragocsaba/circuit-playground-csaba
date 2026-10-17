@@ -51,19 +51,19 @@ function LabCard({ lab }: { lab: Lab }) {
       <span className="lab-card-num">{lab.n}</span>
       <span className="icon-chip"><svg viewBox="0 0 68 60" width="32" height="28" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">{lab.icon}</svg></span>
     </div>
-    <h2 className="mt-4 text-2xl font-semibold">{lab.name}</h2>
+    <h2 className="mt-2 text-2xl font-semibold">{lab.name}</h2>
     <p className="mt-1 text-sm font-medium text-primary">{lab.tag}</p>
-    <p className="mt-3 text-sm text-muted-foreground">{lab.text}</p>
+    <p className="mt-2 text-sm text-muted-foreground">{lab.text}</p>
     {lab.soon
-      ? <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground">Coming soon — see the plan <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" /></span>
-      : <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium">Open lab <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" /></span>}
+      ? <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground">Coming soon — see the plan <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" /></span>
+      : <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium">Open lab <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" /></span>}
   </Link>;
 }
 
 function Section({ title, blurb, labs }: { title: string; blurb: string; labs: Lab[] }) {
-  return <section className="mb-12">
+  return <section className="mb-7">
     <h2 className="section-title">{title}</h2>
-    <p className="mt-1 mb-5 max-w-xl text-sm text-muted-foreground">{blurb}</p>
+    <p className="mt-1 mb-3 max-w-xl text-sm text-muted-foreground">{blurb}</p>
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {labs.map(l => <LabCard key={l.to} lab={l} />)}
     </div>
