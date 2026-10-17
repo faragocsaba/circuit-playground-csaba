@@ -91,7 +91,7 @@ function AddersLab() {
         </div><div className="panel-note"><Info size={13} className="shrink-0" /><span>Overflow: when the result needs 5 bits (like 9 + 8 = 17), the last carry out lights up as C₄.</span></div></div></section>
       </div>
       <PhysicalParts kind="adders" />
-      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal gates · 4-bit unsigned numbers 0–15</span><span><Link to="/theory" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 12</span></footer>
+      <footer className="footer"><span className="flex items-center gap-1.5"><Info size={12} /> Ideal gates · 4-bit unsigned numbers 0–15</span><span><Link to="/theory" hash="digital-logic" className="mr-3 text-primary hover:underline">Theory →</Link>circuit.playground / 12</span></footer>
     </main>
   </>;
 }
