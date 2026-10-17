@@ -54,7 +54,7 @@ function AntennaLab() {
   return <>
     <SiteHeader />
     <main className="shell">
-      <div className="lab-heading"><div className="eyebrow mb-3 flex items-center gap-2 text-muted-foreground"><span className="text-primary">10</span><span>/</span> RADIO</div><h1>Antenna lab<span className="text-primary">.</span></h1><p className="mt-3 text-sm text-muted-foreground">Current that shakes the field — and fields that push current.</p></div>
+      <div className="lab-heading"><div className="eyebrow mb-3 flex items-center gap-2 text-muted-foreground"><span className="text-primary">13</span><span>/</span> RADIO</div><h1>Antenna lab<span className="text-primary">.</span></h1><p className="mt-3 text-sm text-muted-foreground">Current that shakes the field — and fields that push current.</p></div>
       <div className="lab-grid">
         <section className="workspace" aria-label="Antenna workspace">
           <div className="workspace-head"><div className="flex items-center gap-2.5"><span className="eyebrow text-muted-foreground">LIVE ANTENNA</span><span className="text-xs text-muted-foreground">/</span><span className="text-xs font-medium">{antennaInfo[s.type].name}</span></div><span className="live-status"><span className="legend-dot" />{status}</span></div>
@@ -93,6 +93,7 @@ function AntennaLab() {
           </div>
         </section>
       </div>
+      <section className="mt-8 border-t border-border py-6"><h2 className="text-xl font-semibold">Beyond the antenna</h2><p className="mt-2 text-sm text-muted-foreground">An antenna converts between RF current and fields. The radio circuitry creates the message-bearing carrier or recovers its audio.</p><div className="mt-4 flex flex-wrap gap-5 text-sm text-primary"><Link to="/radio/modulation">AM &amp; FM modulation →</Link><Link to="/radio/receiver">From antenna signal to audio →</Link><Link to="/radio/transmitter">From microphone to wave →</Link></div></section>
       <footer className="footer"><span className="flex items-center gap-2"><Radio size={14} /> Simplified textbook formulas; animation slowed enormously.</span><Link to="/theory" hash="electromagnetic-waves" className="text-primary">Theory →</Link></footer>
     </main>
   </>;

@@ -25,6 +25,9 @@ import { Route as ApiCapacitorChatRouteImport } from './routes/api.capacitor-cha
 import { Route as CircuitsKirchhoffRouteImport } from './routes/circuits_.kirchhoff'
 import { Route as CircuitsLenzRouteImport } from './routes/circuits_.lenz'
 import { Route as CircuitsResonanceRouteImport } from './routes/circuits_.resonance'
+import { Route as RadioModulationRouteImport } from './routes/radio.modulation'
+import { Route as RadioReceiverRouteImport } from './routes/radio.receiver'
+import { Route as RadioTransmitterRouteImport } from './routes/radio.transmitter'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -106,6 +109,21 @@ const CircuitsResonanceRoute = CircuitsResonanceRouteImport.update({
   path: '/circuits/resonance',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RadioModulationRoute = RadioModulationRouteImport.update({
+  id: '/radio/modulation',
+  path: '/radio/modulation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RadioReceiverRoute = RadioReceiverRouteImport.update({
+  id: '/radio/receiver',
+  path: '/radio/receiver',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RadioTransmitterRoute = RadioTransmitterRouteImport.update({
+  id: '/radio/transmitter',
+  path: '/radio/transmitter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -124,6 +142,9 @@ export interface FileRoutesByFullPath {
   '/circuits/kirchhoff': typeof CircuitsKirchhoffRoute
   '/circuits/lenz': typeof CircuitsLenzRoute
   '/circuits/resonance': typeof CircuitsResonanceRoute
+  '/radio/modulation': typeof RadioModulationRoute
+  '/radio/receiver': typeof RadioReceiverRoute
+  '/radio/transmitter': typeof RadioTransmitterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -142,6 +163,9 @@ export interface FileRoutesByTo {
   '/circuits/kirchhoff': typeof CircuitsKirchhoffRoute
   '/circuits/lenz': typeof CircuitsLenzRoute
   '/circuits/resonance': typeof CircuitsResonanceRoute
+  '/radio/modulation': typeof RadioModulationRoute
+  '/radio/receiver': typeof RadioReceiverRoute
+  '/radio/transmitter': typeof RadioTransmitterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -161,6 +185,9 @@ export interface FileRoutesById {
   '/circuits_/kirchhoff': typeof CircuitsKirchhoffRoute
   '/circuits_/lenz': typeof CircuitsLenzRoute
   '/circuits_/resonance': typeof CircuitsResonanceRoute
+  '/radio/modulation': typeof RadioModulationRoute
+  '/radio/receiver': typeof RadioReceiverRoute
+  '/radio/transmitter': typeof RadioTransmitterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -181,6 +208,9 @@ export interface FileRouteTypes {
     | '/circuits/kirchhoff'
     | '/circuits/lenz'
     | '/circuits/resonance'
+    | '/radio/modulation'
+    | '/radio/receiver'
+    | '/radio/transmitter'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -199,6 +229,9 @@ export interface FileRouteTypes {
     | '/circuits/kirchhoff'
     | '/circuits/lenz'
     | '/circuits/resonance'
+    | '/radio/modulation'
+    | '/radio/receiver'
+    | '/radio/transmitter'
   id:
     | '__root__'
     | '/'
@@ -217,6 +250,9 @@ export interface FileRouteTypes {
     | '/circuits_/kirchhoff'
     | '/circuits_/lenz'
     | '/circuits_/resonance'
+    | '/radio/modulation'
+    | '/radio/receiver'
+    | '/radio/transmitter'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -236,6 +272,9 @@ export interface RootRouteChildren {
   CircuitsKirchhoffRoute: typeof CircuitsKirchhoffRoute
   CircuitsLenzRoute: typeof CircuitsLenzRoute
   CircuitsResonanceRoute: typeof CircuitsResonanceRoute
+  RadioModulationRoute: typeof RadioModulationRoute
+  RadioReceiverRoute: typeof RadioReceiverRoute
+  RadioTransmitterRoute: typeof RadioTransmitterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -352,6 +391,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CircuitsResonanceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/radio/modulation': {
+      id: '/radio/modulation'
+      path: '/radio/modulation'
+      fullPath: '/radio/modulation'
+      preLoaderRoute: typeof RadioModulationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/radio/receiver': {
+      id: '/radio/receiver'
+      path: '/radio/receiver'
+      fullPath: '/radio/receiver'
+      preLoaderRoute: typeof RadioReceiverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/radio/transmitter': {
+      id: '/radio/transmitter'
+      path: '/radio/transmitter'
+      fullPath: '/radio/transmitter'
+      preLoaderRoute: typeof RadioTransmitterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -372,6 +432,9 @@ const rootRouteChildren: RootRouteChildren = {
   CircuitsKirchhoffRoute: CircuitsKirchhoffRoute,
   CircuitsLenzRoute: CircuitsLenzRoute,
   CircuitsResonanceRoute: CircuitsResonanceRoute,
+  RadioModulationRoute: RadioModulationRoute,
+  RadioReceiverRoute: RadioReceiverRoute,
+  RadioTransmitterRoute: RadioTransmitterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
