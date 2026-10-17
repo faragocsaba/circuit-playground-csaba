@@ -297,11 +297,14 @@ export function CmosDiagram({ type, a, b }: { type: PrimitiveGate; a: Bit; b: Bi
   </svg>;
 }
 
-/** Small labeled gate box with live colored wires, for composition diagrams. */
+/** Small labeled gate box with live colored wires, for composition diagrams.
+ *  Two-input boxes take inputs at y+12 / y+28; single-input boxes take theirs at the vertical center (y+20),
+ *  in line with the output so chained gates join with a straight wire. */
 function GateBox({ x, y, name, inA, inB, out }: { x: number; y: number; name: string; inA: Bit; inB?: Bit | undefined; out: Bit }) {
   const w = 64, h = 40;
+  const yA = inB !== undefined ? y + 12 : y + h / 2;
   return <g>
-    <Wire d={`M ${x - 30} ${y + 12} H ${x}`} bit={inA} />
+    <Wire d={`M ${x - 30} ${yA} H ${x}`} bit={inA} />
     {inB !== undefined && <Wire d={`M ${x - 30} ${y + 28} H ${x}`} bit={inB} />}
     <rect x={x} y={y} width={w} height={h} rx={6} className="symbol" style={{ fill: 'var(--card)', strokeWidth: 1.8 }} />
     <text x={x + w / 2} y={y + h / 2 + 4} textAnchor="middle" style={{ fontSize: 11 }}>{name}</text>
@@ -315,15 +318,16 @@ export function CompositeBuild({ type, a, b }: { type: GateType; a: Bit; b: Bit 
     const first = type === 'and' ? 'nand' : 'nor';
     const mid = gate(first, a, b);
     const out = gate('not', mid);
+    // First gate at x=120..184 (inputs at y 72 / 88, output y 80); NOT at x=244..308 (input & output y 80).
     return <svg viewBox="0 0 400 200" className="circuit-svg" style={{ height: 220 }} role="img" aria-label={`${GATE_INFO[type].name} built from ${GATE_INFO[first].name} plus NOT`}>
       <Pin x={30} y={72} bit={a} label="A" />
-      <Pin x={30} y={108} bit={b} label="B" />
-      <Wire d="M 40 72 H 90" bit={a} />
-      <Wire d="M 40 108 H 90" bit={b} />
+      <Pin x={30} y={118} bit={b} label="B" />
+      <Wire d="M 39 72 H 90" bit={a} />
+      <Wire d="M 39 118 H 70 V 88 H 90" bit={b} />
       <GateBox x={120} y={60} name={GATE_INFO[first].name} inA={a} inB={b} out={mid} />
-      <text x={214} y={86} className="terminal-label" style={{ fontSize: 10 }}>{mid}</text>
+      <text x={214} y={72} textAnchor="middle" className="terminal-label" style={{ fontSize: 10 }}>{mid}</text>
       <GateBox x={244} y={60} name="NOT" inA={mid} out={out} />
-      <Pin x={368} y={80} bit={out} label="OUT" />
+      <Pin x={347} y={80} bit={out} label="OUT" />
       <text x={200} y={160} textAnchor="middle" className="terminal-label" style={{ fontSize: 11 }}>{GATE_BUILD[type].transistors} transistors: {GATE_INFO[first].name} (4) + NOT (2)</text>
     </svg>;
   }
