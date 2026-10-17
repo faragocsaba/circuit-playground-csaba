@@ -1,5 +1,5 @@
 # Circuit playground
-- [ ] Radio expansion: AM/FM modulation, tuned AM/FM receiver with circuit diagrams and audio recovery, transmitter stages; add main-page cards and Radio navigation, cross-link Antennas, test and browser-verify.
+- [x] Radio expansion: AM/FM modulation, tuned AM/FM receiver with circuit diagrams and audio recovery, transmitter stages; main-page cards, Radio navigation and Antennas links added; 152 tests pass and all three labs browser-verified on desktop and mobile.
 - [x] Add labeled realistic component illustrations to component and digital labs; verify image loading, enlargement, and mobile layout.
 - [x] Transistor lab (six arrangements, color-coded currents).
 - [x] Diode lab tab: rectifier, Schottky, LED, Zener with circuit, junction view, I–V curve.
