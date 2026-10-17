@@ -29,6 +29,8 @@ import { Route as RadioModulationRouteImport } from './routes/radio.modulation'
 import { Route as RadioReceiverRouteImport } from './routes/radio.receiver'
 import { Route as RadioTransmitterRouteImport } from './routes/radio.transmitter'
 import { Route as TheoryCircuitsRouteImport } from './routes/theory_.circuits'
+import { Route as TheoryDigitalRouteImport } from './routes/theory_.digital'
+import { Route as TheoryRadioRouteImport } from './routes/theory_.radio'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -130,6 +132,16 @@ const TheoryCircuitsRoute = TheoryCircuitsRouteImport.update({
   path: '/theory/circuits',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TheoryDigitalRoute = TheoryDigitalRouteImport.update({
+  id: '/theory_/digital',
+  path: '/theory/digital',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TheoryRadioRoute = TheoryRadioRouteImport.update({
+  id: '/theory_/radio',
+  path: '/theory/radio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -152,6 +164,8 @@ export interface FileRoutesByFullPath {
   '/radio/receiver': typeof RadioReceiverRoute
   '/radio/transmitter': typeof RadioTransmitterRoute
   '/theory/circuits': typeof TheoryCircuitsRoute
+  '/theory/digital': typeof TheoryDigitalRoute
+  '/theory/radio': typeof TheoryRadioRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -174,6 +188,8 @@ export interface FileRoutesByTo {
   '/radio/receiver': typeof RadioReceiverRoute
   '/radio/transmitter': typeof RadioTransmitterRoute
   '/theory/circuits': typeof TheoryCircuitsRoute
+  '/theory/digital': typeof TheoryDigitalRoute
+  '/theory/radio': typeof TheoryRadioRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -197,6 +213,8 @@ export interface FileRoutesById {
   '/radio/receiver': typeof RadioReceiverRoute
   '/radio/transmitter': typeof RadioTransmitterRoute
   '/theory_/circuits': typeof TheoryCircuitsRoute
+  '/theory_/digital': typeof TheoryDigitalRoute
+  '/theory_/radio': typeof TheoryRadioRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -221,6 +239,8 @@ export interface FileRouteTypes {
     | '/radio/receiver'
     | '/radio/transmitter'
     | '/theory/circuits'
+    | '/theory/digital'
+    | '/theory/radio'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -243,6 +263,8 @@ export interface FileRouteTypes {
     | '/radio/receiver'
     | '/radio/transmitter'
     | '/theory/circuits'
+    | '/theory/digital'
+    | '/theory/radio'
   id:
     | '__root__'
     | '/'
@@ -265,6 +287,8 @@ export interface FileRouteTypes {
     | '/radio/receiver'
     | '/radio/transmitter'
     | '/theory_/circuits'
+    | '/theory_/digital'
+    | '/theory_/radio'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -288,6 +312,8 @@ export interface RootRouteChildren {
   RadioReceiverRoute: typeof RadioReceiverRoute
   RadioTransmitterRoute: typeof RadioTransmitterRoute
   TheoryCircuitsRoute: typeof TheoryCircuitsRoute
+  TheoryDigitalRoute: typeof TheoryDigitalRoute
+  TheoryRadioRoute: typeof TheoryRadioRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -432,6 +458,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TheoryCircuitsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/theory_/digital': {
+      id: '/theory_/digital'
+      path: '/theory/digital'
+      fullPath: '/theory/digital'
+      preLoaderRoute: typeof TheoryDigitalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/theory_/radio': {
+      id: '/theory_/radio'
+      path: '/theory/radio'
+      fullPath: '/theory/radio'
+      preLoaderRoute: typeof TheoryRadioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -456,6 +496,8 @@ const rootRouteChildren: RootRouteChildren = {
   RadioReceiverRoute: RadioReceiverRoute,
   RadioTransmitterRoute: RadioTransmitterRoute,
   TheoryCircuitsRoute: TheoryCircuitsRoute,
+  TheoryDigitalRoute: TheoryDigitalRoute,
+  TheoryRadioRoute: TheoryRadioRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -9,7 +9,7 @@ import { coilFace, defaultLenzSettings, inducedCurrent, inducedEmf } from '@/lib
 export const Route = createFileRoute('/theory')({
   head: () => ({ meta: [
     { title: 'Theory — Circuit Playground' },
-    { name: 'description', content: 'Learn Ohm and Kirchhoff laws, stored energy, impedance and phase, Lenz’s law, digital logic and electromagnetic waves with worked examples.' },
+    { name: 'description', content: 'Learn electronics foundations, then explore dedicated Circuits, Digital and Radio theory chapters with equations, diagrams and worked examples.' },
     { property: 'og:title', content: 'Circuit theory — Circuit Playground' },
     { property: 'og:description', content: 'Worked examples connect circuit laws, impedance, magnetic induction, digital logic and radio waves to interactive labs.' },
     { property: 'og:type', content: 'article' }, { name: 'twitter:card', content: 'summary_large_image' },
@@ -38,6 +38,11 @@ function Theory() {
     <SiteHeader />
     <main className="shell">
       <div className="lab-heading max-w-2xl"><div className="eyebrow mb-3 text-muted-foreground">THE RULES BEHIND THE LABS</div><h1>Theory<span className="text-primary">.</span></h1><p className="mt-4 text-muted-foreground">From charge flowing through a resistor to information carried by radio waves.</p></div>
+      <nav aria-label="Theory chapters" className="mb-8 grid gap-6 border-y border-border py-6 sm:grid-cols-3">
+        <Link to="/theory/circuits" className="group"><h2 className="text-lg font-semibold text-primary">Circuits <ArrowRight size={16} className="inline" /></h2><p className="mt-2 text-sm text-muted-foreground">Kirchhoff, complex impedance, phasors, RMS power and resonance.</p></Link>
+        <Link to="/theory/digital" className="group"><h2 className="text-lg font-semibold text-primary">Digital <ArrowRight size={16} className="inline" /></h2><p className="mt-2 text-sm text-muted-foreground">Boolean algebra, truth tables, CMOS, memory and binary addition.</p></Link>
+        <Link to="/theory/radio" className="group"><h2 className="text-lg font-semibold text-primary">Radio <ArrowRight size={16} className="inline" /></h2><p className="mt-2 text-sm text-muted-foreground">Waves, AM/FM, tuning, mixing, detectors and transmitter power.</p></Link>
+      </nav>
       <nav aria-label="Theory contents" className="mb-8 flex flex-wrap gap-2">{contents.map(([id, name]) => <a key={id} href={`#${id}`} className="rounded-md bg-secondary px-3 py-1.5 text-xs font-medium hover:text-primary">{name}</a>)}</nav>
       <div className="max-w-4xl pb-12">
         <Topic id="ohm" n="01" title="Ohm's law" formula="V = I × R" lab="/resistors" labName="resistor lab" example={<>9 V across 470 Ω gives I = 9 ÷ 470 = <b>19.1 mA</b>. The power turned into heat is P = V × I = 9 × 0.0191 = <b>172 mW</b>.</>}>

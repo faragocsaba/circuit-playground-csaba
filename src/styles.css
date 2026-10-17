@@ -272,6 +272,8 @@ h1 { font-family: var(--font-display); font-weight: 400; font-size: 46px; line-h
 .radio-audio-line { fill: none; stroke: var(--primary); stroke-width: 2; }
 .radio-reference-line { fill: none; stroke: var(--amber); stroke-width: 1.8; stroke-dasharray: 5 3; }
 .radio-readout { font-size: 16px !important; overflow-wrap: anywhere; }
+.theory-diagram { display: block; width: 100%; max-width: 600px; height: auto; margin: 20px 0; }
+.theory-diagram text { fill: var(--foreground); font: 13px var(--font-mono); }
 @media (max-width: 760px) {
   .radio-chain { min-height: 0; }
   .radio-stage-controls > button { font-size: 11px; }

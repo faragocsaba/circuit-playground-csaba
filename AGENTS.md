@@ -24,4 +24,5 @@
 - Use the shared PhysicalParts gallery for physical component examples; label generated pictures as illustrations and generic chip packages as generic so learners do not infer an exact part or pinout from the image.
 - Share one LenzExperiment between Inductors and the dedicated Circuits lab; automatic and manual motion use the pure Lenz model's positive-approach convention so diagrams, meters and traces agree.
 - Derive numerical Theory examples from the existing pure lab models when available so explanations stay aligned with simulation values.
+- Keep expanded Theory chapters at separate un-nested Circuits, Digital and Radio routes with a shared chapter presentation; interactive examples reuse existing pure lab models to avoid competing equations.
 - Radio modulation, receiver and transmitter routes share the pure radio model, SVG signal/circuit views and opt-in Web Audio output; display translated carriers explicitly and separate teaching equations from practical circuit topology so learners do not mistake them for measured RF or a construction guide.
