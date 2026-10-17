@@ -37,6 +37,11 @@ export function oscillation(t: number, dMin = 1.2, dMax = 4, period = 6) {
   const phase = (2 * Math.PI * t) / period;
   const mid = (dMin + dMax) / 2, amp = (dMax - dMin) / 2;
   const distance = mid - amp * Math.cos(phase);
-  const velocity = ((2 * Math.PI) / period) * amp * Math.sin(phase); // positive = approaching
+  const velocity = -((2 * Math.PI) / period) * amp * Math.sin(phase); // positive = approaching = decreasing distance
   return { distance, velocity };
+}
+
+/** Manual motion uses the same convention as automatic motion: positive approaches. */
+export function manualMotion(previousDistance: number, distance: number, elapsed: number) {
+  return { distance, velocity: elapsed > 0 ? (previousDistance - distance) / elapsed : 0 };
 }

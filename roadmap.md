@@ -30,7 +30,7 @@
 ## Growth plan (approved 2026-10-16, .lovable/plan/circuit-playground-growth-plan-2026-10-16.md)
 - [x] Step 0: section-based landing page + section menu in header (Components / Circuits / Digital / Radio).
 - [x] Step 1: Circuits lab (/circuits) — combined R/L/C AC circuit, impedance, phasor diagram.
-- [ ] Step 2 (rest): Lenz's law experiment inside the Inductors lab; Theory: impedance topic. (Kirchhoff + resonance already moved.)
+- [ ] Current request: add a shared Lenz's-law experiment inside Inductors and complete Theory topics (impedance/phase, Lenz, digital logic, electromagnetic waves); verify both.
 - [x] Step 4: Logic gates lab (7 gates, truth tables, live pins); verified.(/logic-gates) with shared gate engine.
 - [x] Step 5: Flip-flops lab (NAND SR latch, D, JK, T; clock edges); verified.(/flip-flops) from NAND gates.
 - [x] Step 6: Adder lab (/adders).
