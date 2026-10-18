@@ -8,11 +8,14 @@ import { Message, MessageContent, MessageResponse } from '@/components/ai-elemen
 import { PromptInput, PromptInputTextarea, PromptInputFooter, PromptInputSubmit } from '@/components/ai-elements/prompt-input';
 import { Shimmer } from '@/components/ai-elements/shimmer';
 import type { CapacitorContext } from '@/lib/capacitor-context';
+import { useLanguage } from '@/lib/localization/context';
+import { translate } from '@/lib/localization/translate';
 
 function GuideMark() {
   return <svg viewBox="0 0 40 40" className="size-9 text-primary" aria-label="Capacitor Guide"><path d="M4 20H16M24 20H36M16 9V31M24 9V31" fill="none" stroke="currentColor" strokeWidth="2.5" /><circle cx="5" cy="20" r="2" fill="currentColor" /><circle cx="35" cy="20" r="2" fill="currentColor" /></svg>;
 }
 export function CapacitorHelper({ setup }: { setup: CapacitorContext }) {
+  const { language } = useLanguage();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [input, setInput] = useState('');
   const [snapshot, setSnapshot] = useState<CapacitorContext>();
@@ -34,7 +37,8 @@ export function CapacitorHelper({ setup }: { setup: CapacitorContext }) {
     if (busy || !text.trim()) return;
     clearError(); setNotice(''); setStopped(false); setSnapshot(setup); setInput('');
     inputRef.current?.focus({ preventScroll: true });
-    await sendMessage({ text: text.trim(), metadata: { setup } }, { body: { setup } });
+    const question = translate(text.trim(), language);
+    await sendMessage({ text: language === 'hu' ? `${question}\n\nKérlek, magyarul válaszolj.` : question, metadata: { setup } }, { body: { setup } });
   }
   return <section data-capacitor-helper className="capacitor-helper" aria-label="Capacitor AI helper">
     <div className="section-top"><h2 className="flex items-center gap-2"><GuideMark />Capacitor Guide</h2><div className="flex items-center gap-3"><span className="eyebrow text-muted-foreground">AI-POWERED</span><Button variant="ghost" size="icon" disabled={busy || messages.length === 0} title="Clear conversation" aria-label="Clear conversation" onClick={() => { setMessages([]); clearError(); setNotice(''); setSnapshot(undefined); setStopped(false); inputRef.current?.focus(); }}><Trash2 /></Button></div></div>

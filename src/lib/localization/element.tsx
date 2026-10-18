@@ -1,4 +1,4 @@
-import { createElement, type ReactNode } from 'react';
+import { createElement, type ReactNode, type ElementType } from 'react';
 import { useLanguage } from './context';
 import { translate } from './translate';
 
@@ -9,10 +9,10 @@ function localizeChildren(children: ReactNode, language: 'en' | 'hu'): ReactNode
   return children;
 }
 
-export function LocalizedElement({ tag, original }: { tag: string; original: Record<string, unknown> }) {
+export function LocalizedElement({ tag, original }: { tag: ElementType; original: Record<string, unknown> }) {
   const { language } = useLanguage();
   const props = { ...original };
-  if (!props['data-no-translate'] && !['script', 'style', 'code', 'pre'].includes(tag)) {
+  if (!props['data-no-translate'] && !(typeof tag === 'string' && ['script', 'style', 'code', 'pre'].includes(tag))) {
     props['children'] = localizeChildren(props['children'] as ReactNode, language);
     for (const attribute of attributes) {
       const value = props[attribute];
