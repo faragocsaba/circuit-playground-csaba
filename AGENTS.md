@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Application architecture
+- Localize presentation through a scoped JSX-runtime adapter and a bundled English/Hungarian catalog; keep model identifiers, equations and simulation state unchanged when language switches, hydrate in English before restoring the saved choice, and synchronize route metadata after navigation.
 - Derive parallel resistor particles from complete branch routes and a shared current-to-charge-rate scale in a pure tested flow model, so shared wires preserve both branch contributions without changing the electrical model.
 - Keep each component's educational model (transistor, diode, …) in a browser-safe pure module under src/lib with unit tests; visualizations consume the same results to keep circuit values and carrier flow consistent.
 - Derive transistor branch dot counts and a shared transit period from the pure transistor model; emitter dots combine both terminal contributions so displayed counts and rates conserve current across every arrangement.
