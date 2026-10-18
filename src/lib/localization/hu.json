@@ -1551,7 +1551,7 @@
   "1 position · discarded: 0": "1 helyiérték · kiesett: 0",
   "100 MHz": "100 MHz",
   "Message": "Moduláló jel",
-  "circuit": "áramkör",
+  "circuit": "circuit",
   "CARRY": "ÁTVITEL",
   "MESSAGE": "MODULÁLÓ JEL",
   "Move bits. Change the number.": "Told el a biteket. Változtasd meg a számot.",
@@ -1608,5 +1608,7 @@
   "gold": "arany",
   "yellow": "sárga",
   "violet": "ibolya",
-  "brown": "barna"
+  "brown": "barna",
+  "Source-": "Forrás-",
+  "I_total": "I_összes"
 }
