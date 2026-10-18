@@ -1,5 +1,6 @@
 import type { BandColor, ResistorSettings } from '@/lib/resistor-model';
 import { colorBands, formatOhms, resistorModel } from '@/lib/resistor-model';
+import { parallelResistorFlow } from '@/lib/resistor-flow-model';
 
 type Pt = [number, number];
 function along(points: Pt[], t: number): Pt {
@@ -36,13 +37,12 @@ export function ResistorCircuit({ settings, phase }: { settings: ResistorSetting
       <rect x="248" y="140" width="24" height="100" fill="var(--card)" /><rect x="368" y="140" width="24" height="100" fill="var(--card)" />
       <path d="M260 140 V160 M260 220 V240 M380 140 V160 M380 220 V240" className="wire" />
       <Zigzag x={260} y={190} vertical /><Zigzag x={380} y={190} vertical />
-      <text x="278" y="186" className="terminal-label">R₁</text><text x="278" y="202">{formatOhms(settings.r1)}</text>
-      <text x="398" y="186" className="terminal-label">R₂</text><text x="398" y="202">{formatOhms(settings.r2)}</text>
+      <text x="278" y="186" className="terminal-label flow-text-collector">R₁</text><text x="278" y="202">{formatOhms(settings.r1)}</text>
+      <text x="398" y="186" className="terminal-label flow-text-base">R₂</text><text x="398" y="202">{formatOhms(settings.r2)}</text>
       <circle cx="260" cy="90" r="4" className="node" /><circle cx="380" cy="90" r="4" className="node" /><circle cx="260" cy="300" r="4" className="node" /><circle cx="380" cy="300" r="4" className="node" />
-      <Particles path={[[120, 170], [120, 90], [260, 90]]} current={m.current} phase={phase} cls="" />
-      <Particles path={[[260, 90], [260, 300]]} current={m.i1} phase={phase} cls="flow-collector" />
-      <Particles path={[[260, 90], [380, 90], [380, 300]]} current={m.i2} phase={phase} cls="flow-base" />
-      <Particles path={[[260, 300], [120, 300], [120, 220]]} current={m.current} phase={phase} cls="" />
+      {parallelResistorFlow(settings, phase).map(stream => <g key={stream.branch} data-current-branch={stream.branch + 1}>
+        {stream.dots.map((dot, i) => <circle key={i} cx={dot.x} cy={dot.y} r={3.2} className={`current-particle ${stream.branch === 0 ? 'flow-collector' : 'flow-base'}`} />)}
+      </g>)}
       <text x="420" y="80" className="current-text">I = I₁ + I₂</text>
     </> : <>
       <rect x="230" y="78" width="80" height="24" fill="var(--card)" />
