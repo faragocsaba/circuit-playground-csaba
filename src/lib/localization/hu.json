@@ -1479,5 +1479,9 @@
   "NAND": "NAND",
   "NOR": "NOR",
   "XOR": "XOR",
-  "XNOR": "XNOR"
+  "XNOR": "XNOR",
+  "AM & FM modulation →": "AM &amp; FM moduláció →",
+  "Voltage & current": "Feszültség &amp; áram",
+  "Simplified magnet & coil · motion slowed to stay visible": "Egyszerűsített mágnes &amp; tekercs · a mozgás lelassítva, hogy látható maradjon",
+  "Charge capacitor & release": "Kondenzátor feltöltése &amp; elengedése"
 }
