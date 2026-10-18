@@ -296,7 +296,7 @@ html[lang=hu] .readout-value { overflow-wrap: anywhere; }
 @media (max-width: 500px) {
   .topbar { height: auto; min-height: 96px; }
   .topbar .shell { flex-wrap: wrap; gap: 0; padding-top: 12px; padding-bottom: 12px; }
-  .site-nav-row { width: 100%; flex-wrap: wrap; gap: 10px !important; }
+  .site-nav-row { width: 100%; flex-wrap: wrap; gap: 10px !important; padding-right: 0; }
   .site-nav-row > nav { width: 100%; justify-content: space-between; }
   .site-nav-row .tab { padding: 6px; font-size: 11px; }
   .site-nav-row .nav-group:last-of-type .nav-menu { left: auto; right: 0; }
