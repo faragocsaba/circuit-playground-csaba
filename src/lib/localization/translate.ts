@@ -2,6 +2,10 @@ import catalog from './hu.json';
 import type { Language } from './language';
 
 const messages: Record<string, string> = catalog;
+const englishMessages = new Map(Object.entries(messages).map(([english, hungarian]) => [hungarian, english]));
+export function translateMetadata(text: string, language: Language): string {
+  return translate(englishMessages.get(text) ?? text, language);
+}
 const normalize = (text: string) => text.replace(/\s+/g, ' ').trim();
 const patterns = Object.entries(messages).filter(([key]) => /\{\d+\}/.test(key)).map(([key, value]) => ({
   expression: new RegExp('^' + key.split(/(\{\d+\})/).map(part => /^\{\d+\}$/.test(part) ? '(.+?)' : part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('') + '$'),
