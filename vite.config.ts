@@ -10,10 +10,10 @@ export default defineConfig({
   vite: {
     plugins: [{
       name: 'circuit-localized-presentation',
-      enforce: 'post',
+      enforce: 'pre',
       transform(code, id) {
         if (!id.includes('/src/') || !id.split('?')[0]?.endsWith('.tsx') || /\/lib\/localization\/|\/components\/ui\/|\/components\/ai-elements\//.test(id)) return;
-        return code.replace(/(["'])react\/(jsx(?:-dev)?-runtime)\1/g, '"@/lib/localization/$2"');
+        return '/** @jsxImportSource @/lib/localization */\n' + code;
       },
     }],
   },
