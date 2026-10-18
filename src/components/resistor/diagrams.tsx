@@ -27,7 +27,7 @@ export function ResistorCircuit({ settings, phase }: { settings: ResistorSetting
   const m = resistorModel(settings);
   const { arrangement } = settings;
   return <svg viewBox="0 0 640 390" className="circuit-svg" role="img" aria-label={`${arrangement} resistor circuit carrying ${m.current.toFixed(1)} milliamps`}>
-    <path d="M120 170 V90 H520 V300 H120 V220" className="wire" />
+    <path d={arrangement === 'parallel' ? 'M120 170 V90 H380 M380 300 H120 V220' : 'M120 170 V90 H520 V300 H120 V220'} className="wire" />
     <line x1="100" y1="170" x2="140" y2="170" className="symbol" /><line x1="110" y1="220" x2="130" y2="220" className="symbol" />
     <text x="150" y="176" className="terminal-label">+</text><text x="60" y="200">{settings.voltage.toFixed(1)} V</text>
     {arrangement === 'parallel' ? <>
