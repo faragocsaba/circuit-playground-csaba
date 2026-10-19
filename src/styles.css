@@ -230,6 +230,7 @@ html[lang=hu] .control-label { flex-wrap: wrap; gap: 4px; }
 html[lang=hu] .layout-option { height: auto; min-height: 38px; white-space: normal; }
 html[lang=hu] .readout-value { overflow-wrap: anywhere; }
 @media (max-width: 1100px) { .topbar .shell { position: relative; } .site-nav-row { flex-wrap: wrap; row-gap: 8px; padding-right: 96px; } .topbar { height: auto; min-height: 64px; } .topbar .shell { padding-top: 10px; padding-bottom: 10px; } .language-selector { position: absolute; top: 12px; right: 24px; } }
+@media (max-width: 1100px) { .site-nav-row { min-width: 0; flex: 1; } .site-nav-row .tabs { flex-wrap: wrap; max-width: 100%; } }
 @media (max-width: 420px) { .site-nav-row .tab { font-size: 10px; padding: 6px 4px; } .language-selector { right: 18px; } }
 .ant-wave { fill: none; stroke: var(--primary); stroke-width: 1.6; }
 .ant-grid { fill: none; stroke: var(--border); stroke-width: 1; }
