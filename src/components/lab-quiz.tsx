@@ -2,7 +2,7 @@ import { useReducer, useState } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { ArrowRight, CheckCircle2, CircleHelp, RotateCcw, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { useLanguage } from '@/lib/localization/context';
 import { labQuizzes, type LabQuizData } from '@/lib/quiz-catalog';
 import { initialQuizState, quizReducer, quizScore } from '@/lib/quiz-model';
@@ -18,18 +18,17 @@ function Quiz({ quiz }: { quiz: LabQuizData }) {
   const hu = language === 'hu';
   const [state, dispatch] = useReducer(quizReducer, undefined, initialQuizState);
   const [selected, setSelected] = useState<number | null>(null);
+  const [open, setOpen] = useState(false);
   const question = quiz.questions[state.index];
   if (!question) return null;
   const answered = state.answers.length > state.index;
   const correct = state.answers[state.index] === question.correct;
   const score = quizScore(state.answers, quiz.questions.map(item => item.correct));
   function restart() { dispatch({ type: 'restart' }); setSelected(null); }
-  return <Dialog>
-    <DialogTrigger asChild>
-      <Button variant="ghost" size="sm" className="quiz-trigger" aria-label={hu ? 'Laborkvíz megnyitása' : 'Open lab quiz'}>
+  return <Dialog open={open} onOpenChange={setOpen}>
+      <Button variant="ghost" size="sm" className="quiz-trigger" aria-haspopup="dialog" aria-expanded={open} onClick={() => setOpen(true)} aria-label={hu ? 'Laborkvíz megnyitása' : 'Open lab quiz'}>
         <CircleHelp aria-hidden="true" /><span>{hu ? 'Kvíz' : 'Quiz'}</span>
       </Button>
-    </DialogTrigger>
     <DialogContent className="quiz-dialog">
       <div className="pr-6">
         <DialogTitle>{hu ? 'Kvíz' : 'Quiz'} · {quiz.title[language]}</DialogTitle>
