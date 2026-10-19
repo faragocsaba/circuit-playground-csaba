@@ -1,4 +1,5 @@
 # Circuit playground
+- [ ] Add topic-specific English/Hungarian quizzes to all labs with answer explanations, results and retry; verify both languages and scoring.
 - [x] Add English/Hungarian localization throughout the labs and Theory with a persistent language selector; verified language switching, saved preference, localized titles and circuit interaction, all 22 pages at desktop/tablet/phone sizes, and 24 targeted tests.
 - [x] Add Bit Shifts beside Adders with a tested shift model, interactive binary diagram and verified navigation/controls on desktop and mobile.
 - [x] Expand Theory with dedicated Circuits, Digital and Radio pages, equations, model-derived examples, diagrams and lab links; navigation, resonance, XOR, clocked memory, FM and tablet/phone layout browser-verified; 155 tests passing.
