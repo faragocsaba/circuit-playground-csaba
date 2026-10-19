@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { ChevronDown, Zap } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { LanguageSelector } from '@/components/language-selector';
+import { LabQuiz } from '@/components/lab-quiz';
 
 type NavItem = { to: string; label: string; soon?: boolean };
 
@@ -47,6 +48,7 @@ export function SiteHeader({ children }: { children?: ReactNode }) {
           { to: '/radio/transmitter', label: 'Radio transmitter' },
         ]} />
         <Link to="/theory" className="tab" activeProps={{ 'aria-current': 'page' }}>Theory</Link>
+        <LabQuiz />
       </nav>
     </div>
     <div className="flex items-center gap-2">{children}<LanguageSelector /></div>

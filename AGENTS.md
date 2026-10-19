@@ -29,3 +29,4 @@
 - Keep expanded Theory chapters at separate un-nested Circuits, Digital and Radio routes with a shared chapter presentation; interactive examples reuse existing pure lab models to avoid competing equations.
 - Radio modulation, receiver and transmitter routes share the pure radio model, SVG signal/circuit views and opt-in Web Audio output; display translated carriers explicitly and separate teaching equations from practical circuit topology so learners do not mistake them for measured RF or a construction guide.
 - Keep fixed-width bit shifts and source-to-output bit mappings in a pure tested model; the Bit Shifts lab consumes that mapping so diagrams and signed/unsigned readouts agree.
+- Mount topic-specific quizzes through SiteHeader with an exact lab-path catalog; keep bilingual question data separate from the pure scoring/state model and preserve answers across language switches so practice stays consistent without altering simulations.
