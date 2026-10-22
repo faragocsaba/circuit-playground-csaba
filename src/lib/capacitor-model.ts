@@ -50,3 +50,16 @@ export function acResponse(settings: CapacitorSettings) {
   const x = 2 * Math.PI * settings.frequency * timeConstant(settings);
   return { amplitude: settings.voltage / Math.sqrt(1 + x * x), lag: Math.atan(x) * 180 / Math.PI };
 }
+// Continuous teaching scales, not electron counts or physical drift velocity.
+export function capacitorVisualState(sample: CapacitorSample) {
+  const magnitude = Math.abs(sample.current);
+  return {
+    currentDirection: Math.sign(sample.current),
+    currentStrength: magnitude / (magnitude + 0.25),
+    upperPolarity: Math.sign(sample.charge),
+    lowerPolarity: -Math.sign(sample.charge),
+    chargeLevels: Array.from({ length: 24 }, (_, i) => Math.max(0, Math.min(1, Math.abs(sample.charge) / 1000 - i))),
+    fieldDirection: Math.sign(sample.voltage),
+    fieldStrength: Math.min(1, Math.abs(sample.voltage) / 12),
+  };
+}

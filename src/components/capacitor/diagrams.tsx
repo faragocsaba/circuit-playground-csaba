@@ -1,4 +1,4 @@
-import type { CapacitorSample, CapacitorSettings } from '@/lib/capacitor-model';
+import { capacitorVisualState, type CapacitorSample, type CapacitorSettings } from '@/lib/capacitor-model';
 
 type Point = [number, number];
 function along(points: Point[], progress: number) {
@@ -10,17 +10,18 @@ function along(points: Point[], progress: number) {
   for (const { start, end, length } of segments) {
     if (distance <= length && length > 0) {
       const ratio = distance / length;
-      return { cx: start[0] + ratio * (end[0] - start[0]), cy: start[1] + ratio * (end[1] - start[1]) };
+      return { cx: start[0] + ratio * (end[0] - start[0]), cy: start[1] + ratio * (end[1] - start[1]), angle: Math.atan2(end[1] - start[1], end[0] - start[0]) * 180 / Math.PI };
     }
     distance -= length;
   }
   const first = points[0];
-  return { cx: first?.[0] ?? 0, cy: first?.[1] ?? 0 };
+  return { cx: first?.[0] ?? 0, cy: first?.[1] ?? 0, angle: 0 };
 }
 
 export function CapacitorCircuit({ settings, sample, motion }: { settings: CapacitorSettings; sample: CapacitorSample; motion: number }) {
-  const count = Math.abs(sample.current) > 0.02 ? Math.min(12, Math.max(3, Math.ceil(Math.abs(sample.current)))) : 0;
-  const paths: Point[][] = [[[150, 155], [150, 90], [560, 90], [560, 185]], [[560, 205], [560, 300], [150, 300], [150, 235]]];
+  const visual = capacitorVisualState(sample);
+  // Separate wire runs: no arrows enter the source, resistor or dielectric.
+  const paths: Point[][] = [[[150, 143], [150, 90], [308, 90]], [[432, 90], [560, 90], [560, 173]], [[560, 217], [560, 300], [150, 300], [150, 247]]];
   return <svg className="circuit-svg" viewBox="0 0 720 390" role="img" aria-label={`Capacitor series RC circuit, ${settings.mode === 'ac' ? 'alternating source' : settings.connected ? 'charging' : 'discharging'}`}>
     <path d="M150 155V90H560V185M560 205V300H150V235" className="wire" />
     <circle cx="150" cy="195" r="40" className="symbol" />
@@ -33,30 +34,34 @@ export function CapacitorCircuit({ settings, sample, motion }: { settings: Capac
     <text x="608" y="182">C</text><text x="608" y="207">{settings.capacitance} µF</text>
     <text x="510" y="177" className="terminal-label">{sample.voltage >= 0 ? '+' : '−'}</text><text x="510" y="223" className="terminal-label">{sample.voltage >= 0 ? '−' : '+'}</text>
     <text x="580" y="253">{sample.voltage.toFixed(2)} V</text>
-    {paths.map((points, path) => Array.from({ length: count }, (_, i) => {
-      const progress = ((motion / 3 + i / count) % 1 + 1) % 1;
-      return <circle key={`${path}-${i}`} r="3.5" className="current-particle" {...along(points, progress)} />;
-    }))}
+    <g data-testid="capacitor-wire-current" data-direction={visual.currentDirection} opacity={visual.currentStrength}>
+      {paths.map((points, path) => Array.from({ length: path === 2 ? 10 : 4 }, (_, i) => {
+        const count = path === 2 ? 10 : 4;
+        const progress = ((motion / 3 + i / count) % 1 + 1) % 1;
+        const { cx, cy, angle } = along(points, progress);
+        return <path key={`${path}-${i}`} d="M-7 0H7M2-5 7 0 2 5" className="capacitor-current-arrow" transform={`translate(${cx},${cy}) rotate(${angle + (visual.currentDirection < 0 ? 180 : 0)})`} opacity={Math.min(1, progress * 12, (1 - progress) * 12)} />;
+      }))}
+    </g>
     <text x="300" y="335" className="current-text">I = {sample.current.toFixed(2)} mA</text>
   </svg>;
 }
 
 export function CapacitorPlates({ sample }: { sample: CapacitorSample }) {
-  const count = Math.min(12, Math.round(Math.abs(sample.voltage)));
-  const positive = sample.voltage >= 0;
+  const visual = capacitorVisualState(sample);
+  const positive = visual.upperPolarity >= 0;
   return <svg className="cutaway-svg" viewBox="0 0 600 222" role="img" aria-label={`Capacitor plates with opposite stored charges, ${sample.charge.toFixed(0)} microcoulombs on the upper plate`}>
-    <text x="65" y="29">UPPER PLATE</text><text x="402" y="29">LOWER PLATE</text>
+    <text x="122" y="29" textAnchor="middle">PLATE 1 · TOP</text><text x="478" y="29" textAnchor="middle">PLATE 2 · BOTTOM</text>
     <rect x="80" y="45" width="85" height="125" rx="3" className="region-p" /><rect x="435" y="45" width="85" height="125" rx="3" className="region-n" />
     <rect x="180" y="45" width="240" height="125" rx="3" className="region-metal" />
     <path d="M165 45V170M435 45V170" className="symbol" />
     <text x="300" y="187" textAnchor="middle">insulating dielectric</text>
-    {Array.from({ length: count }, (_, i) => <g key={i}>
-      <circle cx={103 + i % 2 * 36} cy={59 + Math.floor(i / 2) * 19} r="7" className={positive ? 'hole-carrier' : 'carrier'} stroke="var(--coral)" />
-      <text x={103 + i % 2 * 36} y={62 + Math.floor(i / 2) * 19} textAnchor="middle" className={positive ? 'hole-sign' : 'electron-sign'}>{positive ? '+' : '−'}</text>
-      <circle cx={458 + i % 2 * 36} cy={59 + Math.floor(i / 2) * 19} r="7" className={positive ? 'carrier' : 'hole-carrier'} stroke="var(--coral)" />
-      <text x={458 + i % 2 * 36} y={62 + Math.floor(i / 2) * 19} textAnchor="middle" className={positive ? 'electron-sign' : 'hole-sign'}>{positive ? '−' : '+'}</text>
+    {visual.chargeLevels.map((opacity, i) => <g key={i} opacity={opacity} data-testid="capacitor-plate-charge">
+      <text x={96 + i % 3 * 26} y={61 + Math.floor(i / 3) * 14} textAnchor="middle" className="capacitor-charge-sign">{positive ? '+' : '−'}</text>
+      <text x={451 + i % 3 * 26} y={61 + Math.floor(i / 3) * 14} textAnchor="middle" className="capacitor-charge-sign">{positive ? '−' : '+'}</text>
     </g>)}
-    {count > 0 && [75, 110, 145].map(y => <path key={y} d={positive ? `M210 ${y}H390m-8-5 8 5-8 5` : `M390 ${y}H210m8-5-8 5 8 5`} className="capacitor-field" opacity={Math.min(1, Math.abs(sample.voltage) / 5)} />)}
+    <g data-testid="capacitor-electric-field" data-direction={visual.fieldDirection} opacity={visual.fieldStrength}>
+      {[75, 110, 145].map(y => <path key={y} d={visual.fieldDirection >= 0 ? `M210 ${y}H390m-8-5 8 5-8 5` : `M390 ${y}H210m8-5-8 5 8 5`} className="capacitor-field" />)}
+    </g>
     <text x="300" y="211" textAnchor="middle">Q = ±{Math.abs(sample.charge).toFixed(0)} µC · electric field from + to −</text>
   </svg>;
 }
