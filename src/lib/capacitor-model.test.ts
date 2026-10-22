@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { acResponse, advanceCapacitor, capacitorSample, defaultCapacitorSettings as defaults, timeConstant } from './capacitor-model';
+import { acResponse, advanceCapacitor, capacitorSample, capacitorVisualState, defaultCapacitorSettings as defaults, timeConstant } from './capacitor-model';
 
 describe('capacitor RC model', () => {
   it('charges to 63.2% in one time constant and blocks steady DC', () => {
@@ -39,5 +39,46 @@ describe('capacitor RC model', () => {
     const time = 20.5;
     expect(advanceCapacitor(settings, 0, 0, time).voltage).toBeCloseTo(response.amplitude * Math.sin(2 * Math.PI * settings.frequency * time - response.lag * Math.PI / 180), 6);
     expect(acResponse({ ...settings, frequency: 2 }).amplitude).toBeLessThan(response.amplitude);
+  });
+  it('gradually accumulates equal opposite plate charges while current decays', () => {
+    const early = capacitorVisualState(advanceCapacitor(defaults, 0, 0, 0.1));
+    const later = capacitorVisualState(advanceCapacitor(defaults, 0, 0, 1));
+    expect(early.chargeLevels[0]).toBeCloseTo(5 * (1 - Math.exp(-0.1)));
+    expect(later.chargeLevels.reduce((a, b) => a + b, 0)).toBeCloseTo(5 * (1 - Math.exp(-1)));
+    expect(later.upperPolarity).toBe(1);
+    expect(later.lowerPolarity).toBe(-1);
+    expect(later.currentStrength).toBeLessThan(early.currentStrength);
+    expect(later.fieldStrength).toBeGreaterThan(early.fieldStrength);
+  });
+  it('reverses discharge current while stored charges and field gradually fade without reversing polarity', () => {
+    const start = capacitorVisualState(capacitorSample(defaults, 0, 5));
+    const discharged = capacitorVisualState(advanceCapacitor({ ...defaults, connected: false }, 0, 5, 1));
+    expect(discharged.currentDirection).toBe(-1);
+    expect(discharged.fieldDirection).toBe(1);
+    expect(discharged.fieldStrength).toBeLessThan(start.fieldStrength);
+    expect(discharged.chargeLevels.reduce((a, b) => a + b, 0)).toBeCloseTo(5 / Math.E);
+  });
+  it('swaps plate polarity and field in AC', () => {
+    const ac = { ...defaults, mode: 'ac' as const };
+    const positive = capacitorVisualState(advanceCapacitor(ac, 0, 0, 20.5));
+    const negative = capacitorVisualState(advanceCapacitor(ac, 0, 0, 21.5));
+    expect(positive.upperPolarity).toBe(1);
+    expect(negative.upperPolarity).toBe(-1);
+    expect(negative.lowerPolarity).toBe(1);
+    expect(negative.fieldDirection).toBe(-1);
+  });
+  it('retains charged DC field with no current and leaves uncharged plates empty', () => {
+    const steady = capacitorVisualState(capacitorSample(defaults, 20, 5));
+    expect(steady.currentStrength).toBe(0);
+    expect(steady.fieldStrength).toBeCloseTo(5 / 12);
+    expect(steady.chargeLevels.reduce((a, b) => a + b, 0)).toBe(5);
+    expect(capacitorVisualState(capacitorSample(defaults, 0, 0)).chargeLevels.reduce((a, b) => a + b, 0)).toBe(0);
+  });
+  it('shows more plate charge for greater capacitance at the same voltage', () => {
+    const small = capacitorVisualState(capacitorSample({ ...defaults, capacitance: 100 }, 0, 5));
+    const large = capacitorVisualState(capacitorSample({ ...defaults, capacitance: 2000 }, 0, 5));
+    expect(small.chargeLevels.reduce((a, b) => a + b, 0)).toBe(0.5);
+    expect(large.chargeLevels.reduce((a, b) => a + b, 0)).toBe(10);
+    expect(large.fieldStrength).toBe(small.fieldStrength);
   });
 });
