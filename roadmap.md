@@ -1,5 +1,5 @@
 # Circuit playground
-- [ ] Correct capacitor animation in both languages: wire-only current arrows, gradual plate charges and dielectric field; test charging, discharge, AC and pause.
+- [x] Correct capacitor animation in both languages: wire-only current arrows, gradual plate charges and dielectric field; 16 targeted tests passed and charging, damping, discharge, AC, pause, live motion and 622px layout browser-verified without runtime errors.
 - [x] Add topic-specific English/Hungarian quizzes to all 17 labs (51 questions) with explanations, results and retry; browser-verified bilingual completion, language switching without lost answers, all lab entry points and 634/390px layouts; 29 targeted tests passed.
 - [x] Add English/Hungarian localization throughout the labs and Theory with a persistent language selector; verified language switching, saved preference, localized titles and circuit interaction, all 22 pages at desktop/tablet/phone sizes, and 24 targeted tests.
 - [x] Add Bit Shifts beside Adders with a tested shift model, interactive binary diagram and verified navigation/controls on desktop and mobile.
