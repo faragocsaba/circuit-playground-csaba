@@ -1,4 +1,12 @@
 {
+  "PLATE 1 · TOP": "1. FEGYVERZET · FELSŐ",
+  "PLATE 2 · BOTTOM": "2. FEGYVERZET · ALSÓ",
+  "Wire current · conventional direction": "Vezetékáram · egyezményes irány",
+  "The plates swap polarity every cycle. Electrons move only in the wires and plates, never across the dielectric; the electric field reverses. Current leads capacitor voltage.": "A fegyverzetek polaritása minden periódusban felcserélődik. Elektronok csak a vezetékekben és a fegyverzeteken mozognak, a szigetelőn át nem; az elektromos tér megfordul. Az áram siet a kondenzátorfeszültséghez képest.",
+  "One plate loses electrons (+), the other gains them (−). Stored charge and electric field grow while wire current decays. No electrons cross the dielectric.": "Az egyik fegyverzet elektronokat veszít (+), a másik elektronokat kap (−). A tárolt töltés és az elektromos tér nő, miközben a vezetékáram csillapodik. Elektronok nem haladnak át a szigetelőn.",
+  "Stored charge leaves through the external resistor: wire current reverses, plate charges decrease and the electric field fades. No electrons cross the dielectric.": "A tárolt töltés a külső ellenálláson keresztül távozik: a vezetékáram megfordul, a fegyverzetek töltése csökken, az elektromos tér gyengül. Elektronok nem haladnak át a szigetelőn.",
+  "Ideal RC · no leakage or ESR · arrows indicate current, not electron speed": "Ideális RC · szivárgás és ESR nélkül · a nyilak az áramot jelzik, nem az elektronok sebességét",
+  "Displacement current: a changing electric field between the plates, not electrons crossing the insulator. + marks electron deficit; − marks electron excess.": "Eltolási áram: a fegyverzetek közötti elektromos tér változása, nem a szigetelőn áthaladó elektronok. A + elektronhiányt, a − elektrontöbbletet jelöl.",
   "ground plane (car roof, earth)": "földsík (autótető, föld)",
   "loop axis — null": "hurok tengelye — vételi nullhely",
   "{0} antenna {1}": "{0} antenna {1}",

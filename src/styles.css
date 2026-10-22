@@ -92,6 +92,8 @@ h1 { font-family: var(--font-display); font-weight: 400; font-size: 46px; line-h
 @media (max-width: 760px) { .brand-word { display: none; } }
 :root { --led-red: oklch(0.6 0.22 27); --led-green: oklch(0.66 0.19 145); --led-blue: oklch(0.55 0.2 260); --flow-collector: oklch(0.55 0.15 240); --flow-base: oklch(0.7 0.15 75); --curve-rectifier: var(--primary); --curve-schottky: oklch(0.55 0.16 245); --curve-led: var(--coral); --curve-zener: oklch(0.55 0.13 80); }
 .current-text { fill: var(--primary) !important; }
+.capacitor-current-arrow { stroke: var(--primary); stroke-width: 2.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.cutaway-svg .capacitor-charge-sign { fill: var(--coral); font-size: 14px; font-weight: 600; }
 .capacitor-field { stroke: var(--coral); stroke-width: 1.5; fill: none; }
 .capacitor-current-trace { stroke: var(--flow-collector); stroke-width: 2; fill: none; }
 .capacitor-trace { width: 100%; aspect-ratio: 600 / 248; display: block; }
